@@ -21,7 +21,7 @@ enum COMMAND
     END,
     
     PUSH,
-    
+    POP,
     
     ADD,
     MUL,
@@ -29,7 +29,7 @@ enum COMMAND
     DIV
 };
 
-static u8 command = { START, PUSH, MUL, END};
+
 
 #endif /* COMMAND_H */
 

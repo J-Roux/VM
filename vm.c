@@ -1,14 +1,14 @@
 #include "stack.h"
 #include "command.h"
 
-enum STATE
+typedef enum STATE
 {
     COMMAND,
     GET_ARG,
     TERMINATE
-};
+} vm_state;
 
-STATE state = GET_ARG;
+vm_state state = GET_ARG;
 uint16_t arg;
 
 typedef struct  
@@ -22,7 +22,7 @@ void command_proceed(u8 command)
 {
     switch(command)
     {
-    
+        
     }
 }
 uint64_t execute_step(data_blob data, u8* code)
@@ -39,7 +39,7 @@ uint64_t execute_step(data_blob data, u8* code)
         }
         case COMMAND:
         {
-            
+            command_proceed(data.command);
             pointer++;
             break;
         }
