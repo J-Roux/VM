@@ -1,7 +1,10 @@
 #ifndef _CONFIG_H_
 #define _CONFIG_H_
 #include <stdint.h>
-//#define DEBUG
+
+
+#define DEBUG
+//#define ARDUINO
 #define RANGE_CHECK
 
 #define STACK_SIZE 128
@@ -11,15 +14,23 @@
 typedef uint8_t u8;
 //typedef uint16_t u16;
 
-
-#ifdef DEBUG
-#define TRACE printf
-#define MEMCPY(DEST, SRC, SIZE) memcpy(DEST, SRC, SIZE)
-#else 
+#ifdef ARDUINO
 #include <string.h>
 #include <Arduino.h>
-#define TRACE Serial.println
-#define MEMCPY(DEST, SRC, SIZE) memcpy(DEST, SRC, SIZE)
+#define TRACE_DBG Serial.println
+#define MEMCPY_DBG(DEST, SRC, SIZE) memcpy(DEST, SRC, SIZE)
+#else
+#define TRACE_DBG printf
+#define MEMCPY_DBG(DEST, SRC, SIZE) memcpy(DEST, SRC, SIZE)
+#endif
+
+
+#ifdef DEBUG
+#define TRACE TRACE_DBG
+#define MEMCPY(DEST, SRC, SIZE) MEMCPY_DBG(DEST, SRC, SIZE)
+#else 
+#define TRACE
+#define MEMCPY(DEST, SRC, SIZE)
 #endif
 
 #ifndef RANGE_CHECK

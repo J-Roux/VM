@@ -5,7 +5,7 @@ ptr_size pointer = 0;
 
 void range_check(ptr_size size, ptr_size range)
 {
-	if(pointer + size > range)
+	if( pointer  > range - size)
 		THROW(STACK_OVERFLOW);	
 }
 
@@ -21,8 +21,7 @@ void push(u8 *ptr, ptr_size size)
 void pop(u8 *ptr, ptr_size size)
 {
 	if(RANGE_CHECK)
-		range_check(-size, 0);
+		range_check(size, 0);
 	MEMCPY(ptr, data + pointer, size);
 	pointer -= size;
-
 }
