@@ -18,11 +18,11 @@ typedef struct
     uint8_t command;
 } data_blob;
 
-void command_proceed(u8 command)
+void command_proceed(u8 command, u8* data)
 {
     switch(command)
     {
-        
+        case MUL: break;
     }
 }
 uint64_t execute_step(data_blob data, u8* code)

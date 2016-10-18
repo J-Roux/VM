@@ -20,7 +20,6 @@ enum COMMAND
     START,
     END,
     
-    PUSH,
     POP,
     
     ADD,
