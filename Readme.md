@@ -1,10 +1,14 @@
-﻿command algorithm:
+command algorithm:
+
 	end_frame command -> get_size -> pop
 	push commnad -> get_size -> push
 	arithmetic and logic:
+	
 		binary command -> get_type_op_1 -> pop_op_1 -> get_type_op_2 -> pop_op_2 -> type_casting -> operation -> push
-		unary command -> get_type_op -> pop_op -> operation -> push 
+		unary command -> get_type_op -> pop_op -> operation -> push
+		
 	multiply operand:
+	
 		get_number_operands -> binary_command -> dec_number_operands
 
 types:
@@ -29,6 +33,7 @@ types:
 	double (8 byte)
 
 operation:
+
 	default:
 		arithmetic and logic:
 			binary: add, sub, mul, div(exception), and, or
@@ -46,8 +51,9 @@ operation:
 example
 
 // don't need push command in the start of code
-    -> 6 byte
-5   -> byte
+
+   -> 6 byte
+5  -> byte
 8
 9
 mul
