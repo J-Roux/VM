@@ -48,12 +48,11 @@ Operations
 Example
 
 	// don't need push command in the start of code
-
-	   -> 6 byte
-	5  -> byte
-	8
-	9
-	mul
-	sub
+	   	-> 6 byte
+	5	-> byte
+	8 	-> byte
+	9   	-> byte
+	mul	pop 5, 8 push byte 40
+	sub	pop 40, 9 push byte 31
 
 
