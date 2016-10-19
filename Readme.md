@@ -1,10 +1,16 @@
 Commands algorithm
 
-	end_frame command -> get_size -> pop
-	push commnad -> get_size -> push
+	
+	
 	arithmetic and logic:
 		binary command -> get_type_op_1 -> pop_op_1 -> get_type_op_2 -> pop_op_2 -> type_casting -> operation -> push
 		unary command -> get_type_op -> pop_op -> operation -> push
+	branch:
+		jmp command -> get_pos -> change_pc
+		je command -> get_pos -> get_value -> value to bool -> if true -> change_pc
+	mem:
+		push command -> get_size -> push
+		pop command -> get_size -> pop
 	multiply operand:
 		get_number_operands -> binary_command -> dec_number_operands
 
@@ -33,9 +39,13 @@ Operations
 
 	default:
 		arithmetic and logic:
-			binary: add, sub, mul, div(exception), and, or, shl, shr
+			binary: add, sub, mul, div(exception), and, or, shl, shr, eq, neq, lt, leq, gt, geq 
 			unary:  inc, dec, neg, not
-	
+		branch:
+			jmp, je 
+		mem:
+			push, pop
+			
 	arithmetic and logic extended:
 		binary: mod, pow	
 
@@ -59,11 +69,13 @@ Example
 
 	// first byte is vm version
 	// don't need push command in the start of code
-	   	-> 6 byte
+		vm type 1 byte
+		-> 6 byte
 	5 	-> byte
 	8 	-> byte
-	9 -> byte
-	mul	pop 5, 8 push byte 40
+	9 	-> byte
+	mul	pop 5, 8 push byte 40 
 	sub	pop 40, 9 push byte 31
-
+	------------------
+	overfall: 9 byte
 
