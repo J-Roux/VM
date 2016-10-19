@@ -33,25 +33,35 @@ Operations
 
 	default:
 		arithmetic and logic:
-			binary: add, sub, mul, div(exception), and, or
-			unary:  inc, dec, neg, not, shl, shr
+			binary: add, sub, mul, div(exception), and, or, shl, shr
+			unary:  inc, dec, neg, not
 	
 	arithmetic and logic extended:
 		binary: mod, pow	
 
 	multiply operand:
 		arithmetic and logic:
-			m_add, m_mul, m_and, m_or, m_shl, m_shr - need param on stack head
+			m_add, m_mul, m_and, m_or - need param on stack head
 
+Version format
 
+ Bits:
+  0- type extendent
+  1- float
+  2- double
+  3- extendent arith operation
+  4- multiply operand 
+  5- 
+  6-
+  7-
 
 Example
-
+// first byte is vm version
 	// don't need push command in the start of code
 	   	-> 6 byte
-	5	-> byte
+	5 	-> byte
 	8 	-> byte
-	9   	-> byte
+	9 -> byte
 	mul	pop 5, 8 push byte 40
 	sub	pop 40, 9 push byte 31
 
