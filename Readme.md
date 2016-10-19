@@ -1,6 +1,7 @@
-Commands algorithm
+Algorithms
 
-	
+	call func:
+		push return address -> push args -> push func id -> call command -> func body computation -> result on top -> erase return address -> jump
 	
 	arithmetic and logic:
 		binary command -> get_type_op_1 -> pop_op_1 -> get_type_op_2 -> pop_op_2 -> type_casting -> operation -> push
@@ -14,27 +15,47 @@ Commands algorithm
 	multiply operand:
 		get_number_operands -> binary_command -> dec_number_operands
 
+Exceptions
+
+	stack overflow
+	code use wider instruction set
+	division by zero
+
 Types
 
 	default:
-	bool (1 byte)
-	byte unsigned  (1 byte)
-	sbyte signed   (1 byte)
+	bool            (1 byte)
+	byte unsigned   (1 byte)
+	sbyte signed    (1 byte)
 	short signed    (2 byte)
 	ushort unsigned (2 byte)	
 	
 	extended:
-	int signed (4 byte)
-	uint unsigned (4 byte)
-	long signed ( 8 byte)
-	ulong unsigned (8 byte )
+	int signed      (4 byte)
+	uint unsigned   (4 byte)
+	long signed     (8 byte)
+	ulong unsigned  (8 byte)
 
 	float:
-	float (4 byte)
+	float           (4 byte)
 	
 	double:
-	double (8 byte)
+	double          (8 byte)
 
+Func
+
+	call func:
+	|     *******    |
+	| return address |
+	|     arg one    |
+	|     *******    |
+	|      arg n     | <- head
+	
+	stack after func coputation
+	|     *******    |
+	| return address |
+	| func return val| <- head
+	
 Operations
 
 	default:
@@ -61,9 +82,9 @@ Version format
   	2- double
   	3- extendent arith operation
   	4- multiply operand 
-  	5- 
-  	6-
-  	7-
+  	5- string intruction(future)
+  	6- arrays(future)
+  	7- 
 
 Example
 
