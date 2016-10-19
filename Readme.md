@@ -45,18 +45,19 @@ Operations
 
 Version format
 
- Bits:
-  0- type extendent
-  1- float
-  2- double
-  3- extendent arith operation
-  4- multiply operand 
-  5- 
-  6-
-  7-
+	Bits:
+ 	0- type extendent
+  	1- float
+  	2- double
+  	3- extendent arith operation
+  	4- multiply operand 
+  	5- 
+  	6-
+  	7-
 
 Example
-// first byte is vm version
+
+	// first byte is vm version
 	// don't need push command in the start of code
 	   	-> 6 byte
 	5 	-> byte
