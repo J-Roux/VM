@@ -22,7 +22,7 @@ void command_proceed(u8 command, u8* data)
 {
     switch(command)
     {
-        case MUL: break;
+  //     case MUL: break;
     }
 }
 uint64_t execute_step(data_blob data, u8* code)
@@ -39,7 +39,7 @@ uint64_t execute_step(data_blob data, u8* code)
         }
         case COMMAND:
         {
-            command_proceed(data.command);
+    //        command_proceed(data.command);
             pointer++;
             break;
         }

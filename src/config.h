@@ -4,7 +4,7 @@
 
 
 #define DEBUG
-//#define ARDUINO
+
 #define RANGE_CHECK
 
 #define STACK_SIZE 128
@@ -12,7 +12,9 @@
 
 
 typedef uint8_t u8;
-//typedef uint16_t u16;
+
+typedef uint32_t u32;
+typedef uint64_t u64;
 
 #ifdef ARDUINO
 #include <string.h>
