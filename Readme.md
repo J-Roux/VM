@@ -4,7 +4,7 @@ Algorithms
 		push return address -> push args -> push func id -> call command -> func body computation -> result on top -> push pointer to ret address -> erase return address -> jump
 	
 	arithmetic and logic:
-		binary command -> pop_op_1 -> pop_op_2 -> type_casting -> operation -> push
+		binary command -> pop_op_1 -> pop_op_2  -> operation -> push
 		unary command -> pop_op -> operation -> push
 	branch:
 		jmp command -> get_pos -> change_pc
@@ -20,6 +20,7 @@ Exceptions
 	stack overflow
 	code use wider instruction set
 	division by zero
+
 
 Types
 
@@ -60,13 +61,15 @@ Func
 Operations
 
 	default:
-		arithmetic and logic:
+		arithmetic and logic(type depended *_bool, *_byte, *_sbyte, *_short, *_sshort .. etc) :
 			binary: add, sub, mul, div(exception), and, or, shl, shr, eq, neq, lt, leq, gt, geq 
 			unary:  inc, dec, neg, not
 		branch:
 			jmp, je 
 		mem:
 			push, pop
+		type cast:
+			one_to_two, one_to_four, two_to_one, two_to_four, four_to_one, four_to_two
 			
 	arithmetic and logic extended:
 		binary: mod, pow	
@@ -91,13 +94,12 @@ Example
 
 	// first byte is vm version
 	// don't need push command in the start of code
-		vm type 1 byte
-		-> 6 byte
+		-> 3 
 	5 	-> byte
 	8 	-> byte
 	9 	-> byte
-	mul_bb	pop 5, 8 push byte 40 
-	sub_bb	pop 40, 9 push byte 31
+	mul_byte pop 5, 8 push byte 40 
+	sub_byte pop 40, 9 push byte 31
 	------------------
-	overfall: 9 byte
+	overfall: 7 byte
 
