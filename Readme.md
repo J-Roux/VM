@@ -25,7 +25,6 @@ Exceptions
 Types
 
 	default:
-	bool            (1 byte)
 	byte unsigned   (1 byte)
 	sbyte signed    (1 byte)
 	short signed    (2 byte)
