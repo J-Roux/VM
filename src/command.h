@@ -15,7 +15,7 @@
 #define COMMAND_H
 #include "config.h"
 
-enum COMMAND
+typedef enum 
 {
     START,
     END,
@@ -26,7 +26,7 @@ enum COMMAND
     MUL,
     SUB,
     DIV
-};
+} COMMANDS;
 
 
 
