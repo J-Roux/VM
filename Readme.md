@@ -1,11 +1,11 @@
 Algorithms
 
 	call func:
-		push return address -> push args -> push func id -> call command -> func body computation -> result on top -> erase return address -> jump
+		push return address -> push args -> push func id -> call command -> func body computation -> result on top -> push pointer to ret address -> erase return address -> jump
 	
 	arithmetic and logic:
-		binary command -> get_type_op_1 -> pop_op_1 -> get_type_op_2 -> pop_op_2 -> type_casting -> operation -> push
-		unary command -> get_type_op -> pop_op -> operation -> push
+		binary command -> pop_op_1 -> pop_op_2 -> type_casting -> operation -> push
+		unary command -> pop_op -> operation -> push
 	branch:
 		jmp command -> get_pos -> change_pc
 		je command -> get_pos -> get_value -> value to bool -> if true -> change_pc
@@ -53,8 +53,9 @@ Func
 	
 	stack after func coputation
 	|     *******    |
-	| return address |
-	| func return val| <- head
+	| return address |<--
+	| func return val|  |
+	| ptr to ret addr|---   <-head
 	
 Operations
 
@@ -95,8 +96,8 @@ Example
 	5 	-> byte
 	8 	-> byte
 	9 	-> byte
-	mul	pop 5, 8 push byte 40 
-	sub	pop 40, 9 push byte 31
+	mul_bb	pop 5, 8 push byte 40 
+	sub_bb	pop 40, 9 push byte 31
 	------------------
 	overfall: 9 byte
 
