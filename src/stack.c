@@ -44,26 +44,57 @@ RESULT push_byte(uint8_t value)
 RESULT push_short(uint16_t value)
 {
   RESULT result = SUCCESS;
-  if(RANGE_CHECK)
-	  result = range_check(sizeof(uint16_t), STACK_SIZE);
-	data[++pointer] = value;
-	data[++pointer] = value >> 8;
+  result = push_byte(value);
+  result += push_byte(value >> 8);
   return result;
 }
 
 RESULT push_int(uint32_t value)
 {
   RESULT result = SUCCESS;
-  if(RANGE_CHECK)
-	  result =range_check(sizeof(uint32_t), STACK_SIZE);
-	data[++pointer] = value;
-	data[++pointer] = value >> 8;
-	data[++pointer] = value >> 16;
-	data[++pointer] = value >> 24;
+  result = push_short(value);
+  result += push_short(value >> 16);
   return result;
 }
 
 RESULT push_long(uint64_t value)
 {
-	  return push((uint8_t*)&value, sizeof(uint64_t));
+  RESULT result = SUCCESS;
+  result = push_int(value);
+  result += push_int(value >> 32);
+  return result;
 }
+RESULT pop_byte(uint8_t &value)
+{
+  RESULT result = SUCCESS;
+  if(RANGE_CHECK)
+    result = range_check(sizeof(uint8_t), 0);
+  value = data[pointer--];
+  return result;
+}
+
+RESULT pop_short(uint16_t &value)
+{
+  RESULT result = SUCCESS;
+  result = pop_byte(value);
+  result += pop_byte(value << 8);
+  return result;
+}
+
+RESULT pop_int(uint32_t &value)
+{
+  RESULT result = SUCCESS;
+  result = pop_short(value);
+  result += pop_short(value << 16);
+  return result;
+}
+
+RESULT pop_long(uint64_t &value)
+{
+  RESULT result = SUCCESS;
+  result = pop_int(value);
+  result += pop_int(value << 32);
+  return result;
+}
+
+
