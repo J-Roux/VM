@@ -1,7 +1,7 @@
 #include "stack.h"
 
-uint8_t data[STACK_SIZE];
-ptr_size pointer = 0;
+static uint8_t data[STACK_SIZE];
+static ptr_size pointer = -1;
 
 RESULT range_check(ptr_size size, ptr_size range)
 {	
@@ -17,8 +17,8 @@ RESULT push(uint8_t *ptr, ptr_size size)
   RESULT result = SUCCESS;
   if(RANGE_CHECK)
 	  result = range_check(size, STACK_SIZE);
-	MEMCPY(data + pointer, ptr, size);
-	pointer += size;
+  MEMCPY(data + pointer, ptr, size);
+  pointer += size;
   return result;
 }
 
@@ -26,9 +26,9 @@ RESULT pop(uint8_t *ptr, ptr_size size)
 {
   RESULT result = SUCCESS;
   if(RANGE_CHECK)
-	   result = range_check(size, 0);
-	MEMCPY(ptr, data + pointer, size);
-	pointer -= size;
+	   result = range_check( -size, 0);
+  MEMCPY(ptr, data + pointer, size);
+  pointer -= size;
   return result;
 }
 
@@ -37,7 +37,7 @@ RESULT push_byte(uint8_t value)
   RESULT result = SUCCESS;
   if(RANGE_CHECK)
 	  result = range_check(sizeof(uint8_t), STACK_SIZE);
-	data[++pointer] = value;
+  data[++pointer] = value;
   return result;
 }
 
@@ -64,36 +64,41 @@ RESULT push_long(uint64_t value)
   result += push_int(value >> 32);
   return result;
 }
-RESULT pop_byte(uint8_t &value)
+RESULT pop_byte(uint8_t *value)
 {
   RESULT result = SUCCESS;
   if(RANGE_CHECK)
-    result = range_check(sizeof(uint8_t), 0);
-  value = data[pointer--];
+    result = range_check( - sizeof(uint8_t), 0);
+  *value = data[pointer--];
   return result;
 }
 
-RESULT pop_short(uint16_t &value)
+RESULT pop_short(uint16_t *value)
 {
   RESULT result = SUCCESS;
-  result = pop_byte(value);
-  result += pop_byte(value << 8);
+  if(RANGE_CHECK)
+    result = range_check( - sizeof(uint16_t), 0);
+  pointer -= sizeof(uint16_t) - 1;
+  *value = *((uint16_t *)(data + pointer ));
   return result;
 }
 
-RESULT pop_int(uint32_t &value)
+RESULT pop_int(uint32_t *value)
 {
   RESULT result = SUCCESS;
-  result = pop_short(value);
-  result += pop_short(value << 16);
-  return result;
+  if(RANGE_CHECK)
+    result = range_check( - sizeof(uint32_t), 0);
+  pointer -= sizeof(uint32_t);
+  *value = *((uint32_t *)(data + pointer ));  return result;
 }
 
-RESULT pop_long(uint64_t &value)
+RESULT pop_long(uint64_t *value)
 {
   RESULT result = SUCCESS;
-  result = pop_int(value);
-  result += pop_int(value << 32);
+  if(RANGE_CHECK)
+    result = range_check( - sizeof(uint64_t), 0);
+  pointer -= sizeof(uint64_t);
+  *value = *((uint64_t *)(data + pointer ));  
   return result;
 }
 

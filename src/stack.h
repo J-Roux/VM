@@ -30,10 +30,12 @@ RESULT push_short(uint16_t value);
 RESULT push_int(uint32_t value);
 RESULT push_long(uint64_t value);
 
-RESULT pop_byte(uint8_t &value);
-RESULT pop_short(uint16_t &value);
-RESULT pop_int(uint32_t &value);
-RESULT pop_long(uint64_t &value);
+RESULT pop_byte(uint8_t *value);
+RESULT pop_short(uint16_t *value);
+RESULT pop_int(uint32_t *value);
+RESULT pop_long(uint64_t *value);
+
+static ptr_size pointer;
 
 #ifdef __cplusplus
 }

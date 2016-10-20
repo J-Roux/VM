@@ -4,7 +4,7 @@
 
 
 #define DEBUG
-
+#define UNITTESTS
 #define RANGE_CHECK
 
 #define STACK_SIZE 128
