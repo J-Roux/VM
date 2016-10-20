@@ -13,19 +13,19 @@ uint16_t arg;
 
 typedef struct  
 {
-    u8 * data;
+    uint8_t * data;
     uint16_t arg;
     uint8_t command;
 } data_blob;
 
-void command_proceed(u8 command, u8* data)
+void command_proceed(uint8_t command, uint8_t* data)
 {
     switch(command)
     {
   //     case MUL: break;
     }
 }
-uint64_t execute_step(data_blob data, u8* code)
+uint64_t execute_step(data_blob data, uint8_t* code)
 {
     uint64_t pointer = 0;
     switch(state)

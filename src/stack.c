@@ -1,56 +1,69 @@
 #include "stack.h"
 
-u8 data[STACK_SIZE];
+uint8_t data[STACK_SIZE];
 ptr_size pointer = 0;
 
-void range_check(ptr_size size, ptr_size range)
+RESULT range_check(ptr_size size, ptr_size range)
 {	
-	if(RANGE_CHECK)
-	{
 		if( pointer  > range - size)
-			THROW(STACK_OVERFLOW);
-	}
+			return STACK_OVERFLOW;
+    else
+      return SUCCESS;
 }
 
 
-void push(u8 *ptr, ptr_size size)
+RESULT push(uint8_t *ptr, ptr_size size)
 {
-
-	range_check(size, STACK_SIZE);
+  RESULT result = SUCCESS;
+  if(RANGE_CHECK)
+	  result = range_check(size, STACK_SIZE);
 	MEMCPY(data + pointer, ptr, size);
 	pointer += size;
+  return result;
 }
 
-void pop(u8 *ptr, ptr_size size)
+RESULT pop(uint8_t *ptr, ptr_size size)
 {
-	range_check(size, 0);
+  RESULT result = SUCCESS;
+  if(RANGE_CHECK)
+	   result = range_check(size, 0);
 	MEMCPY(ptr, data + pointer, size);
 	pointer -= size;
+  return result;
 }
 
-void push_byte(u8 value)
+RESULT push_byte(uint8_t value)
 {
-	range_check(sizeof(u8), STACK_SIZE);
+  RESULT result = SUCCESS;
+  if(RANGE_CHECK)
+	  result = range_check(sizeof(uint8_t), STACK_SIZE);
 	data[++pointer] = value;
+  return result;
 }
 
-void push_short(uint16_t value)
+RESULT push_short(uint16_t value)
 {
-	range_check(sizeof(uint16_t), STACK_SIZE);
+  RESULT result = SUCCESS;
+  if(RANGE_CHECK)
+	  result = range_check(sizeof(uint16_t), STACK_SIZE);
 	data[++pointer] = value;
 	data[++pointer] = value >> 8;
+  return result;
 }
 
-void push_int(u32 value)
+RESULT push_int(uint32_t value)
 {
-	range_check(sizeof(u32), STACK_SIZE);
+  RESULT result = SUCCESS;
+  if(RANGE_CHECK)
+	  result =range_check(sizeof(uint32_t), STACK_SIZE);
 	data[++pointer] = value;
 	data[++pointer] = value >> 8;
 	data[++pointer] = value >> 16;
 	data[++pointer] = value >> 24;
+  return result;
 }
 
-void push_long(u64 value)
+RESULT push_long(uint64_t value)
 {
-	push((u8*)&value, sizeof(u64));
+	  return push((uint8_t*)&value, sizeof(uint64_t));
 }
