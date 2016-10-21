@@ -12,49 +12,51 @@ typedef enum
 STATE state = ARG;
 uint16_t arg;
 
-#define BINARY_OPERATION(TYPE, SIZE, OP )  TYPE op1, op2; \
+
+
+#define TYPE_BINARY_OPERATION (TYPE, SIZE, OP )  TYPE op1, op2; \
 pop_##SIZE(&op1); \
 pop_##SIZE(&op2); \
 push_##SIZE(op1 OP op2)
 
-#define OP_TYPE(OPERATION, OP)  case OPERATION##_BYTE: \
+#define BINARY_OPERATION(OPERATION, OP)  case OPERATION##_BYTE: \
   { \
-    BINARY_OPERATION(uint8_t, byte, OP);  \
+    TYPE_BINARY_OPERATION(uint8_t, byte, OP);  \
     break; \
   } \
   case OPERATION##_SBYTE:\
   {\
-    BINARY_OPERATION(int8_t, byte, OP);\
+    TYPE_OPERATION(int8_t, byte, OP);\
     break;\
   }\
   case OPERATION##_SHORT:\
   {\
-    BINARY_OPERATION(uint16_t, short, OP);\
+    TYPE_OPERATION(uint16_t, short, OP);\
     break;\
   }\
   case OPERATION##_SSHORT:\
   {\
-    BINARY_OPERATION(int16_t, short, OP);\
+    TYPE_OPERATION(int16_t, short, OP);\
     break;\
   }\
   case OPERATION##_INT:\
   {\
-    BINARY_OPERATION(uint32_t, int, OP);\
+    TYPE_OPERATION(uint32_t, int, OP);\
     break;\
   }\
   case OPERATION##_SINT:\
   {\
-    BINARY_OPERATION(int32_t, int, OP);\
+    TYPE_OPERATION(int32_t, int, OP);\
     break;\
   }\
   case OPERATION##_LONG:\
   {\
-    BINARY_OPERATION(uint64_t, long, OP);\
+    TYPE_OPERATION(uint64_t, long, OP);\
     break;\
   }\
   case OPERATION##_SLONG:\
   {\
-    BINARY_OPERATION(int64_t, long, OP);\
+    TYPE_OPERATION(int64_t, long, OP);\
     break;\
   }
 
@@ -64,14 +66,14 @@ RESULT execute_intruction(uint8_t *code, uint16_t *program_counter, uint16_t pro
 	COMMANDS command = code[*program_counter];
 	switch (command)
 	{
-    OP_TYPE(ADD, +);
-    OP_TYPE(SUB, -);
-    OP_TYPE(MUL, *);
-    OP_TYPE(DIV, /);
-    OP_TYPE(LT, < );
-    OP_TYPE(LEQ, <= );
-    OP_TYPE(GT, > );
-    OP_TYPE(GEQ, >= );
+   	BINARY_OPERATION(ADD, +);
+    	BINARY_OPERATION(SUB, -);
+    	BINARY_OPERATION(MUL, *);
+    	BINARY_OPERATION(DIV, /);
+    	BINARY_OPERATION(LT, < );
+    	BINARY_OPERATION(LEQ, <= );
+    	BINARY_OPERATION(GT, > );
+    	BINARY_OPERATION(GEQ, >= );
 	}
 	
 	return result;
