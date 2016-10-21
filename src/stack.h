@@ -35,7 +35,8 @@ RESULT pop_short(uint16_t *value);
 RESULT pop_int(uint32_t *value);
 RESULT pop_long(uint64_t *value);
 
-static ptr_size pointer;
+ptr_size get_ponter();
+
 
 #ifdef __cplusplus
 }
