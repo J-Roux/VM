@@ -6,7 +6,7 @@
 #ifdef UNITTESTS
 #ifndef ARDUINO
 #include <assert.h>
-
+#include <stdlib.h>
 void setup()
 {
   uint8_t out_byte = 0;
@@ -69,7 +69,7 @@ void setup()
   assert(pointer == -1);
   assert(out_long == in_long);  
   
-  uint8_t * ptr; 
+  uint8_t * ptr = (uint8_t *)calloc(STACK_SIZE, sizeof(uint8_t));
   int16_t stack_size = STACK_SIZE;
   assert(push(ptr, stack_size) == SUCCESS);
 

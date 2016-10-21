@@ -19,7 +19,7 @@ file(GLOB SOURCES "src/*")
 # to the source code
 configure_file (
   "${PROJECT_SOURCE_DIR}/Config.h.in"
-  "${PROJECT_SOURCE_DIR}/src/CmakeConfig.h"
+  "${PROJECT_SOURCE_DIR}/src/CMakeConfig.h"
   )
 
 add_executable(YASM ${SOURCES})

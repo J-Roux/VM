@@ -13,7 +13,8 @@ typedef POINTER_SIZE ptr_size;
 typedef enum 
 {
   SUCCESS, 
-  STACK_OVERFLOW
+  STACK_OVERFLOW,
+  CODE_END
 } RESULT;
 
 
@@ -35,7 +36,7 @@ RESULT pop_short(uint16_t *value);
 RESULT pop_int(uint32_t *value);
 RESULT pop_long(uint64_t *value);
 
-ptr_size get_ponter();
+ptr_size get_pointer();
 
 
 #ifdef __cplusplus
