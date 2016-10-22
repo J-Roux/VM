@@ -111,12 +111,12 @@ SIGNED_UNARY_OPERATION(OPERATION, OP)
 
 typedef RESULT(*func)(uint8_t *ptr, ptr_size size);
 
-RESULT test(  uint8_t *code, uint16_t *program_counter,  func f)
+RESULT push_by_arg(  uint8_t *code, uint16_t *program_counter,  func mem_instruction)
 {
        *program_counter++;
        uint8_t arg = code[*program_counter];
        *program_counter += arg;
-       return f(code, arg);
+       return mem_instruction(code, arg);
 }
 RESULT execute_intruction(uint8_t *code, uint16_t *program_counter)
 {
@@ -138,22 +138,42 @@ RESULT execute_intruction(uint8_t *code, uint16_t *program_counter)
             COMPARE_BINARY_OPERATION(GT, >);
             COMPARE_BINARY_OPERATION(LEQ, <=);
             COMPARE_BINARY_OPERATION(GEQ, >=);
- 	          UNARY_OPERATION(INC, ++);
+ 	    UNARY_OPERATION(INC, ++);
             UNARY_OPERATION(DEC, --);
             SIGNED_UNARY_OPERATION(NEG, -);
             UNSIGNED_UNARY_OPERATION(NOT, ~);
             case PUSH:
             {
-                test(code, program_counter, &push);
+                result = push_by_arg(code, program_counter, &push);
                 break;
             }
             case POP:
             {
-                test(code, program_counter, &pop);
+                result = push_by_arg(code, program_counter, &pop);
                 break;
             }
             case PUSH_BYTE:
             {
+                *program_counter++;
+                result = push(code + *program_counter, sizeof(uint8_t));
+                break;
+            }
+            case PUSH_SHORT:
+            {
+                *program_counter++;
+                result = push(code + *program_counter, sizeof(uint16_t));
+                break;
+            }
+            case PUSH_INT:
+            {
+                *program_counter++;
+                result = push(code + *program_counter, sizeof(uint32_t));
+                break;
+            }
+            case PUSH_LONG:
+            {
+                *program_counter++;
+                result = push(code + *program_counter, sizeof(uint64_t));
                 break;
             }
  	}
