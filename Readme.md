@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/J-Roux/YASM.svg?branch=master)](https://travis-ci.org/J-Roux/YASM)
+
 Algorithms
 
 	call func:
