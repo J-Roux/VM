@@ -4,14 +4,24 @@ static uint8_t data[STACK_SIZE];
 static ptr_size pointer = -1;
 
 ptr_size get_pointer() { return pointer;}
-
+uint8_t* get_head()
+{
+    if(pointer >= 0)
+    {
+        return data + pointer;
+    }
+    else
+    {
+        return 0;
+    }
+}
 
 RESULT range_check(ptr_size size, ptr_size range)
 {	
-    if( pointer  > range - size - 1)
-      return STACK_OVERFLOW;
-    else
-      return SUCCESS;
+    RESULT result = SUCCESS;
+    if( pointer + size > range)
+        result = STACK_OVERFLOW;
+    return result;
 }
 
 

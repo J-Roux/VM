@@ -1,6 +1,5 @@
 
-#include "stack.h"
-
+#include "vm.h"
 
 
 
@@ -76,14 +75,31 @@ int main()
   assert(pointer == -1);
   assert(out_long == in_long);
   
+
+
+
+
+  uint16_t pc = 0;
+  uint8_t *res;
+  uint8_t code_mul[5] = {PUSH, 2, 4, 5, MUL_BYTE};
+  assert(execute_intruction(code_mul, &pc) == SUCCESS);
+  assert(execute_intruction(code_mul, &pc) == SUCCESS);
+  res = get_head();
+  assert(*res == 4 * 5);
+
+  pc = 0;
+  uint8_t code_add[5] = {PUSH, 2, 4, 5, ADD_BYTE};
+  //assert(execute_intruction(code_add, &pc) == SUCCESS);
+  //assert(execute_intruction(code_add, &pc) == SUCCESS);
+  res = get_head();
+ //assert(*res == 4 + 5);
+
+
   uint8_t * ptr = (uint8_t *)calloc(STACK_SIZE, sizeof(uint8_t));
   int16_t stack_size = STACK_SIZE;
   assert(push(ptr, stack_size) == SUCCESS);
-
   stack_size++;
   assert(push(ptr, stack_size) == STACK_OVERFLOW);
-  
-
   return 0;
 }
 #else

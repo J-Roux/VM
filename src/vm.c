@@ -1,42 +1,35 @@
 #include "vm.h"
 
-typedef enum
-{
-	INSTRUCTION,
-	ARG,
-	EXEC,
-	DATA,
-	TERMINATE
-}STATE;
 
-STATE state = ARG;
 uint16_t arg;
+
+
 
 RESULT pop_op_byte(uint8_t* op1, uint8_t* op2)
 {
   RESULT result = pop_byte(op1);
-  result |= pop_byte(op1); 
+  result |= pop_byte(op2);
   return result;
 }
 
 RESULT pop_op_short(uint16_t* op1, uint16_t* op2)
 {
   RESULT result = pop_short(op1);
-  result |= pop_short(op1); 
+  result |= pop_short(op2);
   return result;
 }
 
 RESULT pop_op_int(uint32_t* op1, uint32_t* op2)
 {
   RESULT result = pop_int(op1);
-  result |= pop_int(op1); 
+  result |= pop_int(op2);
   return result;
 }
 
 RESULT pop_op_long(uint64_t* op1, uint64_t* op2)
 {
   RESULT result = pop_long(op1);
-  result |= pop_long(op1); 
+  result |= pop_long(op2);
   return result;
 }
 
@@ -113,10 +106,11 @@ typedef RESULT(*func)(uint8_t *ptr, ptr_size size);
 
 RESULT push_by_arg(  uint8_t *code, uint16_t *program_counter,  func mem_instruction)
 {
-       *program_counter++;
+       (*program_counter)++;
+       uint8_t* ptr_data = code + *(program_counter) + 1;
        uint8_t arg = code[*program_counter];
-       *program_counter += arg;
-       return mem_instruction(code, arg);
+       (*program_counter) += arg + 1;
+       return mem_instruction(ptr_data, arg);
 }
 RESULT execute_intruction(uint8_t *code, uint16_t *program_counter)
 {
@@ -154,20 +148,20 @@ RESULT execute_intruction(uint8_t *code, uint16_t *program_counter)
             }
             case PUSH_BYTE:
             {
-                *program_counter++;
-                result = push(code + *program_counter, sizeof(uint8_t));
+                (*program_counter)++;
+                result = push(code + (*program_counter), sizeof(uint8_t));
                 break;
             }
             case PUSH_SHORT:
             {
                 *program_counter++;
-                result = push(code + *program_counter, sizeof(uint16_t));
+                result = push(code + (*program_counter), sizeof(uint16_t));
                 break;
             }
             case PUSH_INT:
             {
                 *program_counter++;
-                result = push(code + *program_counter, sizeof(uint32_t));
+                result = push(code + (*program_counter), sizeof(uint32_t));
                 break;
             }
             case PUSH_LONG:
@@ -184,15 +178,7 @@ RESULT execute_intruction(uint8_t *code, uint16_t *program_counter)
 RESULT execute_step(uint8_t *code, uint16_t *program_counter)
 {
 	RESULT result = SUCCESS;
-	switch (state)
-	{
-	case INSTRUCTION:
-	{
-		result = execute_intruction(code, program_counter);
-		break;
-	
-	}
-	}
-        *program_counter++;
+    result = execute_intruction(code, program_counter);
+    (*program_counter)++;
 	return result;
 }
