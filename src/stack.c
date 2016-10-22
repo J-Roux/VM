@@ -44,10 +44,10 @@ RESULT push_long(uint64_t value) {  return push((uint8_t *)&value, sizeof(uint64
 
 
 
-RESULT pop_byte(uint8_t *value) { return pop((uint8_t *)&value, sizeof(uint8_t)); }
-RESULT pop_short(uint16_t *value)  { return pop((uint8_t *)&value, sizeof(uint16_t)); }
-RESULT pop_int(uint32_t *value)  {  return pop((uint8_t *)&value, sizeof(uint32_t));}
-RESULT pop_long(uint64_t *value) {  return pop((uint8_t *)&value, sizeof(uint64_t)); }
+RESULT pop_byte(uint8_t *value) { return pop((uint8_t *)value, sizeof(uint8_t)); }
+RESULT pop_short(uint16_t *value)  { return pop((uint8_t *)value, sizeof(uint16_t)); }
+RESULT pop_int(uint32_t *value)  {  return pop((uint8_t *)value, sizeof(uint32_t));}
+RESULT pop_long(uint64_t *value) {  return pop((uint8_t *)value, sizeof(uint64_t)); }
 
 
 

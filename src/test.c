@@ -7,10 +7,17 @@
 #ifndef ARDUINO
 #include <assert.h>
 #include <stdlib.h>
+
+
+
+
 int main()
 {
+
+    
   uint8_t out_byte = 0;
-  uint8_t in_byte = 1;  
+  uint8_t in_byte = 1;
+
   assert(push_byte(in_byte) == SUCCESS);
   assert(pop_byte(&out_byte) == SUCCESS);
   ptr_size pointer = get_pointer();
@@ -67,7 +74,7 @@ int main()
   assert(pop((uint8_t*)&out_long, sizeof(out_long)) == SUCCESS);
   pointer = get_pointer();
   assert(pointer == -1);
-  assert(out_long == in_long);  
+  assert(out_long == in_long);
   
   uint8_t * ptr = (uint8_t *)calloc(STACK_SIZE, sizeof(uint8_t));
   int16_t stack_size = STACK_SIZE;
