@@ -12,13 +12,39 @@ typedef enum
 STATE state = ARG;
 uint16_t arg;
 
+RESULT pop_op_byte(uint8_t* op1, uint8_t* op2)
+{
+  RESULT result = pop_byte(op1);
+  result |= pop_byte(op1); 
+  return result;
+}
+
+RESULT pop_op_short(uint16_t* op1, uint16_t* op2)
+{
+  RESULT result = pop_short(op1);
+  result |= pop_short(op1); 
+  return result;
+}
+
+RESULT pop_op_int(uint32_t* op1, uint32_t* op2)
+{
+  RESULT result = pop_int(op1);
+  result |= pop_int(op1); 
+  return result;
+}
+
+RESULT pop_op_long(uint64_t* op1, uint64_t* op2)
+{
+  RESULT result = pop_long(op1);
+  result |= pop_long(op1); 
+  return result;
+}
 
 #define TYPE_COMPARE_BINARY_OPERATION(OPERATION, TYPE, SIZE, OP ) case OPERATION: \
 {\  
 TYPE op1, op2; \
-pop_##SIZE(&op1); \
-pop_##SIZE(&op2); \
-push_byte(op1 OP op2); \
+result = pop_op_##SIZE(&op1, &op2);\
+result |= push_byte(op1 OP op2); \
 break;\
 }
 
@@ -26,9 +52,8 @@ break;\
 #define TYPE_BINARY_OPERATION(OPERATION, TYPE, SIZE, OP ) case OPERATION: \
 {\  
 TYPE op1, op2; \
-pop_##SIZE(&op1); \
-pop_##SIZE(&op2); \
-push_##SIZE(op1 OP op2); \
+result = pop_op_##SIZE(&op1, &op2);\
+result |= push_##SIZE(op1 OP op2); \
 break;\
 }
 
@@ -65,8 +90,8 @@ SIGNED_COMPARE_BINARY_OPERATION(OPERATION, OP)
 #define TYPE_UNARY_OPERATION(OPERATION, TYPE, SIZE, OP ) case OPERATION: \
 {\  
 TYPE op1; \
-pop_##SIZE(&op1); \
-push_##SIZE(OP op1); \
+result = pop_##SIZE(&op1); \
+result |= push_##SIZE(OP op1); \
 break;\
 }
 
@@ -83,8 +108,17 @@ TYPE_UNARY_OPERATION(OPERATION##_SLONG, int64_t, long, OP)
 #define UNARY_OPERATION(OPERATION, OP) \
 UNSIGNED_UNARY_OPERATION(OPERATION, OP)\
 SIGNED_UNARY_OPERATION(OPERATION, OP)
-        
-RESULT execute_intruction(uint8_t *code, uint16_t *program_counter, uint16_t programm_size)
+
+typedef RESULT(*func)(uint8_t *ptr, ptr_size size);
+
+RESULT test(  uint8_t *code, uint16_t *program_counter,  func f)
+{
+       *program_counter++;
+       uint8_t arg = code[*program_counter];
+       *program_counter += arg;
+       return f(code, arg);
+}
+RESULT execute_intruction(uint8_t *code, uint16_t *program_counter)
 {
 	RESULT result = SUCCESS;
 	COMMANDS command = code[*program_counter];
@@ -108,40 +142,37 @@ RESULT execute_intruction(uint8_t *code, uint16_t *program_counter, uint16_t pro
             UNARY_OPERATION(DEC, --);
             SIGNED_UNARY_OPERATION(NEG, -);
             UNSIGNED_UNARY_OPERATION(NOT, ~);
+            case PUSH:
+            {
+                test(code, program_counter, &push);
+                break;
+            }
+            case POP:
+            {
+                test(code, program_counter, &pop);
+                break;
+            }
+            case PUSH_BYTE:
+            {
+                break;
+            }
  	}
 	
 	return result;
 }
 
-RESULT execute_step(uint8_t *code, uint16_t *program_counter, uint16_t programm_size)
+RESULT execute_step(uint8_t *code, uint16_t *program_counter)
 {
 	RESULT result = SUCCESS;
 	switch (state)
 	{
 	case INSTRUCTION:
 	{
-		result = execute_intruction(code, program_counter, programm_size);
+		result = execute_intruction(code, program_counter);
 		break;
-	}
-	case ARG:
-	{
-		if (*program_counter + 2 < programm_size)
-		{
-			arg = *(uint16_t*)code;
-			*program_counter += 2;
-			result = SUCCESS;
-		}
-		else
-			result = CODE_END;
-		break;
-	}
 	
-
-	case DATA:
-		break;
-
-	case TERMINATE:
-		break;
 	}
+	}
+        *program_counter++;
 	return result;
 }

@@ -13,8 +13,8 @@ typedef POINTER_SIZE ptr_size;
 typedef enum 
 {
   SUCCESS, 
-  STACK_OVERFLOW,
-  CODE_END
+  STACK_OVERFLOW = 2,
+  CODE_END = 4
 } RESULT;
 
 
