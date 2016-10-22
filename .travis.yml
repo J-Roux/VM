@@ -9,7 +9,7 @@ before_install:
           - sudo ln -s /usr/local/share/arduino/arduino /usr/local/bin/arduino
 
 script:
-          - arduino --verify --board aduino:avr:uno yasm.ino
+          - arduino --verify --board aduino:avr:uno YASM/src/yasm.ino
 notifications:
           email:
               on_success: change
