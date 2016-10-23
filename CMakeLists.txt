@@ -25,20 +25,30 @@ configure_file (
 
 if (test)
   # This adds another subdirectory, which has 'project(gtest)'.
-  add_subdirectory(lib/gtest-1.6.0)
+  include(ExternalProject)
+
+  set(EXTERNAL_INSTALL_LOCATION ${CMAKE_BINARY_DIR}/external)
+
+  ExternalProject_Add(googletest
+     GIT_REPOSITORY https://github.com/google/googletest
+     CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${EXTERNAL_INSTALL_LOCATION}
+  )
+
+  include_directories(${EXTERNAL_INSTALL_LOCATION}/include)
+  link_directories(${EXTERNAL_INSTALL_LOCATION}/lib)
 
   enable_testing()
 
   # Include the gtest library. gtest_SOURCE_DIR is available due to
   # 'project(gtest)' above.
-  include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
+  
 
   ##############
   # Unit Tests
   ##############
 
   add_executable(runUnitTests test.cpp ${STACK} ${VM}  ${HEADERS})
-  target_link_libraries(runUnitTests gtest gtest_main)
+  target_link_libraries(runUnitTests gtest gtest_main pthread)
   add_test(NAME stack-test COMMAND runUnitTests)
   # You can also omit NAME and COMMAND. The second argument could be some other
   # test executable.
@@ -46,5 +56,6 @@ if (test)
 endif()
 
 add_executable(YASM ${MAIN} ${VM} ${HEADERS} ${STACK})
-#target_link_libraries(YASM YASM_lib)
+
+
 
