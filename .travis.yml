@@ -15,8 +15,10 @@ install:
 script:
          - mkdir build
          - cd build
-         - cmake ../
+         - cmake -Dtest=ON ../
          - make
-         - ./YASM   
+         - make test
+         - ./YASM
+         - ./runUnitTests   
          - cd ..  
          - platformio ci --board=uno
