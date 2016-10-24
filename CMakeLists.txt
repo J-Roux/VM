@@ -43,6 +43,7 @@ if (test)
   	link_directories(${EXTERNAL_INSTALL_LOCATION}/lib ${CMAKE_SOURCE_DIR}/lib)
   else(UNIX)
 	link_directories(${EXTERNAL_INSTALL_LOCATION}/lib)
+	set(pthreads "")
   endif()  
   enable_testing()
 
