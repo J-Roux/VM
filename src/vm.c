@@ -33,18 +33,14 @@ RESULT pop_op_long(uint64_t* op1, uint64_t* op2)
   return result;
 }
 
-#define TYPE_COMPARE_BINARY_OPERATION(OPERATION, TYPE, SIZE, OP ) case OPERATION: \
-{\  
-TYPE op1, op2; \
+#define TYPE_COMPARE_BINARY_OPERATION(OPERATION, TYPE, SIZE, OP ) case OPERATION: {  TYPE op1, op2; \
 result = pop_op_##SIZE(&op1, &op2);\
 result |= push_byte(op1 OP op2); \
 break;\
 }
 
 
-#define TYPE_BINARY_OPERATION(OPERATION, TYPE, SIZE, OP ) case OPERATION: \
-{\  
-TYPE op1, op2; \
+#define TYPE_BINARY_OPERATION(OPERATION, TYPE, SIZE, OP ) case OPERATION: {  TYPE op1, op2; \
 result = pop_op_##SIZE(&op1, &op2);\
 result |= push_##SIZE(op1 OP op2); \
 break;\
@@ -80,9 +76,7 @@ SIGNED_BINARY_OPERATION(OPERATION, OP)
 UNSIGNED_COMPARE_BINARY_OPERATION(OPERATION, OP) \
 SIGNED_COMPARE_BINARY_OPERATION(OPERATION, OP) 
 
-#define TYPE_UNARY_OPERATION(OPERATION, TYPE, SIZE, OP ) case OPERATION: \
-{\  
-TYPE op1; \
+#define TYPE_UNARY_OPERATION(OPERATION, TYPE, SIZE, OP ) case OPERATION: {TYPE op1; \
 result = pop_##SIZE(&op1); \
 result |= push_##SIZE(OP op1); \
 break;\
