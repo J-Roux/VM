@@ -5,9 +5,12 @@ project(YASM)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 option(test "Build all tests." OFF)
-
+if(UNIX)
 set(CMAKE_CXX_FLAGS "-g -Wall")
-
+else()
+set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} /W3 /MTd")
+SET(CMAKE_CXX_FLAGS_DEBUG "/MTd")
+endif()
 
 
 file(GLOB STACK "src/stack.c")
@@ -35,8 +38,12 @@ if (test)
   )
 
   include_directories(${EXTERNAL_INSTALL_LOCATION}/include)
-  link_directories(${EXTERNAL_INSTALL_LOCATION}/lib)
-
+   
+  if(WIN32) 
+  	link_directories(${EXTERNAL_INSTALL_LOCATION}/lib ${CMAKE_SOURCE_DIR}/lib)
+  else()
+	link_directories(${EXTERNAL_INSTALL_LOCATION}/lib)
+  endif()  
   enable_testing()
 
   # Include the gtest library. gtest_SOURCE_DIR is available due to
@@ -48,7 +55,14 @@ if (test)
   ##############
 
   add_executable(runUnitTests test.cpp ${STACK} ${VM}  ${HEADERS})
-  target_link_libraries(runUnitTests gtest gtest_main pthread)
+ 
+  if(WIN32) 
+	
+	get_directory_property(OUT_VAR LINK_DIRECTORIES)
+	message(STATUS "DIR: ${OUT_VAR}")
+  endif()
+  target_link_libraries(runUnitTests gtest gtest_main pthreads)
+
   add_test(NAME stack-test COMMAND runUnitTests)
   # You can also omit NAME and COMMAND. The second argument could be some other
   # test executable.
