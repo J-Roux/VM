@@ -56,7 +56,7 @@ if (test)
 
   add_executable(runUnitTests test.cpp ${STACK} ${VM}  ${HEADERS})
  
-  target_link_libraries(runUnitTests gtest gtest_main pthread)
+  target_link_libraries(runUnitTests gtest gtest_main pthreads)
 
   add_test(NAME stack-test COMMAND runUnitTests)
   # You can also omit NAME and COMMAND. The second argument could be some other
