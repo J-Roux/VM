@@ -10,7 +10,7 @@
 
 # Libraries
 *.lib
-!pthreads.lib
+!pthread.lib
 *.a
 *.la
 *.lo
