@@ -6,7 +6,7 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 option(test "Build all tests." OFF)
 if(UNIX)
-set(CMAKE_CXX_FLAGS "-g -Wall -lpthreads")
+set(CMAKE_CXX_FLAGS "-g -Wall -pthread")
 else(WIN32)
 set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} /W3 /MTd")
 SET(CMAKE_CXX_FLAGS_DEBUG "/MTd")
