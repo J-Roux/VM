@@ -56,11 +56,6 @@ if (test)
 
   add_executable(runUnitTests test.cpp ${STACK} ${VM}  ${HEADERS})
  
-  if(WIN32) 
-	
-	get_directory_property(OUT_VAR LINK_DIRECTORIES)
-	message(STATUS "DIR: ${OUT_VAR}")
-  endif()
   target_link_libraries(runUnitTests gtest gtest_main pthreads)
 
   add_test(NAME stack-test COMMAND runUnitTests)
