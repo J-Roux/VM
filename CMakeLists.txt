@@ -6,7 +6,7 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 option(test "Build all tests." OFF)
 if(UNIX)
-set(CMAKE_CXX_FLAGS "-g -Wall -pthread")
+set(CMAKE_CXX_FLAGS "-g -Wall ")
 else(WIN32)
 set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} /W3 /MTd")
 SET(CMAKE_CXX_FLAGS_DEBUG "/MTd")
@@ -43,7 +43,6 @@ if (test)
   	link_directories(${EXTERNAL_INSTALL_LOCATION}/lib ${CMAKE_SOURCE_DIR}/lib)
   else(UNIX)
 	link_directories(${EXTERNAL_INSTALL_LOCATION}/lib)
-	set(pthreads "")
   endif()  
   enable_testing()
 
@@ -57,7 +56,7 @@ if (test)
 
   add_executable(runUnitTests test.cpp ${STACK} ${VM}  ${HEADERS})
  
-  target_link_libraries(runUnitTests gtest gtest_main pthreads)
+  target_link_libraries(runUnitTests gtest gtest_main pthread)
 
   add_test(NAME stack-test COMMAND runUnitTests)
   # You can also omit NAME and COMMAND. The second argument could be some other
