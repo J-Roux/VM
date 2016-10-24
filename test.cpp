@@ -8,12 +8,10 @@
 TEST(StackTest, Push_byte) {
     uint8_t out_byte = 0;
     uint8_t in_byte = 1;
-
-
     EXPECT_EQ(push_byte(in_byte), SUCCESS);
     EXPECT_EQ(pop_byte(&out_byte), SUCCESS);
     ptr_size pointer = get_pointer();
-    EXPECT_EQ(pointer, -1);
+    EXPECT_EQ(pointer, STACK_START_ADDRESS);
     EXPECT_EQ(out_byte, in_byte);
 }
 
@@ -26,7 +24,7 @@ TEST(StackTest, Push_short) {
     EXPECT_EQ(push_short(in_short), SUCCESS);
     EXPECT_EQ(pop_short(&out_short), SUCCESS);
     ptr_size pointer = get_pointer();
-    EXPECT_EQ(pointer, -1);
+    EXPECT_EQ(pointer, STACK_START_ADDRESS);
     EXPECT_EQ(out_short, in_short);
 }
 
@@ -37,7 +35,7 @@ TEST(StackTest, Push_int) {
     EXPECT_EQ(push_int(in_int), SUCCESS);
     EXPECT_EQ(pop_int(&out_int), SUCCESS);
     ptr_size pointer = get_pointer();
-    EXPECT_EQ(pointer, -1);
+    EXPECT_EQ(pointer, STACK_START_ADDRESS);
     EXPECT_EQ(out_int, in_int);
 }
 
@@ -48,36 +46,70 @@ TEST(StackTest, Push_long) {
     EXPECT_EQ(push_long(in_long), SUCCESS);
     EXPECT_EQ(pop_long(&out_long), SUCCESS);
     ptr_size pointer = get_pointer();
-    EXPECT_EQ(pointer, -1);
+    EXPECT_EQ(pointer, STACK_START_ADDRESS);
     EXPECT_EQ(out_long, in_long);
 }
 
 
-TEST(VMTest, Mul_byte_intruction) {
-    uint16_t pc = 0;
-    uint8_t *res;
-    uint8_t code_mul[5] = {PUSH, 2, 4, 5, MUL_BYTE};
-    EXPECT_EQ(execute_intruction(code_mul, &pc), SUCCESS);
-    EXPECT_EQ(execute_intruction(code_mul, &pc), SUCCESS);
-    res = get_head();
-    EXPECT_EQ(*res, 4 * 5);
-}
-
-
-TEST(VMTest, Add_byte_intruction) {
+TEST(VMTest, Add_ubyte_intruction) {
     uint16_t pc = 0;
     uint8_t *res;
     uint8_t code_add[5] = {PUSH, 2, 4, 5, ADD_BYTE};
     EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
     EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
+    ptr_size pointer = get_pointer();
+    EXPECT_EQ(pointer, STACK_START_ADDRESS + 1);
     res = get_head();
     EXPECT_EQ(*res, 4 + 5);
 }
 
 
 
+TEST(VMTest, Mul_ubyte_intruction) {
+    uint16_t pc = 0;
+    uint8_t *res;
+    uint8_t code_mul[5] = {PUSH, 2, 4, 5, MUL_BYTE};
+    EXPECT_EQ(execute_intruction(code_mul, &pc), SUCCESS);
+    EXPECT_EQ(execute_intruction(code_mul, &pc), SUCCESS);
+    ptr_size pointer = get_pointer();
+    EXPECT_EQ(pointer, STACK_START_ADDRESS + 2);
+    res = get_head();
+    EXPECT_EQ(*res, 4 * 5);
+}
 
 
 
 
+
+TEST(VMTest, Sub_ubyte_intruction) {
+    uint16_t pc = 0;
+    uint8_t *res;
+    uint8_t code_add[5] = {PUSH, 2, 4, 5, SUB_BYTE};
+    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
+    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
+    res = get_head();
+    EXPECT_EQ(*res, 5 - 4);
+}
+
+
+
+TEST(VMTest, Div_ubyte_intruction) {
+    uint16_t pc = 0;
+    uint8_t *res;
+    uint8_t code_add[5] = {PUSH, 2, 3, 27, DIV_BYTE};
+    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
+    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
+    res = get_head();
+    EXPECT_EQ(*res, 27 / 3);
+}
+
+TEST(VMTest, Mul_sbyte_intruction) {
+    uint16_t pc = 0;
+    int8_t *res;
+    uint8_t code_add[5] = {PUSH, 2, 9, 3, ADD_SBYTE};
+    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
+    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
+    res = (int8_t *)get_head();
+    EXPECT_EQ(*res, 3 + 9);
+}
 

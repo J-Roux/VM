@@ -1,7 +1,7 @@
 #include "stack.h"
 
 static uint8_t data[STACK_SIZE];
-static ptr_size pointer = -1;
+static ptr_size pointer = STACK_START_ADDRESS;
 
 ptr_size get_pointer() { return pointer;}
 uint8_t* get_head()
@@ -16,11 +16,24 @@ uint8_t* get_head()
     }
 }
 
-RESULT range_check(ptr_size size, ptr_size range)
+typedef enum
+{
+    PUSH,
+    POP
+} COMPARE_TYPE;
+RESULT range_check(ptr_size size, COMPARE_TYPE type)
 {	
     RESULT result = SUCCESS;
-    if( pointer + size > range)
-        result = STACK_OVERFLOW;
+    if(type == PUSH)
+    {
+        if( pointer + size > STACK_SIZE)
+            result = STACK_OVERFLOW;
+    }
+    else
+    {
+        if( pointer - size < STACK_START_ADDRESS)
+            result = STACK_OVERFLOW;
+    }
     return result;
 }
 
@@ -29,7 +42,7 @@ RESULT push(uint8_t *ptr, ptr_size size)
 {
   RESULT result = SUCCESS;
   if(RANGE_CHECK)
-	  result = range_check(size, STACK_SIZE);
+      result = range_check(size, PUSH);
   MEMCPY(data + ++pointer, ptr, size);
   pointer += size - 1;
   return result;
@@ -39,10 +52,9 @@ RESULT pop(uint8_t *ptr, ptr_size size)
 {
   RESULT result = SUCCESS;
   if(RANGE_CHECK)
-	   result = range_check( -size, 0);
+      result = range_check( size, POP);
   pointer -= size - 1;
-  MEMCPY(ptr, data + pointer, size);
-  pointer--;    
+  MEMCPY(ptr, data + pointer--, size);
   return result;
 }
 

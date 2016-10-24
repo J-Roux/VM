@@ -17,7 +17,7 @@ typedef enum
   CODE_END = 4
 } RESULT;
 
-
+#define STACK_START_ADDRESS -1
 #ifdef __cplusplus
 extern "C" {
 #endif

@@ -132,7 +132,7 @@ RESULT execute_intruction(uint8_t *code, uint16_t *program_counter)
             COMPARE_BINARY_OPERATION(GT, >);
             COMPARE_BINARY_OPERATION(LEQ, <=);
             COMPARE_BINARY_OPERATION(GEQ, >=);
- 	    UNARY_OPERATION(INC, ++);
+            UNARY_OPERATION(INC, ++);
             UNARY_OPERATION(DEC, --);
             SIGNED_UNARY_OPERATION(NEG, -);
             UNSIGNED_UNARY_OPERATION(NOT, ~);
