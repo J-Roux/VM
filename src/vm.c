@@ -46,7 +46,25 @@ result |= push_##SIZE(op1 OP op2); \
 break;\
 }
 
+#define TYPE_BINARY_OPERATION_DIV(OPERATION, TYPE, SIZE) case OPERATION: { TYPE op1, op2; \
+result = pop_op_##SIZE(&op1, &op2); \
+result = op2 ? push_##SIZE(op1 / op2) : DIV_BY_ZERO; \
+break; \
+}
 
+#define UNSIGNED_BINARY_OPERATION_DIV(OPERATION) TYPE_BINARY_OPERATION_DIV(OPERATION##_BYTE, uint8_t, byte) \
+  TYPE_BINARY_OPERATION_DIV(OPERATION##_SHORT, uint16_t, short) \
+  TYPE_BINARY_OPERATION_DIV(OPERATION##_INT, uint32_t, int) \
+  TYPE_BINARY_OPERATION_DIV(OPERATION##_LONG, uint64_t, long)
+
+#define SIGNED_BINARY_OPERATION_DIV(OPERATION) TYPE_BINARY_OPERATION_DIV(OPERATION##_SBYTE, int8_t, byte) \
+  TYPE_BINARY_OPERATION_DIV(OPERATION##_SSHORT, int16_t, short) \
+  TYPE_BINARY_OPERATION_DIV(OPERATION##_SINT, int32_t, int) \
+  TYPE_BINARY_OPERATION_DIV(OPERATION##_SLONG, int64_t, long)
+
+#define BINARY_OPERATION_DIV \
+UNSIGNED_BINARY_OPERATION_DIV(DIV)\
+SIGNED_BINARY_OPERATION_DIV(DIV)
 
 #define UNSIGNED_COMPARE_BINARY_OPERATION(OPERATION, OP) TYPE_COMPARE_BINARY_OPERATION(OPERATION##_BYTE, uint8_t, byte, OP) \
 TYPE_COMPARE_BINARY_OPERATION(OPERATION##_SHORT, uint16_t, short, OP) \
@@ -106,6 +124,7 @@ RESULT push_by_arg(  uint8_t *code, uint16_t *program_counter,  func mem_instruc
        (*program_counter) += arg + 1;
        return mem_instruction(ptr_data, arg);
 }
+
 RESULT execute_intruction(uint8_t *code, uint16_t *program_counter)
 {
 	RESULT result = SUCCESS;
@@ -115,7 +134,7 @@ RESULT execute_intruction(uint8_t *code, uint16_t *program_counter)
             BINARY_OPERATION(ADD, +);
             BINARY_OPERATION(SUB, -);
             BINARY_OPERATION(MUL, *);
-            BINARY_OPERATION(DIV, /);
+            BINARY_OPERATION_DIV;
             UNSIGNED_BINARY_OPERATION(OR, |);
             UNSIGNED_BINARY_OPERATION(AND, &);
             UNSIGNED_BINARY_OPERATION(SHR, >>);

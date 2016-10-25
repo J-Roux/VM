@@ -2,19 +2,15 @@
 #define _STACK_H
 #include "config.h"
 
-#ifdef RANGE_CHECK
-#define RANGE_CHECK 1
 
-#else 
-#define RANGE_CHECK 0
-#endif 
 typedef POINTER_SIZE ptr_size;
 
 typedef enum 
 {
   SUCCESS, 
   STACK_OVERFLOW = 2,
-  CODE_END = 4
+  CODE_END = 4,
+  DIV_BY_ZERO = 8,
 } RESULT;
 
 #define STACK_START_ADDRESS -1

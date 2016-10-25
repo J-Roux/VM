@@ -21,6 +21,7 @@ typedef enum
     PUSH,
     POP
 } COMPARE_TYPE;
+
 RESULT range_check(ptr_size size, COMPARE_TYPE type)
 {	
     RESULT result = SUCCESS;

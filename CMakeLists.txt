@@ -5,11 +5,23 @@ project(YASM)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 option(test "Build all tests." OFF)
+<<<<<<< HEAD
 if(UNIX)
 set(CMAKE_CXX_FLAGS "-g -Wall ")
 else(WIN32)
 set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} /W3 /MTd")
 SET(CMAKE_CXX_FLAGS_DEBUG "/MTd")
+=======
+set(RANGE_CHECK  1 CACHE STRING "Range check 1 - on 0 - off")
+set(STACK_SIZE 128 CACHE STRING "Stack size, default:128")
+
+
+if(UNIX)
+    set(CMAKE_CXX_FLAGS "-g -Wall ")
+else(WIN32)
+    set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} /W3 /MTd")
+    set(CMAKE_CXX_FLAGS_DEBUG "/MTd")
+>>>>>>> 8da31bc7311b5ffd7c7e355afb4bac8e8f287259
 endif()
 
 
@@ -17,6 +29,8 @@ file(GLOB STACK "src/stack.c")
 file(GLOB VM  "src/vm.c")
 file(GLOB HEADERS "src/*.h")
 file(GLOB MAIN "src/main.c")
+
+
 # configure a header file to pass some of the CMake settings
 # to the source code
 configure_file (

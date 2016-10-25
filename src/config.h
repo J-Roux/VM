@@ -1,13 +1,10 @@
 #ifndef _CONFIG_H_
 #define _CONFIG_H_
 #include <stdint.h>
-
+#include "CMakeConfig.h"
 
 #define DEBUG
-#define UNITTESTS
-#define RANGE_CHECK
 
-#define STACK_SIZE 128
 #define POINTER_SIZE int16_t
 
 
