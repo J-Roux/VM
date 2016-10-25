@@ -8,7 +8,7 @@ cache:
 directories:
              - "~/.platformio"
 env:
-                 - PLATFORMIO_CI_SRC=src/
+             - PLATFORMIO_CI_SRC=src/
 install:
         sudo  pip install -U platformio
    
@@ -19,6 +19,14 @@ script:
          - make
          - make test
          - ./YASM
-         - ./runUnitTests   
-         - cd ..  
+         - ./runUnitTests
+         - cd ..
+         - platformio ci --board=uno
+         - cd build
+         - cmake -Dtest=ON -DRANGE_CHECK=0 -DSTACK_SIZE=64 ../
+         - make
+         - make test
+         - ./YASM
+         - ./runUnitTests
+         - cd ..
          - platformio ci --board=uno
