@@ -11,6 +11,8 @@ set(CMAKE_CXX_FLAGS "-g -Wall ")
 else(WIN32)
 set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} /W3 /MTd")
 SET(CMAKE_CXX_FLAGS_DEBUG "/MTd")
+endif()
+
 
 set(RANGE_CHECK  1 CACHE STRING "Range check 1 - on 0 - off")
 set(STACK_SIZE 128 CACHE STRING "Stack size, default:128")

@@ -1,4 +1,3 @@
 
-
-#define SOME_VALUE 0
-#define UNITTESTS 
+#define RANGE_CHECK 1
+#define STACK_SIZE 128
