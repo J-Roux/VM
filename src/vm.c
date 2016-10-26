@@ -183,6 +183,7 @@ RESULT execute_intruction(uint8_t *code, uint16_t *program_counter)
                 result = push(code + *program_counter, sizeof(uint64_t));
                 break;
             }
+
  	}
 	
 	return result;

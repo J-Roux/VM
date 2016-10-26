@@ -4,11 +4,11 @@ static uint8_t data[STACK_SIZE];
 static ptr_size pointer = STACK_START_ADDRESS;
 
 ptr_size get_pointer() { return pointer;}
-uint8_t* get_head()
+uint8_t* get_head(uint8_t shift )
 {
     if(pointer >= 0)
     {
-        return data + pointer;
+        return data + pointer - shift + 1;
     }
     else
     {

@@ -33,7 +33,7 @@ RESULT pop_int(uint32_t *value);
 RESULT pop_long(uint64_t *value);
 
 ptr_size get_pointer();
-uint8_t* get_head();
+uint8_t* get_head(uint8_t shift);
 
 #ifdef __cplusplus
 }
