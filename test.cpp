@@ -299,3 +299,132 @@ TEST(VMTest, Div_sshort_intruction_by_zero) {
     EXPECT_EQ(execute_intruction(code_add, &pc), DIV_BY_ZERO);
 
 }
+
+
+TEST(VMTest, Add_int_intruction) {
+    uint16_t pc = 0;
+    uint32_t *res;
+    union{ uint32_t data; struct { uint8_t one; uint8_t two; uint8_t three; uint8_t four;}; } op1, op2;
+    op1.data = 33000;
+    op2.data = 5;
+    uint8_t code_add[11] = {PUSH, 8, op1.one, op1.two, op1.three, op1.four, op2.one, op2.two, op2.three, op2.four, ADD_INT};
+    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
+    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
+    res = GET_HEAD(uint32_t);
+    EXPECT_EQ(*res, 33000 + 5);
+}
+
+
+TEST(VMTest, Sub_int_intruction) {
+    uint16_t pc = 0;
+    uint32_t *res;
+    union{ uint32_t data; struct { uint8_t one; uint8_t two; uint8_t three; uint8_t four;}; } op1, op2;
+    op1.data = 5;
+    op2.data = 33000;
+    uint8_t code_add[11] = {PUSH, 8, op1.one, op1.two, op1.three, op1.four, op2.one, op2.two, op2.three, op2.four, SUB_INT};
+    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
+    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
+    res = GET_HEAD(uint32_t);
+    EXPECT_EQ(*res, 33000 - 5);
+}
+
+TEST(VMTest, Mul_int_intruction) {
+    uint16_t pc = 0;
+    uint32_t *res;
+    union{ uint32_t data; struct { uint8_t one; uint8_t two; uint8_t three; uint8_t four;}; } op1, op2;
+    op1.data = 33000;
+    op2.data = 5;
+    uint8_t code_add[11] = {PUSH, 8, op1.one, op1.two, op1.three, op1.four, op2.one, op2.two, op2.three, op2.four, MUL_INT};
+    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
+    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
+    res = GET_HEAD(uint32_t);
+    EXPECT_EQ(*res, 33000 * 5);
+}
+
+TEST(VMTest, Div_int_intruction) {
+    uint16_t pc = 0;
+    uint32_t *res;
+    union{ uint32_t data; struct { uint8_t one; uint8_t two; uint8_t three; uint8_t four;}; } op1, op2;
+    op1.data = 5;
+    op2.data = 33000;
+    uint8_t code_add[11] = {PUSH, 8, op1.one, op1.two, op1.three, op1.four, op2.one, op2.two, op2.three, op2.four, DIV_INT};
+    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
+    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
+    res = GET_HEAD(uint32_t);
+    EXPECT_EQ(*res, 33000 / 5);
+}
+
+TEST(VMTest, Div_int_intruction_by_zero) {
+    uint16_t pc = 0;
+    uint32_t *res;
+    union{ uint32_t data; struct { uint8_t one; uint8_t two; uint8_t three; uint8_t four;}; } op1, op2;
+    op1.data = 0;
+    op2.data = 33000;
+    uint8_t code_add[11] = {PUSH, 8, op1.one, op1.two, op1.three, op1.four, op2.one, op2.two, op2.three, op2.four, DIV_INT};
+    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
+    EXPECT_EQ(execute_intruction(code_add, &pc), DIV_BY_ZERO);
+}
+
+TEST(VMTest, Add_sint_intruction) {
+    uint16_t pc = 0;
+    int32_t *res;
+    union{ int32_t data; struct { uint8_t one; uint8_t two; uint8_t three; uint8_t four;}; } op1, op2;
+    op1.data = -33000;
+    op2.data = 5;
+    uint8_t code_add[11] = {PUSH, 8, op1.one, op1.two, op1.three, op1.four, op2.one, op2.two, op2.three, op2.four, ADD_SINT};
+    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
+    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
+    res = GET_HEAD(int32_t);
+    EXPECT_EQ(*res, -33000 + 5);
+}
+
+
+TEST(VMTest, Sub_sint_intruction) {
+    uint16_t pc = 0;
+    int32_t *res;
+    union{ int32_t data; struct { uint8_t one; uint8_t two; uint8_t three; uint8_t four;}; } op1, op2;
+    op1.data = 33000;
+    op2.data = 5;
+    uint8_t code_add[11] = {PUSH, 8, op1.one, op1.two, op1.three, op1.four, op2.one, op2.two, op2.three, op2.four, SUB_SINT};
+    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
+    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
+    res = GET_HEAD(int32_t);
+    EXPECT_EQ(*res, 5 - 33000);
+}
+
+TEST(VMTest, Mul_sint_intruction) {
+    uint16_t pc = 0;
+    int32_t *res;
+    union{ int32_t data; struct { uint8_t one; uint8_t two; uint8_t three; uint8_t four;}; } op1, op2;
+    op1.data = 33000;
+    op2.data = -5;
+    uint8_t code_add[11] = {PUSH, 8, op1.one, op1.two, op1.three, op1.four, op2.one, op2.two, op2.three, op2.four, MUL_SINT};
+    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
+    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
+    res = GET_HEAD(int32_t);
+    EXPECT_EQ(*res, 33000 * -5);
+}
+
+TEST(VMTest, Div_sint_intruction) {
+    uint16_t pc = 0;
+    int32_t *res;
+    union{ int32_t data; struct { uint8_t one; uint8_t two; uint8_t three; uint8_t four;}; } op1, op2;
+    op1.data = -5;
+    op2.data = 33000;
+    uint8_t code_add[11] = {PUSH, 8, op1.one, op1.two, op1.three, op1.four, op2.one, op2.two, op2.three, op2.four, DIV_SINT};
+    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
+    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
+    res = GET_HEAD(int32_t);
+    EXPECT_EQ(*res, 33000 / -5);
+}
+
+TEST(VMTest, Div_sint_intruction_by_zero) {
+    uint16_t pc = 0;
+    int32_t *res;
+    union{ int32_t data; struct { uint8_t one; uint8_t two; uint8_t three; uint8_t four;}; } op1, op2;
+    op1.data = 0;
+    op2.data = -33000;
+    uint8_t code_add[11] = {PUSH, 8, op1.one, op1.two, op1.three, op1.four, op2.one, op2.two, op2.three, op2.four, DIV_SINT};
+    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
+    EXPECT_EQ(execute_intruction(code_add, &pc), DIV_BY_ZERO);
+}
