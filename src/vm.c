@@ -128,7 +128,7 @@ RESULT push_by_arg(  uint8_t *code, uint16_t *program_counter,  func mem_instruc
 RESULT execute_intruction(uint8_t *code, uint16_t *program_counter)
 {
 	RESULT result = SUCCESS;
-	COMMANDS command = code[*program_counter];
+    COMMANDS command = code[*program_counter];
 	switch (command)
 	{
             BINARY_OPERATION(ADD, +);

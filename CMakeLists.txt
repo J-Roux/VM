@@ -19,7 +19,7 @@ set(STACK_SIZE 128 CACHE STRING "Stack size, default:128")
 
 
 if(UNIX)
-    set(CMAKE_CXX_FLAGS "-g -Wall ")
+    set(CMAKE_CXX_FLAGS "-g -Wno-narrowing ")
 else(WIN32)
     set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} /W3 /MTd")
     set(CMAKE_CXX_FLAGS_DEBUG "/MTd")
@@ -59,7 +59,7 @@ if (test)
   	link_directories(${EXTERNAL_INSTALL_LOCATION}/lib ${CMAKE_SOURCE_DIR}/lib)
   else(UNIX)
 	link_directories(${EXTERNAL_INSTALL_LOCATION}/lib)
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --std=c++14")
   endif()  
   enable_testing()
 

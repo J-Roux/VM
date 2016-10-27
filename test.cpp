@@ -3,8 +3,9 @@
 #include "src/stack.h"
 #include <iostream>
 #include <functional>
-#include <array>
+#include <vector>
 #include "gtest/gtest.h"
+#include <type_traits>
 
 #define GET_HEAD(TYPE) (TYPE *)get_head(sizeof(TYPE))
 
@@ -65,7 +66,7 @@ auto get_code(T op1, T op2, COMMANDS command );
 template<>
 auto get_code<uint8_t>(uint8_t op1, uint8_t op2, COMMANDS command)
 {
-	return std::array<uint8_t, 5>({ PUSH, 2, op1, op2, (uint8_t)command }).data();
+    return std::vector<uint8_t>({ PUSH, 2, op1, op2, (uint8_t)command });
 }
 
 template<>
@@ -74,16 +75,28 @@ auto get_code<uint16_t>(uint16_t op1, uint16_t op2, COMMANDS command)
     union{ uint16_t data; struct { uint8_t hi; uint8_t lo;}; } o1, o2;
 	o1.data = op1;
 	o2.data = op2;
-	return std::array<uint8_t, 7>({ PUSH, 4, o1.hi , o1.lo, o2.hi, o2.lo, uint8_t(command) }).data();
+    return std::vector<uint8_t>({ PUSH, 4, o1.hi , o1.lo, o2.hi, o2.lo, uint8_t(command) });
 }
 
-template<class T, typename type>
-void TestMethod<uint8_t>(COMMANDS command, type op1, type op2) {
+template<>
+auto get_code<uint32_t>(uint32_t op1, uint32_t op2, COMMANDS command)
+{
+    union{ uint32_t data; struct { uint8_t one; uint8_t two; uint8_t three; uint8_t four;}; } o1, o2;
+    o1.data = op1;
+    o2.data = op2;
+    return std::vector<uint8_t> ({uint8_t(PUSH), 8, o1.one, o1.two, o1.three, o1.four, o2.one, o2.two, o2.three, o2.four, uint8_t(command)});
+}
+
+template<class T, class type >
+void TestMethod(COMMANDS command, type op1, type op2) {
+    using code_type = typename std::make_unsigned<type>::type;
 	uint16_t pc = 0;
-	auto code = get_code<uint8_t>(op1, op2, command);
-	EXPECT_EQ(execute_intruction(code, &pc), SUCCESS);
-    EXPECT_EQ(execute_intruction(code, &pc), SUCCESS);
+    auto code = get_code<code_type>(op1, op2, command);
+    EXPECT_EQ(execute_intruction(code.data(), &pc), SUCCESS);
+    EXPECT_EQ(execute_intruction(code.data(), &pc), SUCCESS);
     auto res = GET_HEAD(type);
+    auto a = *res;
+    auto b = T{}(op2, op1);
 	EXPECT_EQ(*res, T{}(op2, op1));
 }
 
@@ -156,19 +169,19 @@ TEST(VMTest, Div_ubyte_intruction_by_zero) {
 }
 
 TEST(VMTest, Add_sbyte_intruction) {
-	TestMethod<std::plus<>, int8_t>(ADD_SBYTE, -3, 9);
+    TestMethod<std::plus<>, int8_t>(ADD_BYTE, -3, 9);
 }
 
 TEST(VMTest, Mul_sbyte_intruction) {
-	TestMethod<std::multiplies<>, int8_t>(MUL_SBYTE, 9, -3);
+    TestMethod<std::multiplies<>, int8_t>(MUL_BYTE, 9, -3);
 }
 
 TEST(VMTest, Sub_sbyte_intruction) {
-	TestMethod<std::minus<>, int8_t>(SUB_SBYTE, 3, 1);
+    TestMethod<std::minus<>, int8_t>(SUB_BYTE, 3, 1);
 }
 
 TEST(VMTest, Div_sbyte_intruction) {
-	TestMethod<std::divides<>, int8_t>(DIV_SBYTE, -9, 27);
+    TestMethod<std::divides<>, int8_t>(DIV_SBYTE, -9, 27);
 }
 
 TEST(VMTest, Div_sbyte_intruction_by_zero) {
@@ -217,7 +230,7 @@ TEST(VMTest, Sub_ushort_intruction) {
 
 
 TEST(VMTest, Div_ushort_intruction) {
-	TestMethod<std::divides<>, uint16_t>(DIV_SHORT, 5, 260);
+    TestMethod<std::divides<>, uint16_t>(DIV_SHORT, 5, 260);
 }
 
 
@@ -233,23 +246,23 @@ TEST(VMTest, Div_ushort_intruction_by_zero) {
 
 
 TEST(VMTest, Add_sshort_intruction) {
-	TestMethod<std::plus<>, int16_t>(ADD_SSHORT, -5, 260);
+    TestMethod<std::plus<>, int16_t>(ADD_SHORT, -5, 260);
 }
 
 
 TEST(VMTest, Mul_sshort_intruction) {
-	TestMethod<std::multiplies<>, int16_t>(MUL_SSHORT, -5, 260);
+    TestMethod<std::multiplies<>, int16_t>(MUL_SHORT, -5, 260);
 }
 
 
 TEST(VMTest, Sub_sshort_intruction) {
-	TestMethod<std::minus<>, int16_t>(SUB_SSHORT, -5, 260);
+    TestMethod<std::minus<>, int16_t>(SUB_SHORT, -5, 260);
 }
 
 
 
 TEST(VMTest, Div_sshort_intruction) {
-	TestMethod<std::divides<>, int16_t>(DIV_SSHORT, 5, 260);
+    TestMethod<std::divides<>, int16_t>(DIV_SSHORT, -5, 260);
 }
 
 TEST(VMTest, Div_sshort_intruction_by_zero) {
@@ -265,30 +278,41 @@ TEST(VMTest, Div_sshort_intruction_by_zero) {
 
 
 TEST(VMTest, And_int_intruction) {
-	//TestMethod<std::bit_and<>, uint16_t>(AND_SHORT, 5, 260);
+    TestMethod<std::bit_and<>, uint32_t>(AND_INT, 5, 33000);
 }
 
 
 TEST(VMTest, Or_int_intruction) {
-	//TestMethod<std::bit_and<>, uint16_t>(AND_SHORT, 5, 260);
+    TestMethod<std::bit_or<>, uint32_t>(OR_INT, 5, 33000);
 }
 
 TEST(VMTest, Shr_int_intruction) {
-	//TestMethod<std::bit_and<>, uint16_t>(AND_SHORT, 5, 260);
+    TestMethod<shift_right<>, uint32_t>(SHR_INT, 5, 33000);
 	
 }
 
 TEST(VMTest, Shl_int_intruction) {
-    uint16_t pc = 0;
-    uint32_t *res;
-    union{ uint32_t data; struct { uint8_t one; uint8_t two; uint8_t three; uint8_t four;}; } op1, op2;
-    op1.data = 5;
-    op2.data = 33000;
-    uint8_t code_add[11] = {PUSH, 8, op1.one, op1.two, op1.three, op1.four, op2.one, op2.two, op2.three, op2.four, SHL_INT};
-    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
-    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
-    res = GET_HEAD(uint32_t);
-    EXPECT_EQ(*res, 33000 << 5);
+  TestMethod<shift_left<>, uint32_t>(SHL_INT, 5, 33000);
+}
+
+
+
+TEST(VMTest, Add_int_intruction) {
+    TestMethod<std::plus<>, uint32_t>(ADD_INT, 5, 33000);
+}
+
+
+TEST(VMTest, Sub_int_intruction) {
+    TestMethod<std::minus<>, uint32_t>(SUB_INT, 5, 33000);
+}
+
+TEST(VMTest, Mul_int_intruction) {
+    TestMethod<std::multiplies<>, uint32_t>(MUL_INT, 5, 33000);
+
+}
+
+TEST(VMTest, Div_int_intruction) {
+     TestMethod<std::divides<>, uint32_t>(DIV_INT, 5, 33000);
 }
 
 TEST(VMTest, Div_int_intruction_by_zero) {
@@ -302,16 +326,7 @@ TEST(VMTest, Div_int_intruction_by_zero) {
 }
 
 TEST(VMTest, Add_sint_intruction) {
-    uint16_t pc = 0;
-    int32_t *res;
-    union{ int32_t data; struct { uint8_t one; uint8_t two; uint8_t three; uint8_t four;}; } op1, op2;
-    op1.data = -33000;
-    op2.data = 5;
-    uint8_t code_add[11] = {PUSH, 8, op1.one, op1.two, op1.three, op1.four, op2.one, op2.two, op2.three, op2.four, ADD_SINT};
-    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
-    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
-    res = GET_HEAD(int32_t);
-    EXPECT_EQ(*res, -33000 + 5);
+  TestMethod<std::plus<>, int32_t>(ADD_INT, -5, 33000);
 }
 
 
