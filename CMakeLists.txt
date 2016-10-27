@@ -45,7 +45,7 @@ configure_file (
 if (test)
   # This adds another subdirectory, which has 'project(gtest)'.
   include(ExternalProject)
-
+  
   set(EXTERNAL_INSTALL_LOCATION ${CMAKE_BINARY_DIR}/external)
 
   ExternalProject_Add(googletest
@@ -59,6 +59,7 @@ if (test)
   	link_directories(${EXTERNAL_INSTALL_LOCATION}/lib ${CMAKE_SOURCE_DIR}/lib)
   else(UNIX)
 	link_directories(${EXTERNAL_INSTALL_LOCATION}/lib)
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS -std=c++14")
   endif()  
   enable_testing()
 

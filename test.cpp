@@ -2,6 +2,8 @@
 #include "src/vm.h"
 #include "src/stack.h"
 #include <iostream>
+#include <functional>
+#include <array>
 #include "gtest/gtest.h"
 
 #define GET_HEAD(TYPE) (TYPE *)get_head(sizeof(TYPE))
@@ -53,176 +55,174 @@ TEST(StackTest, Push_long) {
 }
 
 
-TEST(VMTest, Add_ubyte_intruction) {
-    uint16_t pc = 0;
-    uint8_t *res;
-    uint8_t code_add[5] = {PUSH, 2, 4, 5, ADD_BYTE};
-    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
-    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
-    ptr_size pointer = get_pointer();
-    EXPECT_EQ(pointer, STACK_START_ADDRESS + 1);
-    res = GET_HEAD(uint8_t);
-    EXPECT_EQ(*res, 4 + 5);
+template<class T, typename type>
+void TestMethod(COMMANDS command, type op1, type op2);
+
+template<class T>
+auto get_code(T op1, T op2, COMMANDS command );
+
+
+template<>
+auto get_code<uint8_t>(uint8_t op1, uint8_t op2, COMMANDS command)
+{
+	return std::array<uint8_t, 5>({ PUSH, 2, op1, op2, (uint8_t)command }).data();
 }
 
-TEST(VMTest, Add_ubyte_intruction_overfilling) {
-    uint16_t pc = 0;
-    uint8_t *res;
-    uint8_t code_add[5] = {PUSH, 2, 255, 2, ADD_BYTE};
-    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
-    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
-    res = GET_HEAD(uint8_t);
-    EXPECT_EQ(*res, uint8_t(uint8_t(255) + uint8_t(2)));
+template<>
+auto get_code<uint16_t>(uint16_t op1, uint16_t op2, COMMANDS command)
+{
+    union{ uint16_t data; struct { uint8_t hi; uint8_t lo;}; } o1, o2;
+	o1.data = op1;
+	o2.data = op2;
+	return std::array<uint8_t, 7>({ PUSH, 4, o1.hi , o1.lo, o2.hi, o2.lo, uint8_t(command) }).data();
 }
+
+template<class T, typename type>
+void TestMethod<uint8_t>(COMMANDS command, type op1, type op2) {
+	uint16_t pc = 0;
+	auto code = get_code<uint8_t>(op1, op2, command);
+	EXPECT_EQ(execute_intruction(code, &pc), SUCCESS);
+    EXPECT_EQ(execute_intruction(code, &pc), SUCCESS);
+    auto res = GET_HEAD(type);
+	EXPECT_EQ(*res, T{}(op2, op1));
+}
+
+
+template<typename T = void>
+struct shift_right;
+
+template<typename T = void>
+struct shift_left;
+
+template<>
+struct shift_right<void>
+{
+	template< class T, class U>
+	constexpr auto operator()(T&& lhs, U&& rhs) const-> decltype(std::forward<T>(lhs) >> std::forward<U>(rhs))
+	{
+		return    std::forward<T>(lhs) >> std::forward<U>(rhs);
+	}
+};
+
+template<>
+struct shift_left<void>
+{
+	template< class T, class U>
+	constexpr auto operator()(T&& lhs, U&& rhs) const-> decltype(std::forward<T>(lhs) << std::forward<U>(rhs))
+	{
+		return    std::forward<T>(lhs) << std::forward<U>(rhs);
+	}
+};
+
+TEST(VMTest, Shr_byte_intruction) {
+	TestMethod<shift_right<>, uint8_t>(SHR_BYTE, 2, 5);
+}
+
+TEST(VMTest, Shl_byte_intruction) {
+	TestMethod<shift_left<>, uint8_t>(SHL_BYTE, 2, 5);
+}
+
+TEST(VMTest, And_byte_intruction) {
+    TestMethod<std::bit_and<>, uint8_t>(AND_BYTE, 4, 5);
+}
+
+TEST(VMTest, Or_byte_intruction) {
+   TestMethod<std::bit_or<>, uint8_t>(OR_BYTE, 4, 5);
+}
+
+
+TEST(VMTest, Add_ubyte_intruction) {
+	TestMethod<std::plus<>, uint8_t>(ADD_BYTE, 4, 5);
+}
+
 
 TEST(VMTest, Mul_ubyte_intruction) {
-    uint16_t pc = 0;
-    uint8_t *res;
-    uint8_t code_mul[5] = {PUSH, 2, 4, 5, MUL_BYTE};
-    EXPECT_EQ(execute_intruction(code_mul, &pc), SUCCESS);
-    EXPECT_EQ(execute_intruction(code_mul, &pc), SUCCESS);
-    res = GET_HEAD(uint8_t);
-    EXPECT_EQ(*res, 4 * 5);
+	TestMethod<std::multiplies<>, uint8_t>(MUL_BYTE, 4, 5);
 }
 
 TEST(VMTest, Sub_ubyte_intruction) {
-    uint16_t pc = 0;
-    uint8_t *res;
-    uint8_t code_add[5] = {PUSH, 2, 4, 5, SUB_BYTE};
-    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
-    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
-    res = GET_HEAD(uint8_t);
-    EXPECT_EQ(*res, 5 - 4);
+	TestMethod<std::minus<>, uint8_t>(SUB_BYTE, 4, 5);
 }
 
 TEST(VMTest, Div_ubyte_intruction) {
-    uint16_t pc = 0;
-    uint8_t *res;
-    uint8_t code_add[5] = {PUSH, 2, 3, 27, DIV_BYTE};
-    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
-    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
-    res = GET_HEAD(uint8_t);
-    EXPECT_EQ(*res, 27 / 3);
+	TestMethod<std::divides<>, uint8_t>(DIV_BYTE, 3, 27);
 }
 
 TEST(VMTest, Div_ubyte_intruction_by_zero) {
     uint16_t pc = 0;
-    uint8_t *res;
     uint8_t code_add[5] = {PUSH, 2, 0, 27, DIV_BYTE};
     EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
     EXPECT_EQ(execute_intruction(code_add, &pc), DIV_BY_ZERO);
 }
 
 TEST(VMTest, Add_sbyte_intruction) {
-    uint16_t pc = 0;
-    int8_t *res;
-    uint8_t code_add[5] = {PUSH, 2, 9, -3, ADD_SBYTE};
-    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
-    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
-    res = (int8_t *)GET_HEAD(uint8_t);
-    EXPECT_EQ(*res, -3 + 9);
+	TestMethod<std::plus<>, int8_t>(ADD_SBYTE, -3, 9);
 }
 
 TEST(VMTest, Mul_sbyte_intruction) {
-    uint16_t pc = 0;
-    int8_t *res;
-    uint8_t code_add[5] = {PUSH, 2, 9, -3, MUL_SBYTE};
-    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
-    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
-    res = (int8_t *)GET_HEAD(uint8_t);
-    EXPECT_EQ(*res, -3 * 9);
+	TestMethod<std::multiplies<>, int8_t>(MUL_SBYTE, 9, -3);
 }
 
 TEST(VMTest, Sub_sbyte_intruction) {
-    uint16_t pc = 0;
-    int8_t *res;
-    uint8_t code_add[5] = {PUSH, 2, 3, 1, SUB_SBYTE};
-    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
-    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
-    res = (int8_t *)GET_HEAD(uint8_t);
-    EXPECT_EQ(*res, 1 - 3);
+	TestMethod<std::minus<>, int8_t>(SUB_SBYTE, 3, 1);
 }
 
 TEST(VMTest, Div_sbyte_intruction) {
-    uint16_t pc = 0;
-    int8_t *res;
-    uint8_t code_add[5] = {PUSH, 2, -9, 27, DIV_SBYTE};
-    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
-    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
-    res = (int8_t *)GET_HEAD(uint8_t);
-    EXPECT_EQ(*res, 27 / -9);
+	TestMethod<std::divides<>, int8_t>(DIV_SBYTE, -9, 27);
 }
 
 TEST(VMTest, Div_sbyte_intruction_by_zero) {
     uint16_t pc = 0;
-    int8_t *res;
     uint8_t code_add[5] = {PUSH, 2, 0, -27, DIV_SBYTE};
     EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
     EXPECT_EQ(execute_intruction(code_add, &pc), DIV_BY_ZERO);
 }
 
 
+TEST(VMTest, And_short_intruction) {
+	TestMethod<std::bit_and<>, uint16_t>(AND_SHORT, 5, 260);
+}
+
+
+TEST(VMTest, Or_short_intruction) {
+  TestMethod<std::bit_or<>, uint16_t>(OR_SHORT, 5, 260);
+}
+
+
+TEST(VMTest, Shr_short_intruction) {
+ TestMethod<shift_right<>, uint16_t>(SHR_SHORT, 5, 260);
+}
+
+
+
+TEST(VMTest, Shl_short_intruction) {
+	TestMethod<shift_left<>, uint16_t>(SHL_SHORT, 5, 260);
+}
+
 
 TEST(VMTest, Add_ushort_intruction) {
-    uint16_t pc = 0;
-    uint16_t *res;
-    union{ uint16_t data; struct { uint8_t hi; uint8_t lo;}; } op1, op2;
-    op1.data = 260;
-    op2.data = 5;
-    uint8_t code_add[7] = {PUSH, 4, op1.hi, op1.lo, op2.hi, op2.lo, ADD_SHORT};
-    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
-    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
-    res = GET_HEAD(uint16_t);
-    EXPECT_EQ(*res, 260 + 5 );
+	TestMethod<std::plus<>, uint16_t>(ADD_SHORT, 5, 260);
 }
 
 
 TEST(VMTest, Mul_ushort_intruction) {
-    uint16_t pc = 0;
-    uint16_t *res;
-    union{ uint16_t data; struct { uint8_t hi; uint8_t lo;}; } op1, op2;
-    op1.data = 260;
-    op2.data = 5;
-    uint8_t code_add[7] = {PUSH, 4, op1.hi, op1.lo, op2.hi, op2.lo, MUL_SHORT};
-    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
-    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
-    res = GET_HEAD(uint16_t);
-    EXPECT_EQ(*res, 260 * 5 );
+	TestMethod<std::multiplies<>, uint16_t>(MUL_SHORT, 5, 260);
 }
 
 
 TEST(VMTest, Sub_ushort_intruction) {
-    uint16_t pc = 0;
-    uint16_t *res;
-    union{ uint16_t data; struct { uint8_t hi; uint8_t lo;}; } op1, op2;
-    op1.data = 5;
-    op2.data = 260;
-    uint8_t code_add[7] = {PUSH, 4, op1.hi, op1.lo, op2.hi, op2.lo, SUB_SHORT};
-    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
-    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
-    res = GET_HEAD(uint16_t);
-    EXPECT_EQ(*res, 260 - 5 );
+	TestMethod<std::minus<>, uint16_t>(SUB_SHORT, 5, 260);
 }
 
 
 
 TEST(VMTest, Div_ushort_intruction) {
-    uint16_t pc = 0;
-    uint16_t *res;
-    union{ uint16_t data; struct { uint8_t hi; uint8_t lo;}; } op1, op2;
-    op1.data = 5;
-    op2.data = 260;
-    uint8_t code_add[7] = {PUSH, 4, op1.hi, op1.lo, op2.hi, op2.lo, DIV_SHORT};
-    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
-    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
-    res = GET_HEAD(uint16_t);
-    EXPECT_EQ(*res, 260 / 5 );
+	TestMethod<std::divides<>, uint16_t>(DIV_SHORT, 5, 260);
 }
 
 
 TEST(VMTest, Div_ushort_intruction_by_zero) {
     uint16_t pc = 0;
-    uint16_t *res;
     union{ uint16_t data; struct { uint8_t hi; uint8_t lo;}; } op1, op2;
     op1.data = 0;
     op2.data = 260;
@@ -233,64 +233,27 @@ TEST(VMTest, Div_ushort_intruction_by_zero) {
 
 
 TEST(VMTest, Add_sshort_intruction) {
-    uint16_t pc = 0;
-    int16_t *res;
-    union{ int16_t data; struct { uint8_t hi; uint8_t lo;}; } op1, op2;
-    op1.data = -260;
-    op2.data = 5;
-    uint8_t code_add[7] = {PUSH, 4, op1.hi, op1.lo, op2.hi, op2.lo, ADD_SSHORT};
-    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
-    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
-    res = GET_HEAD(int16_t);
-    EXPECT_EQ(*res, -260 + 5 );
+	TestMethod<std::plus<>, int16_t>(ADD_SSHORT, -5, 260);
 }
 
 
 TEST(VMTest, Mul_sshort_intruction) {
-    uint16_t pc = 0;
-    int16_t *res;
-    union{ int16_t data; struct { uint8_t hi; uint8_t lo;}; } op1, op2;
-    op1.data = -260;
-    op2.data = 5;
-    uint8_t code_add[7] = {PUSH, 4, op1.hi, op1.lo, op2.hi, op2.lo, MUL_SSHORT};
-    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
-    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
-    res = GET_HEAD(int16_t);
-    EXPECT_EQ(*res, -260 * 5 );
+	TestMethod<std::multiplies<>, int16_t>(MUL_SSHORT, -5, 260);
 }
 
 
 TEST(VMTest, Sub_sshort_intruction) {
-    uint16_t pc = 0;
-    int16_t *res;
-    union{ int16_t data; struct { uint8_t hi; uint8_t lo;}; } op1, op2;
-    op1.data = 260;
-    op2.data = 5;
-    uint8_t code_add[7] = {PUSH, 4, op1.hi, op1.lo, op2.hi, op2.lo, SUB_SSHORT};
-    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
-    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
-    res = GET_HEAD(int16_t);
-    EXPECT_EQ(*res,  5 - 260 );
+	TestMethod<std::minus<>, int16_t>(SUB_SSHORT, -5, 260);
 }
 
 
 
 TEST(VMTest, Div_sshort_intruction) {
-    uint16_t pc = 0;
-    int16_t *res;
-    union{ int16_t data; struct { uint8_t hi; uint8_t lo;}; } op1, op2;
-    op1.data = -5;
-    op2.data = 260;
-    uint8_t code_add[7] = {PUSH, 4, op1.hi, op1.lo, op2.hi, op2.lo, DIV_SSHORT};
-    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
-    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
-    res = GET_HEAD(int16_t);
-    EXPECT_EQ(*res, 260 /- 5 );
+	TestMethod<std::divides<>, int16_t>(DIV_SSHORT, 5, 260);
 }
 
 TEST(VMTest, Div_sshort_intruction_by_zero) {
     uint16_t pc = 0;
-    int16_t *res;
     union{ int16_t data; struct { uint8_t hi; uint8_t lo;}; } op1, op2;
     op1.data = 0;
     op2.data = 260;
@@ -301,62 +264,35 @@ TEST(VMTest, Div_sshort_intruction_by_zero) {
 }
 
 
-TEST(VMTest, Add_int_intruction) {
-    uint16_t pc = 0;
-    uint32_t *res;
-    union{ uint32_t data; struct { uint8_t one; uint8_t two; uint8_t three; uint8_t four;}; } op1, op2;
-    op1.data = 33000;
-    op2.data = 5;
-    uint8_t code_add[11] = {PUSH, 8, op1.one, op1.two, op1.three, op1.four, op2.one, op2.two, op2.three, op2.four, ADD_INT};
-    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
-    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
-    res = GET_HEAD(uint32_t);
-    EXPECT_EQ(*res, 33000 + 5);
+TEST(VMTest, And_int_intruction) {
+	//TestMethod<std::bit_and<>, uint16_t>(AND_SHORT, 5, 260);
 }
 
 
-TEST(VMTest, Sub_int_intruction) {
+TEST(VMTest, Or_int_intruction) {
+	//TestMethod<std::bit_and<>, uint16_t>(AND_SHORT, 5, 260);
+}
+
+TEST(VMTest, Shr_int_intruction) {
+	//TestMethod<std::bit_and<>, uint16_t>(AND_SHORT, 5, 260);
+	
+}
+
+TEST(VMTest, Shl_int_intruction) {
     uint16_t pc = 0;
     uint32_t *res;
     union{ uint32_t data; struct { uint8_t one; uint8_t two; uint8_t three; uint8_t four;}; } op1, op2;
     op1.data = 5;
     op2.data = 33000;
-    uint8_t code_add[11] = {PUSH, 8, op1.one, op1.two, op1.three, op1.four, op2.one, op2.two, op2.three, op2.four, SUB_INT};
+    uint8_t code_add[11] = {PUSH, 8, op1.one, op1.two, op1.three, op1.four, op2.one, op2.two, op2.three, op2.four, SHL_INT};
     EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
     EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
     res = GET_HEAD(uint32_t);
-    EXPECT_EQ(*res, 33000 - 5);
-}
-
-TEST(VMTest, Mul_int_intruction) {
-    uint16_t pc = 0;
-    uint32_t *res;
-    union{ uint32_t data; struct { uint8_t one; uint8_t two; uint8_t three; uint8_t four;}; } op1, op2;
-    op1.data = 33000;
-    op2.data = 5;
-    uint8_t code_add[11] = {PUSH, 8, op1.one, op1.two, op1.three, op1.four, op2.one, op2.two, op2.three, op2.four, MUL_INT};
-    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
-    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
-    res = GET_HEAD(uint32_t);
-    EXPECT_EQ(*res, 33000 * 5);
-}
-
-TEST(VMTest, Div_int_intruction) {
-    uint16_t pc = 0;
-    uint32_t *res;
-    union{ uint32_t data; struct { uint8_t one; uint8_t two; uint8_t three; uint8_t four;}; } op1, op2;
-    op1.data = 5;
-    op2.data = 33000;
-    uint8_t code_add[11] = {PUSH, 8, op1.one, op1.two, op1.three, op1.four, op2.one, op2.two, op2.three, op2.four, DIV_INT};
-    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
-    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
-    res = GET_HEAD(uint32_t);
-    EXPECT_EQ(*res, 33000 / 5);
+    EXPECT_EQ(*res, 33000 << 5);
 }
 
 TEST(VMTest, Div_int_intruction_by_zero) {
     uint16_t pc = 0;
-    uint32_t *res;
     union{ uint32_t data; struct { uint8_t one; uint8_t two; uint8_t three; uint8_t four;}; } op1, op2;
     op1.data = 0;
     op2.data = 33000;
@@ -420,7 +356,6 @@ TEST(VMTest, Div_sint_intruction) {
 
 TEST(VMTest, Div_sint_intruction_by_zero) {
     uint16_t pc = 0;
-    int32_t *res;
     union{ int32_t data; struct { uint8_t one; uint8_t two; uint8_t three; uint8_t four;}; } op1, op2;
     op1.data = 0;
     op2.data = -33000;
@@ -428,3 +363,5 @@ TEST(VMTest, Div_sint_intruction_by_zero) {
     EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
     EXPECT_EQ(execute_intruction(code_add, &pc), DIV_BY_ZERO);
 }
+
+
