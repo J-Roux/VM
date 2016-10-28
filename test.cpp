@@ -90,14 +90,12 @@ auto get_code<uint32_t>(uint32_t op1, uint32_t op2, COMMANDS command)
 template<class T, class type >
 void TestMethod(COMMANDS command, type op1, type op2) {
     using code_type = typename std::make_unsigned<type>::type;
-	uint16_t pc = 0;
+    uint16_t pc = 0;
     auto code = get_code<code_type>(op1, op2, command);
     EXPECT_EQ(execute_intruction(code.data(), &pc), SUCCESS);
     EXPECT_EQ(execute_intruction(code.data(), &pc), SUCCESS);
     auto res = GET_HEAD(type);
-    auto a = *res;
-    auto b = T{}(op2, op1);
-	EXPECT_EQ(*res, T{}(op2, op1));
+    EXPECT_EQ(*res, T{}(op2, op1));
 }
 
 
@@ -173,7 +171,7 @@ TEST(VMTest, Add_sbyte_intruction) {
 }
 
 TEST(VMTest, Mul_sbyte_intruction) {
-    TestMethod<std::multiplies<>, int8_t>(MUL_BYTE, 9, -3);
+    TestMethod<std::multiplies<>, int8_t>(MUL_BYTE, 40, -3);
 }
 
 TEST(VMTest, Sub_sbyte_intruction) {
@@ -331,42 +329,15 @@ TEST(VMTest, Add_sint_intruction) {
 
 
 TEST(VMTest, Sub_sint_intruction) {
-    uint16_t pc = 0;
-    int32_t *res;
-    union{ int32_t data; struct { uint8_t one; uint8_t two; uint8_t three; uint8_t four;}; } op1, op2;
-    op1.data = 33000;
-    op2.data = 5;
-    uint8_t code_add[11] = {PUSH, 8, op1.one, op1.two, op1.three, op1.four, op2.one, op2.two, op2.three, op2.four, SUB_SINT};
-    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
-    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
-    res = GET_HEAD(int32_t);
-    EXPECT_EQ(*res, 5 - 33000);
+  TestMethod<std::minus<>, int32_t>(SUB_INT, -5, 33000);
 }
 
 TEST(VMTest, Mul_sint_intruction) {
-    uint16_t pc = 0;
-    int32_t *res;
-    union{ int32_t data; struct { uint8_t one; uint8_t two; uint8_t three; uint8_t four;}; } op1, op2;
-    op1.data = 33000;
-    op2.data = -5;
-    uint8_t code_add[11] = {PUSH, 8, op1.one, op1.two, op1.three, op1.four, op2.one, op2.two, op2.three, op2.four, MUL_SINT};
-    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
-    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
-    res = GET_HEAD(int32_t);
-    EXPECT_EQ(*res, 33000 * -5);
+     TestMethod<std::multiplies<>, int32_t>(MUL_INT, -5, 33000);
 }
 
 TEST(VMTest, Div_sint_intruction) {
-    uint16_t pc = 0;
-    int32_t *res;
-    union{ int32_t data; struct { uint8_t one; uint8_t two; uint8_t three; uint8_t four;}; } op1, op2;
-    op1.data = -5;
-    op2.data = 33000;
-    uint8_t code_add[11] = {PUSH, 8, op1.one, op1.two, op1.three, op1.four, op2.one, op2.two, op2.three, op2.four, DIV_SINT};
-    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
-    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
-    res = GET_HEAD(int32_t);
-    EXPECT_EQ(*res, 33000 / -5);
+     TestMethod<std::divides<>, int32_t>(DIV_SINT, -5, 33000);
 }
 
 TEST(VMTest, Div_sint_intruction_by_zero) {

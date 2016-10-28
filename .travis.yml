@@ -9,9 +9,12 @@ directories:
              - "~/.platformio"
 env:
              - PLATFORMIO_CI_SRC=src/
+addons:
+	apt:
+		g++5
 install:
         sudo  pip install -U platformio
-   
+         
 script:
          - mkdir build
          - cd build
