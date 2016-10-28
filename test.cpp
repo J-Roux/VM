@@ -87,6 +87,21 @@ auto get_code<uint32_t>(uint32_t op1, uint32_t op2, COMMANDS command)
     return std::vector<uint8_t> ({uint8_t(PUSH), 8, o1.one, o1.two, o1.three, o1.four, o2.one, o2.two, o2.three, o2.four, uint8_t(command)});
 }
 
+template<>
+auto get_code<uint64_t>(uint64_t op1, uint64_t op2, COMMANDS command)
+{
+  union{ uint64_t data; struct { uint8_t one; uint8_t two; uint8_t three; uint8_t four;
+                                 uint8_t five; uint8_t six; uint8_t seven; uint8_t eight;}; } o1, o2;
+  o1.data = op1;
+  o2.data = op2;
+  return std::vector<uint8_t> ({uint8_t(PUSH), 16,
+                                o1.one, o1.two, o1.three, o1.four, o1.five, o1.six, o1.seven, o1.eight,
+                                o2.one, o2.two, o2.three, o2.four, o2.five, o2.six, o2.seven, o2.eight,
+                                uint8_t(command)});
+
+}
+
+
 template<class T, class type >
 void TestMethod(COMMANDS command, type op1, type op2) {
     using code_type = typename std::make_unsigned<type>::type;
@@ -109,7 +124,7 @@ template<>
 struct shift_right<void>
 {
 	template< class T, class U>
-	constexpr auto operator()(T&& lhs, U&& rhs) const-> decltype(std::forward<T>(lhs) >> std::forward<U>(rhs))
+	constexpr auto operator()(T&& lhs, U&& rhs) const -> decltype(std::forward<T>(lhs) >> std::forward<U>(rhs))
 	{
 		return    std::forward<T>(lhs) >> std::forward<U>(rhs);
 	}
@@ -161,9 +176,9 @@ TEST(VMTest, Div_ubyte_intruction) {
 
 TEST(VMTest, Div_ubyte_intruction_by_zero) {
     uint16_t pc = 0;
-    uint8_t code_add[5] = {PUSH, 2, 0, 27, DIV_BYTE};
-    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
-    EXPECT_EQ(execute_intruction(code_add, &pc), DIV_BY_ZERO);
+    auto code = get_code<uint8_t>(0,5, DIV_BYTE);
+    EXPECT_EQ(execute_intruction(code.data(), &pc), SUCCESS);
+    EXPECT_EQ(execute_intruction(code.data(), &pc), DIV_BY_ZERO);
 }
 
 TEST(VMTest, Add_sbyte_intruction) {
@@ -184,9 +199,9 @@ TEST(VMTest, Div_sbyte_intruction) {
 
 TEST(VMTest, Div_sbyte_intruction_by_zero) {
     uint16_t pc = 0;
-    uint8_t code_add[5] = {PUSH, 2, 0, -27, DIV_SBYTE};
-    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
-    EXPECT_EQ(execute_intruction(code_add, &pc), DIV_BY_ZERO);
+    auto code = get_code<uint8_t>(0,5, DIV_SBYTE);
+    EXPECT_EQ(execute_intruction(code.data(), &pc), SUCCESS);
+    EXPECT_EQ(execute_intruction(code.data(), &pc), DIV_BY_ZERO);
 }
 
 
@@ -234,12 +249,9 @@ TEST(VMTest, Div_ushort_intruction) {
 
 TEST(VMTest, Div_ushort_intruction_by_zero) {
     uint16_t pc = 0;
-    union{ uint16_t data; struct { uint8_t hi; uint8_t lo;}; } op1, op2;
-    op1.data = 0;
-    op2.data = 260;
-    uint8_t code_add[7] = {PUSH, 4, op1.hi, op1.lo, op2.hi, op2.lo, DIV_SHORT};
-    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
-    EXPECT_EQ(execute_intruction(code_add, &pc), DIV_BY_ZERO);
+    auto code = get_code<uint16_t>(0, 256, DIV_SHORT);
+    EXPECT_EQ(execute_intruction(code.data(), &pc), SUCCESS);
+    EXPECT_EQ(execute_intruction(code.data(), &pc), DIV_BY_ZERO);
 }
 
 
@@ -265,12 +277,9 @@ TEST(VMTest, Div_sshort_intruction) {
 
 TEST(VMTest, Div_sshort_intruction_by_zero) {
     uint16_t pc = 0;
-    union{ int16_t data; struct { uint8_t hi; uint8_t lo;}; } op1, op2;
-    op1.data = 0;
-    op2.data = 260;
-    uint8_t code_add[7] = {PUSH, 4, op1.hi, op1.lo, op2.hi, op2.lo, DIV_SSHORT};
-    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
-    EXPECT_EQ(execute_intruction(code_add, &pc), DIV_BY_ZERO);
+    auto code = get_code<uint16_t>(0, 256, DIV_SSHORT);
+    EXPECT_EQ(execute_intruction(code.data(), &pc), SUCCESS);
+    EXPECT_EQ(execute_intruction(code.data(), &pc), DIV_BY_ZERO);
 
 }
 
@@ -315,12 +324,9 @@ TEST(VMTest, Div_int_intruction) {
 
 TEST(VMTest, Div_int_intruction_by_zero) {
     uint16_t pc = 0;
-    union{ uint32_t data; struct { uint8_t one; uint8_t two; uint8_t three; uint8_t four;}; } op1, op2;
-    op1.data = 0;
-    op2.data = 33000;
-    uint8_t code_add[11] = {PUSH, 8, op1.one, op1.two, op1.three, op1.four, op2.one, op2.two, op2.three, op2.four, DIV_INT};
-    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
-    EXPECT_EQ(execute_intruction(code_add, &pc), DIV_BY_ZERO);
+    auto code = get_code<uint32_t>(0, 3333, DIV_INT);
+    EXPECT_EQ(execute_intruction(code.data(), &pc), SUCCESS);
+    EXPECT_EQ(execute_intruction(code.data(), &pc), DIV_BY_ZERO);
 }
 
 TEST(VMTest, Add_sint_intruction) {
@@ -342,12 +348,77 @@ TEST(VMTest, Div_sint_intruction) {
 
 TEST(VMTest, Div_sint_intruction_by_zero) {
     uint16_t pc = 0;
-    union{ int32_t data; struct { uint8_t one; uint8_t two; uint8_t three; uint8_t four;}; } op1, op2;
-    op1.data = 0;
-    op2.data = -33000;
-    uint8_t code_add[11] = {PUSH, 8, op1.one, op1.two, op1.three, op1.four, op2.one, op2.two, op2.three, op2.four, DIV_SINT};
-    EXPECT_EQ(execute_intruction(code_add, &pc), SUCCESS);
-    EXPECT_EQ(execute_intruction(code_add, &pc), DIV_BY_ZERO);
+    auto code = get_code<uint32_t>(0, -333, DIV_SINT);
+    EXPECT_EQ(execute_intruction(code.data(), &pc), SUCCESS);
+    EXPECT_EQ(execute_intruction(code.data(), &pc), DIV_BY_ZERO);
 }
 
 
+TEST(VMTest, And_long_intruction) {
+    TestMethod<std::bit_and<>, uint64_t>(AND_LONG, 5, 33000);
+}
+
+
+TEST(VMTest, Or_long_intruction) {
+    TestMethod<std::bit_or<>, uint64_t>(OR_LONG, 5, 33000);
+}
+
+TEST(VMTest, Shr_long_intruction) {
+    TestMethod<shift_right<>, uint64_t>(SHR_LONG, 5, 33000);
+
+}
+
+TEST(VMTest, Shl_long_intruction) {
+  TestMethod<shift_left<>, uint64_t>(SHL_LONG, 5, 33000);
+}
+
+
+
+TEST(VMTest, Add_long_intruction) {
+    TestMethod<std::plus<>, uint64_t>(ADD_LONG, 5, 33000);
+}
+
+
+TEST(VMTest, Sub_long_intruction) {
+    TestMethod<std::minus<>, uint64_t>(SUB_LONG, 5, 33000);
+}
+
+TEST(VMTest, Mul_long_intruction) {
+    TestMethod<std::multiplies<>, uint64_t>(MUL_LONG, 5, 33000);
+
+}
+
+TEST(VMTest, Div_long_intruction) {
+     TestMethod<std::divides<>, uint64_t>(DIV_LONG, 5, 33000);
+}
+
+TEST(VMTest, Div_long_intruction_by_zero) {
+    uint16_t pc = 0;
+    auto code = get_code<uint64_t>(0, 3000, DIV_LONG);
+    EXPECT_EQ(execute_intruction(code.data(), &pc), SUCCESS);
+    EXPECT_EQ(execute_intruction(code.data(), &pc), DIV_BY_ZERO);
+}
+
+TEST(VMTest, Add_slong_intruction) {
+  TestMethod<std::plus<>, int64_t>(ADD_LONG, -5, 33000);
+}
+
+
+TEST(VMTest, Sub_slong_intruction) {
+  TestMethod<std::minus<>, int64_t>(SUB_LONG, -5, 33000);
+}
+
+TEST(VMTest, Mul_slong_intruction) {
+     TestMethod<std::multiplies<>, int64_t>(MUL_LONG, -5, 33000);
+}
+
+TEST(VMTest, Div_slong_intruction) {
+     TestMethod<std::divides<>, int64_t>(DIV_SLONG, -5, 33000);
+}
+
+TEST(VMTest, Div_slong_intruction_by_zero) {
+    uint16_t pc = 0;
+    auto code = get_code<uint64_t>(0, -30000, DIV_SLONG);
+    EXPECT_EQ(execute_intruction(code.data(), &pc), SUCCESS);
+    EXPECT_EQ(execute_intruction(code.data(), &pc), DIV_BY_ZERO);
+}
