@@ -4,6 +4,7 @@ python:
 
 # Cache PlatformIO packages using Travis CI container-based infrastructure
 sudo: required
+dist: trusty
 cache:
 directories:
              - "~/.platformio"
@@ -11,7 +12,8 @@ env:
              - PLATFORMIO_CI_SRC=src/
 addons:
 	apt:
-		g++5
+		packages:
+			g++5
 install:
         sudo  pip install -U platformio
          
