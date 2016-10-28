@@ -1,4 +1,4 @@
-nguage: python
+language: python
 python:
     - "2.7"
 
@@ -10,10 +10,11 @@ directories:
              - "~/.platformio"
 env:
              - PLATFORMIO_CI_SRC=src/
-addons:
-	apt:
-		packages:
-			g++5
+before_install:
+  - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+  - sudo apt-get update -q
+  - sudo apt-get install g++-5 -y
+
 install:
         sudo  pip install -U platformio
          
