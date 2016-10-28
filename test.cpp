@@ -140,6 +140,19 @@ struct shift_left<void>
 	}
 };
 
+
+TEST(VMTest, Eq_byte_intruction) {
+	TestMethod<std::equal_to<>, uint8_t>(EQ_BYTE, 2, 5);
+	TestMethod<std::equal_to<>, uint8_t>(EQ_BYTE, 5, 5);
+}
+
+TEST(VMTest, Neq_byte_intruction) {
+	TestMethod<std::not_equal_to<>, uint8_t>(NEQ_BYTE, 2, 5);
+	TestMethod<std::not_equal_to<>, uint8_t>(NEQ_BYTE, 5, 5);
+}
+
+
+
 TEST(VMTest, Shr_byte_intruction) {
 	TestMethod<shift_right<>, uint8_t>(SHR_BYTE, 2, 5);
 }

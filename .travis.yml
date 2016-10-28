@@ -21,7 +21,7 @@ install:
 script:
          - mkdir build
          - cd build
-         - cmake -Dtest=ON -DCMAKE_CXX_COMPILER=g++-5 ../
+         - cmake -Dtest=ON -DCMAKE_CXX_COMPILER=g++-5 -DSTACK_SIZE=512 ../
          - make
          - make test
          - ./YASM
@@ -31,8 +31,6 @@ script:
          - cd build
          - cmake -Dtest=ON -DRANGE_CHECK=0 -DCMAKE_CXX_COMPILER=g++-5  -DSTACK_SIZE=64 ../
          - make
-         - make test
          - ./YASM
-         - ./runUnitTests
          - cd ..
          - platformio ci --board=uno
