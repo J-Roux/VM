@@ -33,6 +33,9 @@ RESULT pop_op_long(uint64_t* op1, uint64_t* op2)
   return result;
 }
 
+
+
+
 #define TYPE_COMPARE_BINARY_OPERATION(OPERATION, TYPE, SIZE, OP ) case OPERATION: {  TYPE op1, op2; \
 result = pop_op_##SIZE(&op1, &op2);\
 result |= push_byte(op1 OP op2); \
@@ -114,7 +117,7 @@ typedef RESULT(*func)(uint8_t *ptr, ptr_size size);
 
 RESULT push_by_arg(  uint8_t *code, uint16_t *program_counter,  func mem_instruction)
 {
-       (*program_counter)++;
+
        uint8_t* ptr_data = code + *(program_counter) + 1;
        uint8_t arg = code[*program_counter];
        (*program_counter) += arg + 1;
@@ -125,6 +128,7 @@ RESULT execute_intruction(uint8_t *code, uint16_t *program_counter)
 {
 	RESULT result = SUCCESS;
 	COMMANDS command = code[*program_counter];
+	(*program_counter)++;
 	switch (command)
 	{
 	    UNSIGNED_BINARY_OPERATION(ADD, +);
@@ -157,26 +161,33 @@ RESULT execute_intruction(uint8_t *code, uint16_t *program_counter)
             }
             case PUSH_BYTE:
             {
-                (*program_counter)++;
+
                 result = push(code + (*program_counter), sizeof(uint8_t));
                 break;
             }
             case PUSH_SHORT:
             {
-                *program_counter++;
+
                 result = push(code + (*program_counter), sizeof(uint16_t));
                 break;
             }
             case PUSH_INT:
             {
-                *program_counter++;
+
                 result = push(code + (*program_counter), sizeof(uint32_t));
                 break;
             }
             case PUSH_LONG:
             {
-                *program_counter++;
+
                 result = push(code + *program_counter, sizeof(uint64_t));
+                break;
+            }
+
+            case JMP:
+            {
+                uint16_t address = *((uint16_t*)(code + *program_counter));
+                *program_counter = address;
                 break;
             }
 

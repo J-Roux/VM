@@ -113,6 +113,18 @@ void TestMethod(COMMANDS command, type op1, type op2) {
     EXPECT_EQ(*res, T{}(op2, op1));
 }
 
+template<class T, class type>
+void TestUnary(COMMANDS command)
+{
+  using code_type = typename std::make_unsigned<type>::type;
+  uint16_t pc = 0;
+  auto t = GET_HEAD(type);
+  std::make_signed<type>::type t1 = *t;
+  auto code = std::vector<uint8_t> {uint8_t(command)};
+  EXPECT_EQ(execute_intruction(code.data(), &pc), SUCCESS);
+  auto res = GET_HEAD(type);
+  EXPECT_EQ(*res, T{}(0, t1));
+}
 
 template<typename T = void>
 struct shift_right;
@@ -136,8 +148,22 @@ struct shift_left<void>
 	template< class T, class U>
 	constexpr auto operator()(T&& lhs, U&& rhs) const-> decltype(std::forward<T>(lhs) << std::forward<U>(rhs))
 	{
-		return    std::forward<T>(lhs) << std::forward<U>(rhs);
+			return    std::forward<T>(lhs) << std::forward<U>(rhs);
 	}
+};
+
+
+template<typename T = void>
+struct negative;
+
+template<>
+struct negative<void>
+{
+  template< class T, class U>
+  constexpr auto operator()(T&& lhs, U&& rhs) const-> decltype(std::forward<T>(lhs) - std::forward<U>(rhs))
+  {
+                  return    std::forward<T>(lhs) - std::forward<U>(rhs);
+  }
 };
 
 
@@ -435,3 +461,14 @@ TEST(VMTest, Div_slong_intruction_by_zero) {
     EXPECT_EQ(execute_intruction(code.data(), &pc), SUCCESS);
     EXPECT_EQ(execute_intruction(code.data(), &pc), DIV_BY_ZERO);
 }
+
+
+TEST(VMTest, Jmp_intruction) {
+    uint16_t pc = 0;
+    auto code = std::vector<uint8_t>({PUSH, 2, 1, 7, ADD_BYTE, JMP, 6, 0});
+    EXPECT_EQ(execute_intruction(code.data(), &pc), SUCCESS);
+    EXPECT_EQ(execute_intruction(code.data(), &pc), SUCCESS);
+    EXPECT_EQ(execute_intruction(code.data(), &pc), SUCCESS);
+    EXPECT_EQ(pc, 6);
+}
+
