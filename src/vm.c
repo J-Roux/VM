@@ -1,7 +1,7 @@
 #include "vm.h"
 
 
-uint16_t arg;
+
 
 
 
@@ -164,6 +164,7 @@ RESULT execute_intruction(uint8_t *code, uint16_t *program_counter)
                 UNSIGNED_UNARY_OPERATION(DEC, --);
                 SIGNED_UNARY_OPERATION(NEG, -);
                 UNSIGNED_UNARY_OPERATION(NOT, ~);
+                UNSIGNED_UNARY_OPERATION(LNOT, !);
                 case PUSH:
                 {
                         result = push_by_arg(code, program_counter, &push);
@@ -196,6 +197,30 @@ RESULT execute_intruction(uint8_t *code, uint16_t *program_counter)
                 {
 
                         result = push(code + *program_counter, sizeof(uint64_t));
+                        break;
+                }
+                case POP_BYTE:
+                {
+
+                        result = pop(code + (*program_counter), sizeof(uint8_t));
+                        break;
+                }
+                case POP_SHORT:
+                {
+
+                        result = pop(code + (*program_counter), sizeof(uint16_t));
+                        break;
+                }
+                case POP_INT:
+                {
+
+                        result = pop(code + (*program_counter), sizeof(uint32_t));
+                        break;
+                }
+                case POP_LONG:
+                {
+
+                        result = pop(code + *program_counter, sizeof(uint64_t));
                         break;
                 }
 
