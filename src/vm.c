@@ -34,6 +34,21 @@ RESULT pop_op_long(uint64_t* op1, uint64_t* op2)
 }
 
 
+RESULT conditional_jmp(uint8_t* code, uint16_t* program_counter, uint8_t condition)
+{
+        uint8_t op = 0;
+        RESULT result = pop_byte(&op);
+        if(op == condition)
+        {
+                uint16_t address = *((uint16_t*)(code + *program_counter));
+                *program_counter = address;
+        }
+        else
+        {
+                *(program_counter)+=2;
+        }
+        return result;
+}
 
 
 #define TYPE_COMPARE_BINARY_OPERATION(OPERATION, TYPE, SIZE, OP ) case OPERATION: {  TYPE op1, op2; \
@@ -192,32 +207,12 @@ RESULT execute_intruction(uint8_t *code, uint16_t *program_counter)
                 }
                 case JT:
                 {
-                        uint8_t op = 0;
-                        result = pop_byte(&op);
-                        if(op)
-                        {
-                                uint16_t address = *((uint16_t*)(code + *program_counter));
-                                *program_counter = address;
-                        }
-                        else
-                        {
-                                *(program_counter)+=2;
-                        }
+                        result = conditional_jmp(code, program_counter, 1);
                         break;
                 }
                 case JF:
                 {
-                        uint8_t op = 0;
-                        result = pop_byte(&op);
-                        if(!op)
-                        {
-                                uint16_t address = *((uint16_t*)(code + *program_counter));
-                                *program_counter = address;
-                        }
-                        else
-                        {
-                                *(program_counter)+=2;
-                        }
+                        result = conditional_jmp(code, program_counter, 0);
                         break;
                 }
 
