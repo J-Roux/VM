@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 2.7)
 
-project(YASM)
+project(YASM_VM)
+project(YASM_COMPILER)
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
@@ -27,17 +28,23 @@ else(WIN32)
 endif()
 
 
-file(GLOB STACK "src/stack.c")
-file(GLOB VM  "src/vm.c")
-file(GLOB HEADERS "src/*.h")
-file(GLOB MAIN "src/main.c")
+set(FLEX_DIR "C:/Program Files/GnuWin32/bin/")
+if(WIN32)
+find_package(FLEX  REQUIRED)
+endif()
+file(GLOB STACK_VM "YASM_VM/src/stack.c")
+file(GLOB VM  "YASM_VM/src/vm.c")
+file(GLOB HEADERS_VM "YASM_VM/src/*.h")
+file(GLOB MAIN_VM "YASM_VM/src/main.c")
+file(GLOB COMPILER "YASM_COMPILER/src/*.c")
+file(GLOB COMMANDS_VM "YASM_VM/src/command.h")
 
 
 # configure a header file to pass some of the CMake settings
 # to the source code
 configure_file (
-  "${PROJECT_SOURCE_DIR}/Config.h.in"
-  "${PROJECT_SOURCE_DIR}/src/CMakeConfig.h"
+  "${PROJECT_SOURCE_DIR}/config/Config.h.in"
+  "${PROJECT_SOURCE_DIR}/YASM_VM/src/CMakeConfig.h"
   )
 
 
@@ -70,8 +77,9 @@ if (test)
   ##############
   # Unit Tests
   ##############
-
-  add_executable(runUnitTests test.cpp ${STACK} ${VM}  ${HEADERS})
+   
+  file(GLOB TEST_VM "YASM_VM/tests/*.cpp")
+  add_executable(runUnitTests ${TEST_VM} ${STACK_VM} ${VM}  ${HEADERS_VM})
  
   target_link_libraries(runUnitTests gtest gtest_main pthread)
 
@@ -81,7 +89,7 @@ if (test)
   # add_test(stack-test runUnitTests)
 endif()
 
-add_executable(YASM ${MAIN} ${VM} ${HEADERS} ${STACK})
+add_executable(YASM_VM ${MAIN_VM} ${VM} ${HEADERS_VM} ${STACK_VM})
 
 
 

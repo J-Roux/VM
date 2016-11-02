@@ -1,6 +1,6 @@
 
-#include "src/vm.h"
-#include "src/stack.h"
+#include "../src/vm.h"
+#include "../src/stack.h"
 #include <iostream>
 #include <functional>
 #include <vector>
