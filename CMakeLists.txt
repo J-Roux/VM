@@ -28,16 +28,26 @@ else(WIN32)
 endif()
 
 
-set(FLEX_DIR "C:/Program Files/GnuWin32/bin/")
 if(WIN32)
-find_package(FLEX  REQUIRED)
+set(FLEX_DIR "C:/Program Files/GnuWin32/bin/")
 endif()
+
+find_package(FLEX  REQUIRED)
+
+
+
+
+
 file(GLOB STACK_VM "YASM_VM/src/stack.c")
 file(GLOB VM  "YASM_VM/src/vm.c")
 file(GLOB HEADERS_VM "YASM_VM/src/*.h")
 file(GLOB MAIN_VM "YASM_VM/src/main.c")
 file(GLOB COMPILER "YASM_COMPILER/src/*.c")
 file(GLOB COMMANDS_VM "YASM_VM/src/command.h")
+
+
+FLEX_TARGET(MyScanner "YASM_COMPILER/src/yasm.lex" ${COMPILER} ${COMMNADS_VM})
+
 
 
 # configure a header file to pass some of the CMake settings
@@ -89,6 +99,10 @@ if (test)
   # add_test(stack-test runUnitTests)
 endif()
 
+message(STATUS  ${FLEX_MyScanner_OUTPUTS})
+ add_executable(YASM_COMPILER
+    ${FLEX_MyScanner_OUTPUTS}
+ )
 add_executable(YASM_VM ${MAIN_VM} ${VM} ${HEADERS_VM} ${STACK_VM})
 
 

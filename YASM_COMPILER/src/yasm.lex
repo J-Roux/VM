@@ -1,6 +1,6 @@
 %{ 
 #include <stdio.h>
-#include "command.h"
+#include "../../YASM_VM/src/command.h"
 
 #define LEXER_DEBUG 0
 %}
