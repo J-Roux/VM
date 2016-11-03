@@ -1,3 +1,4 @@
+%option noyywrap
 %{ 
 #include <stdio.h>
 #include "../../YASM_VM/src/command.h"
@@ -53,41 +54,12 @@ COMMENT          #.*
 %%
 {COMMENT}      /* Ignore comments */
 
-{PLUS_OP}      return _PLUS_OP;
-{MINUS_OP}     return _MINUS_OP;
-{MUL_OP}       return _MUL_OP;
-{DIV_OP}       return _DIV_OP;
-
-{ASSIGN_OP}    return _ASSIGN_OP;
-{EQUALS_OP}    return _EQUALS_OP;
-{NOT_EQ_OP}    return _NOT_EQ_OP;
-{NOT_OP}       return _NOT_OP;
-{AND_OP}       return _AND_OP;
-{OR_OP}        return _OR_OP;
-{XOR_OP}       return _XOR_OP;
-{NOR_OP}       return _NOR_OP;
-{XNOR_OP}      return _XNOR_OP;
-{INC_OP}       return _INC_OP;
-{DEC_OP}       return _DEC_OP;
-{OF_OP}        return _OF_OP;
-
-{CALL_KW}      return _CALL_KW;
-{IF_KW}        return _IF_KW;
-{UNLESS_KW}    return _UNLESS_KW; 
-{WHILE_KW}     return _WHILE_KW;
-{UNTIL_KW}     return _UNTIL_KW;
-{WITH_KW}      return _WITH_KW;
-{PROJECTS_TO}  return _PROJECTS_TO;
-{COMMA}        return _COMMA;
-{HASH}         return _HASH;
-{FUNCTION_KW}  return _FUNCTION_KW;
-{END_KW}       return _END_KW;
-{THEN_KW}      return _THEN_KW;
-
-
-
-{INDENT}       return _INDENT;
-{OUTDENT}      return _OUTDENT;
-
+{PLUS_OP}      {printf("\nплюс");}
 {WS}+          /* Ignore whitespace */
 %%
+int main()
+{
+        yylex();
+
+        return 0;
+}

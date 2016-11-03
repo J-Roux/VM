@@ -28,9 +28,6 @@ else(WIN32)
 endif()
 
 
-if(WIN32)
-set(FLEX_DIR "C:/Program Files/GnuWin32/bin/")
-endif()
 
 find_package(FLEX  REQUIRED)
 
@@ -46,7 +43,7 @@ file(GLOB COMPILER "YASM_COMPILER/src/*.c")
 file(GLOB COMMANDS_VM "YASM_VM/src/command.h")
 
 
-FLEX_TARGET(MyScanner "YASM_COMPILER/src/yasm.lex" ${COMPILER} ${COMMNADS_VM})
+FLEX_TARGET(MyScanner "YASM_COMPILER/src/yasm.lex" ${CMAKE_SOURCE_DIR}/YASM_COMPILER/src/lexer.c )
 
 
 
@@ -99,10 +96,10 @@ if (test)
   # add_test(stack-test runUnitTests)
 endif()
 
-message(STATUS  ${FLEX_MyScanner_OUTPUTS})
- add_executable(YASM_COMPILER
-    ${FLEX_MyScanner_OUTPUTS}
- )
+
+add_executable(YASM_COMPILER
+    ${COMPILER} ${COMMNADS_VM}
+    ${FLEX_MyScanner_OUTPUTS})
 add_executable(YASM_VM ${MAIN_VM} ${VM} ${HEADERS_VM} ${STACK_VM})
 
 
