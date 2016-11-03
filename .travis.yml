@@ -9,7 +9,7 @@ cache:
 directories:
              - "~/.platformio"
 env:
-             - PLATFORMIO_CI_SRC=src/
+             - PLATFORMIO_CI_SRC=YASM_VM/src/
 before_install:
   - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
   - sudo apt-get update -q
@@ -24,13 +24,7 @@ script:
          - cmake -Dtest=ON -DCMAKE_CXX_COMPILER=g++-5 -DSTACK_SIZE=512 ../
          - make
          - make test
-         - ./YASM
          - ./runUnitTests
          - cd ..
          - platformio ci --board=uno
-         - cd build
-         - cmake -Dtest=ON -DRANGE_CHECK=0 -DCMAKE_CXX_COMPILER=g++-5  -DSTACK_SIZE=64 ../
-         - make
-         - ./YASM
-         - cd ..
-         - platformio ci --board=uno
+
