@@ -30,7 +30,7 @@ endif()
 
 
 find_package(FLEX  REQUIRED)
-
+find_package(BISON REQUIRED)
 
 
 
@@ -39,13 +39,14 @@ file(GLOB STACK_VM "YASM_VM/src/stack.c")
 file(GLOB VM  "YASM_VM/src/vm.c")
 file(GLOB HEADERS_VM "YASM_VM/src/*.h")
 file(GLOB MAIN_VM "YASM_VM/src/main.c")
-file(GLOB COMPILER "YASM_COMPILER/src/*.c")
 file(GLOB COMMANDS_VM "YASM_VM/src/command.h")
 
 
+BISON_TARGET(MyParser "YASM_COMPILER/src/parcer.y" ${CMAKE_SOURCE_DIR}/YASM_COMPILER/src/parser.c)
 FLEX_TARGET(MyScanner "YASM_COMPILER/src/yasm.lex" ${CMAKE_SOURCE_DIR}/YASM_COMPILER/src/lexer.c )
-
-
+file(GLOB COMPILER "YASM_COMPILER/src/*.c")
+file(GLOB HEADER_COMPILER "YASM_COMPILER/src/*h")
+ADD_FLEX_BISON_DEPENDENCY(MyScanner MyParser)
 
 # configure a header file to pass some of the CMake settings
 # to the source code
@@ -99,7 +100,9 @@ endif()
 
 add_executable(YASM_COMPILER
     ${COMPILER} ${COMMNADS_VM}
-    ${FLEX_MyScanner_OUTPUTS})
+    ${HEADER_COMPILER}
+    ${FLEX_MyScanner_OUTPUTS}
+    ${BISON_MyParser_OUTPUTS})
 add_executable(YASM_VM ${MAIN_VM} ${VM} ${HEADERS_VM} ${STACK_VM})
 
 

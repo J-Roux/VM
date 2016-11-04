@@ -1,3 +1,3 @@
 
-#define RANGE_CHECK 0
+#define RANGE_CHECK 1
 #define STACK_SIZE 512
