@@ -286,11 +286,32 @@ static void yy_fatal_error YY_PROTO(( yyconst char msg[] ));
 	*yy_cp = '\0'; \
 	yy_c_buf_p = yy_cp;
 
-#define YY_NUM_RULES 4
-#define YY_END_OF_BUFFER 5
-static yyconst short int yy_accept[11] =
+#define YY_NUM_RULES 130
+#define YY_END_OF_BUFFER 131
+static yyconst short int yy_accept[195] =
     {   0,
-        0,    0,    5,    4,    3,    1,    2,    3,    1,    0
+        0,    0,  131,  130,  127,    1,  128,  129,  124,  126,
+      125,  123,  122,  122,  122,  122,  122,  122,  122,  122,
+      122,  122,  122,  122,  122,  122,  122,  127,    1,  122,
+      122,  122,  122,  122,  122,  122,  122,  122,  122,  122,
+      108,  122,  107,  122,  122,  122,  122,  122,  122,  122,
+      122,  122,  122,  122,  122,  122,  122,  122,  122,  122,
+       38,   40,   41,   39,  122,  122,   70,   72,   73,   71,
+      122,  106,  122,  122,   54,   56,   57,   55,  122,  122,
+      122,  122,   26,   28,   29,   27,  110,  122,  121,  122,
+      122,  122,    2,    4,    5,    3,   22,   24,   25,   23,
+
+      120,   90,   92,   93,   91,   14,   16,   17,   15,   42,
+       44,   45,   43,  122,   78,   80,   81,   79,   74,   76,
+       77,   75,   86,   88,   89,   87,   62,   64,   65,   63,
+      122,   58,   60,   61,   59,   10,   12,   13,   11,   94,
+       96,   97,   95,   46,   48,   49,   47,  102,  104,  105,
+      103,  116,  118,  119,  117,  109,   34,   36,   37,   35,
+       30,   32,   33,   31,    6,    8,    9,    7,   18,   20,
+       21,   19,  111,   82,   84,   85,   83,   66,   68,   69,
+       67,   98,  100,  101,   99,   50,   52,   53,   51,  112,
+      114,  115,  113,    0
+
     } ;
 
 static yyconst int yy_ec[256] =
@@ -298,17 +319,17 @@ static yyconst int yy_ec[256] =
         1,    1,    1,    1,    1,    1,    1,    1,    2,    3,
         1,    1,    2,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    2,    1,    1,    4,    1,    1,    1,    1,    1,
-        1,    1,    5,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    2,    1,    1,    4,    1,    1,    1,    1,    5,
+        6,    7,    8,    1,    9,    1,   10,   11,   11,   11,
+       11,   11,   11,   11,   11,   11,   11,    1,    1,    1,
+        1,    1,    1,    1,   12,   12,   12,   12,   12,   12,
+       12,   12,   12,   12,   12,   12,   12,   12,   12,   12,
+       12,   12,   12,   12,   12,   12,   12,   12,   12,   12,
+        1,    1,    1,    1,    1,    1,   13,   14,   15,   16,
 
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+       17,   18,   19,   20,   21,   22,   12,   23,   24,   25,
+       26,   27,   28,   29,   30,   31,   32,   33,   12,   12,
+       12,   12,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
@@ -325,33 +346,124 @@ static yyconst int yy_ec[256] =
         1,    1,    1,    1,    1
     } ;
 
-static yyconst int yy_meta[6] =
+static yyconst int yy_meta[34] =
     {   0,
-        1,    2,    3,    1,    1
+        1,    1,    2,    1,    1,    1,    1,    1,    1,    1,
+        3,    3,    3,    3,    3,    3,    3,    3,    3,    3,
+        3,    3,    3,    3,    3,    3,    3,    3,    3,    3,
+        3,    3,    3
     } ;
 
-static yyconst short int yy_base[13] =
+static yyconst short int yy_base[197] =
     {   0,
-        0,    0,   10,   11,    0,    0,   11,    0,    0,   11,
-        4,    7
+        0,    0,  204,  205,   32,    0,  205,  205,  205,  205,
+      205,  205,    0,   20,  190,   20,   10,   23,  177,   24,
+       26,  169,   27,  171,   20,  182,   27,   47,    0,    0,
+      182,  181,  173,  180,  161,   42,  180,  164,   46,  176,
+        0,  163,    0,  161,  162,   47,  164,   43,  154,   52,
+      155,  151,  149,   35,  165,   60,   64,  152,   65,   70,
+        0,    0,    0,   75,  142,   78,    0,    0,    0,   83,
+       88,    0,   89,  132,    0,    0,    0,   93,  101,  106,
+      107,  111,    0,    0,    0,    0,  112,  120,    0,  124,
+      125,  129,    0,    0,    0,    0,    0,    0,    0,    0,
+
+        0,    0,    0,    0,    0,    0,    0,    0,  130,    0,
+        0,    0,    0,  100,    0,    0,    0,  135,    0,    0,
+        0,    0,    0,    0,    0,    0,    0,    0,    0,  143,
+      147,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+        0,    0,    0,    0,    0,    0,  148,    0,    0,    0,
+        0,    0,    0,    0,    0,  153,    0,    0,    0,    0,
+        0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+        0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+        0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+        0,    0,    0,  205,  183,   77
+
     } ;
 
-static yyconst short int yy_def[13] =
+static yyconst short int yy_def[197] =
     {   0,
-       10,    1,   10,   10,   11,   12,   10,   11,   12,    0,
-       10,   10
+      194,    1,  194,  194,  194,  195,  194,  194,  194,  194,
+      194,  194,  196,  196,  196,  196,  196,  196,  196,  196,
+      196,  196,  196,  196,  196,  196,  196,  194,  195,  196,
+      196,  196,  196,  196,  196,  196,  196,  196,  196,  196,
+      196,  196,  196,  196,  196,  196,  196,  196,  196,  196,
+      196,  196,  196,  196,  196,  196,  196,  196,  196,  196,
+      196,  196,  196,  196,  196,  196,  196,  196,  196,  196,
+      196,  196,  196,  196,  196,  196,  196,  196,  196,  196,
+      196,  196,  196,  196,  196,  196,  196,  196,  196,  196,
+      196,  196,  196,  196,  196,  196,  196,  196,  196,  196,
+
+      196,  196,  196,  196,  196,  196,  196,  196,  196,  196,
+      196,  196,  196,  196,  196,  196,  196,  196,  196,  196,
+      196,  196,  196,  196,  196,  196,  196,  196,  196,  196,
+      196,  196,  196,  196,  196,  196,  196,  196,  196,  196,
+      196,  196,  196,  196,  196,  196,  196,  196,  196,  196,
+      196,  196,  196,  196,  196,  196,  196,  196,  196,  196,
+      196,  196,  196,  196,  196,  196,  196,  196,  196,  196,
+      196,  196,  196,  196,  196,  196,  196,  196,  196,  196,
+      196,  196,  196,  196,  196,  196,  196,  196,  196,  196,
+      196,  196,  196,    0,  194,  194
+
     } ;
 
-static yyconst short int yy_nxt[17] =
+static yyconst short int yy_nxt[239] =
     {   0,
-        4,    5,    5,    6,    7,    8,    8,    9,    9,   10,
-        3,   10,   10,   10,   10,   10
+        4,    5,    5,    6,    7,    8,    9,   10,   11,   12,
+        4,   13,   14,   13,   15,   16,   17,   13,   18,   13,
+       19,   20,   21,   22,   23,   24,   25,   13,   26,   27,
+       13,   13,   13,   28,   28,   31,   34,   36,   37,   38,
+       35,   41,   44,   48,   32,   51,   54,   42,   28,   28,
+       45,   52,   49,   39,   43,   61,   46,   90,   55,   67,
+       75,   80,   62,   91,   63,   83,   68,   76,   69,   77,
+       81,   64,   84,   93,   85,   70,   78,   97,  102,   30,
+       94,   86,   95,  106,   98,  103,   99,  104,  110,   96,
+      107,  115,  108,  100,  105,  111,  119,  112,  116,  109,
+
+      117,  123,  127,  120,  113,  121,  132,  118,  124,  128,
+      125,  129,  122,  133,  136,  134,  173,  126,  130,  140,
+      144,  137,  135,  138,  148,  152,  141,  145,  142,  146,
+      139,  149,  153,  150,  154,  143,  147,  157,  161,  156,
+      151,  155,  165,  169,  158,  162,  159,  163,  174,  166,
+      170,  167,  171,  160,  164,  175,  178,  176,  168,  172,
+      182,  186,  131,  179,  177,  180,  190,  183,  187,  184,
+      188,  114,  181,  191,  101,  192,  185,  189,   92,   89,
+       88,   87,  193,   29,   82,   29,   79,   74,   73,   72,
+       71,   66,   65,   60,   59,   58,   57,   56,   53,   50,
+
+       47,   40,   33,  194,    3,  194,  194,  194,  194,  194,
+      194,  194,  194,  194,  194,  194,  194,  194,  194,  194,
+      194,  194,  194,  194,  194,  194,  194,  194,  194,  194,
+      194,  194,  194,  194,  194,  194,  194,  194
     } ;
 
-static yyconst short int yy_chk[17] =
+static yyconst short int yy_chk[239] =
     {   0,
-        1,    1,    1,    1,    1,   11,   11,   12,   12,    3,
-       10,   10,   10,   10,   10,   10
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    5,    5,   14,   16,   17,   17,   18,
+       16,   20,   21,   23,   14,   25,   27,   20,   28,   28,
+       21,   25,   23,   18,   20,   36,   21,   54,   27,   39,
+       46,   48,   36,   54,   36,   50,   39,   46,   39,   46,
+       48,   36,   50,   56,   50,   39,   46,   57,   59,  196,
+       56,   50,   56,   60,   57,   59,   57,   59,   64,   56,
+       60,   66,   60,   57,   59,   64,   70,   64,   66,   60,
+
+       66,   71,   73,   70,   64,   70,   78,   66,   71,   73,
+       71,   73,   70,   78,   79,   78,  114,   71,   73,   80,
+       81,   79,   78,   79,   82,   87,   80,   81,   80,   81,
+       79,   82,   87,   82,   87,   80,   81,   90,   91,   88,
+       82,   87,   92,  109,   90,   91,   90,   91,  118,   92,
+      109,   92,  109,   90,   91,  118,  130,  118,   92,  109,
+      131,  147,   74,  130,  118,  130,  156,  131,  147,  131,
+      147,   65,  130,  156,   58,  156,  131,  147,   55,   53,
+       52,   51,  156,  195,   49,  195,   47,   45,   44,   42,
+       40,   38,   37,   35,   34,   33,   32,   31,   26,   24,
+
+       22,   19,   15,    3,  194,  194,  194,  194,  194,  194,
+      194,  194,  194,  194,  194,  194,  194,  194,  194,  194,
+      194,  194,  194,  194,  194,  194,  194,  194,  194,  194,
+      194,  194,  194,  194,  194,  194,  194,  194
     } ;
 
 static yy_state_type yy_last_accepting_state;
@@ -371,11 +483,48 @@ char *yytext;
 #include <stdio.h>
 #include "../../YASM_VM/src/command.h"
 
+
+        //        ADD_BYTE, ADD_SHORT, ADD_INT, ADD_LONG,
+        //        SUB_BYTE, SUB_SHORT, SUB_INT, SUB_LONG,
+        //        MUL_BYTE, MUL_SHORT, MUL_INT, MUL_LONG,
+        //        DIV_BYTE, DIV_SHORT, DIV_INT, DIV_LONG, DIV_SBYTE, DIV_SSHORT, DIV_SINT, DIV_SLONG,
+        //        AND_BYTE, AND_SHORT, AND_INT, AND_LONG,
+        //        OR_BYTE, OR_SHORT, OR_INT, OR_LONG,
+        //        SHR_BYTE, SHR_SHORT, SHR_INT, SHR_LONG,
+        //        SHL_BYTE, SHL_SHORT, SHL_INT, SHL_LONG,
+        //        EQ_BYTE, EQ_SHORT, EQ_INT, EQ_LONG, EQ_SBYTE, EQ_SSHORT, EQ_SINT, EQ_SLONG,
+        //        NEQ_BYTE, NEQ_SHORT, NEQ_INT, NEQ_LONG, NEQ_SBYTE, NEQ_SSHORT, NEQ_SINT, NEQ_SLONG,
+        //        LT_BYTE, LT_SHORT, LT_INT, LT_LONG, LT_SBYTE, LT_SSHORT, LT_SINT, LT_SLONG,
+        //        LEQ_BYTE, LEQ_SHORT, LEQ_INT, LEQ_LONG, LEQ_SBYTE, LEQ_SSHORT, LEQ_SINT, LEQ_SLONG,
+        //        GT_BYTE, GT_SHORT, GT_INT, GT_LONG, GT_SBYTE, GT_SSHORT, GT_SINT, GT_SLONG,
+        //        GEQ_BYTE, GEQ_SHORT, GEQ_INT, GEQ_LONG, GEQ_SBYTE, GEQ_SSHORT, GEQ_SINT, GEQ_SLONG,
+        //        INC_BYTE, INC_SHORT, INC_INT, INC_LONG,
+        //        DEC_BYTE, DEC_SHORT, DEC_INT, DEC_LONG,
+        //        NEG_SBYTE, NEG_SSHORT, NEG_SINT, NEG_SLONG,
+        //        LNOT_BYTE, LNOT_SHORT, LNOT_INT, LNOT_LONG,
+        //        NOT_BYTE, NOT_SHORT, NOT_INT, NOT_LONG,
+        //      // branch
+        //        JMP, JT, JF,
+        //      // mem
+        //        PUSH, POP, ERASE, PUSH_BYTE, PUSH_SHORT, PUSH_INT, PUSH_LONG, POP_BYTE, POP_SHORT, POP_INT, POP_LONG,
+        //      // type cast
+        //         ONE_TO_TWO, ONE_TO_FOUR, TWO_TO_ONE, TWO_TO_FOUR, FOUR_TO_ONE, FOUR_TO_TWO
+
+        typedef enum{
+                _PLUS_OP = RET,
+                _MINUS_OP,
+                _MUL_OP,
+                _DIV_OP,
+                _INDENT,
+                _OUTDENT,
+                _LABEL
+        } OPERATORS;
+
+
 #define LEXER_DEBUG 0
 /* Lexemes */
 /* Arithmetic */
-/* Keywords and aux. */
-#line 379 "D:/YASM/YASM_COMPILER/src/lexer.c"
+#line 528 "D:/YASM/YASM_COMPILER/src/lexer.c"
 
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
@@ -526,9 +675,9 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
 
-#line 54 "YASM_COMPILER/src/yasm.lex"
+#line 209 "YASM_COMPILER/src/yasm.lex"
 
-#line 532 "D:/YASM/YASM_COMPILER/src/lexer.c"
+#line 681 "D:/YASM/YASM_COMPILER/src/lexer.c"
 
 	if ( yy_init )
 		{
@@ -579,13 +728,13 @@ yy_match:
 			while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 				{
 				yy_current_state = (int) yy_def[yy_current_state];
-				if ( yy_current_state >= 11 )
+				if ( yy_current_state >= 195 )
 					yy_c = yy_meta[(unsigned int) yy_c];
 				}
 			yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
 			++yy_cp;
 			}
-		while ( yy_base[yy_current_state] != 11 );
+		while ( yy_base[yy_current_state] != 205 );
 
 yy_find_action:
 		yy_act = yy_accept[yy_current_state];
@@ -613,25 +762,655 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 55 "YASM_COMPILER/src/yasm.lex"
+#line 210 "YASM_COMPILER/src/yasm.lex"
 /* Ignore comments */
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 57 "YASM_COMPILER/src/yasm.lex"
-{printf("\nплюс");}
+#line 214 "YASM_COMPILER/src/yasm.lex"
+{  return ADD_BYTE; }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 58 "YASM_COMPILER/src/yasm.lex"
-/* Ignore whitespace */
+#line 215 "YASM_COMPILER/src/yasm.lex"
+{  return ADD_SHORT; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 59 "YASM_COMPILER/src/yasm.lex"
+#line 216 "YASM_COMPILER/src/yasm.lex"
+{  return ADD_INT; }
+	YY_BREAK
+case 5:
+YY_RULE_SETUP
+#line 217 "YASM_COMPILER/src/yasm.lex"
+{  return ADD_LONG; }
+	YY_BREAK
+case 6:
+YY_RULE_SETUP
+#line 219 "YASM_COMPILER/src/yasm.lex"
+{  return SUB_BYTE; }
+	YY_BREAK
+case 7:
+YY_RULE_SETUP
+#line 220 "YASM_COMPILER/src/yasm.lex"
+{  return SUB_SHORT; }
+	YY_BREAK
+case 8:
+YY_RULE_SETUP
+#line 221 "YASM_COMPILER/src/yasm.lex"
+{  return SUB_INT; }
+	YY_BREAK
+case 9:
+YY_RULE_SETUP
+#line 222 "YASM_COMPILER/src/yasm.lex"
+{  return SUB_LONG; }
+	YY_BREAK
+case 10:
+YY_RULE_SETUP
+#line 224 "YASM_COMPILER/src/yasm.lex"
+{  return MUL_BYTE; }
+	YY_BREAK
+case 11:
+YY_RULE_SETUP
+#line 225 "YASM_COMPILER/src/yasm.lex"
+{  return MUL_SHORT; }
+	YY_BREAK
+case 12:
+YY_RULE_SETUP
+#line 226 "YASM_COMPILER/src/yasm.lex"
+{  return MUL_INT; }
+	YY_BREAK
+case 13:
+YY_RULE_SETUP
+#line 227 "YASM_COMPILER/src/yasm.lex"
+{  return MUL_LONG; }
+	YY_BREAK
+case 14:
+YY_RULE_SETUP
+#line 229 "YASM_COMPILER/src/yasm.lex"
+{  return DIV_BYTE; }
+	YY_BREAK
+case 15:
+YY_RULE_SETUP
+#line 230 "YASM_COMPILER/src/yasm.lex"
+{  return DIV_SHORT; }
+	YY_BREAK
+case 16:
+YY_RULE_SETUP
+#line 231 "YASM_COMPILER/src/yasm.lex"
+{  return DIV_INT; }
+	YY_BREAK
+case 17:
+YY_RULE_SETUP
+#line 232 "YASM_COMPILER/src/yasm.lex"
+{  return DIV_LONG; }
+	YY_BREAK
+case 18:
+YY_RULE_SETUP
+#line 233 "YASM_COMPILER/src/yasm.lex"
+{  return DIV_SBYTE; }
+	YY_BREAK
+case 19:
+YY_RULE_SETUP
+#line 234 "YASM_COMPILER/src/yasm.lex"
+{  return DIV_SSHORT; }
+	YY_BREAK
+case 20:
+YY_RULE_SETUP
+#line 235 "YASM_COMPILER/src/yasm.lex"
+{  return DIV_SINT; }
+	YY_BREAK
+case 21:
+YY_RULE_SETUP
+#line 236 "YASM_COMPILER/src/yasm.lex"
+{  return DIV_SLONG; }
+	YY_BREAK
+case 22:
+YY_RULE_SETUP
+#line 238 "YASM_COMPILER/src/yasm.lex"
+{  return AND_BYTE; }
+	YY_BREAK
+case 23:
+YY_RULE_SETUP
+#line 239 "YASM_COMPILER/src/yasm.lex"
+{  return AND_SHORT; }
+	YY_BREAK
+case 24:
+YY_RULE_SETUP
+#line 240 "YASM_COMPILER/src/yasm.lex"
+{  return AND_INT; }
+	YY_BREAK
+case 25:
+YY_RULE_SETUP
+#line 241 "YASM_COMPILER/src/yasm.lex"
+{  return AND_LONG; }
+	YY_BREAK
+case 26:
+YY_RULE_SETUP
+#line 243 "YASM_COMPILER/src/yasm.lex"
+{  return OR_BYTE; }
+	YY_BREAK
+case 27:
+YY_RULE_SETUP
+#line 244 "YASM_COMPILER/src/yasm.lex"
+{  return OR_SHORT; }
+	YY_BREAK
+case 28:
+YY_RULE_SETUP
+#line 245 "YASM_COMPILER/src/yasm.lex"
+{  return OR_INT; }
+	YY_BREAK
+case 29:
+YY_RULE_SETUP
+#line 246 "YASM_COMPILER/src/yasm.lex"
+{  return OR_LONG; }
+	YY_BREAK
+case 30:
+YY_RULE_SETUP
+#line 248 "YASM_COMPILER/src/yasm.lex"
+{  return SHR_BYTE; }
+	YY_BREAK
+case 31:
+YY_RULE_SETUP
+#line 249 "YASM_COMPILER/src/yasm.lex"
+{  return SHR_SHORT; }
+	YY_BREAK
+case 32:
+YY_RULE_SETUP
+#line 250 "YASM_COMPILER/src/yasm.lex"
+{  return SHR_INT; }
+	YY_BREAK
+case 33:
+YY_RULE_SETUP
+#line 251 "YASM_COMPILER/src/yasm.lex"
+{  return SHR_LONG; }
+	YY_BREAK
+case 34:
+YY_RULE_SETUP
+#line 253 "YASM_COMPILER/src/yasm.lex"
+{  return SHL_BYTE; }
+	YY_BREAK
+case 35:
+YY_RULE_SETUP
+#line 254 "YASM_COMPILER/src/yasm.lex"
+{  return SHL_SHORT; }
+	YY_BREAK
+case 36:
+YY_RULE_SETUP
+#line 255 "YASM_COMPILER/src/yasm.lex"
+{  return SHL_INT; }
+	YY_BREAK
+case 37:
+YY_RULE_SETUP
+#line 256 "YASM_COMPILER/src/yasm.lex"
+{  return SHL_LONG; }
+	YY_BREAK
+case 38:
+YY_RULE_SETUP
+#line 258 "YASM_COMPILER/src/yasm.lex"
+{  return EQ_BYTE; }
+	YY_BREAK
+case 39:
+YY_RULE_SETUP
+#line 259 "YASM_COMPILER/src/yasm.lex"
+{  return EQ_SHORT; }
+	YY_BREAK
+case 40:
+YY_RULE_SETUP
+#line 260 "YASM_COMPILER/src/yasm.lex"
+{  return EQ_INT; }
+	YY_BREAK
+case 41:
+YY_RULE_SETUP
+#line 261 "YASM_COMPILER/src/yasm.lex"
+{  return EQ_LONG; }
+	YY_BREAK
+case 42:
+YY_RULE_SETUP
+#line 262 "YASM_COMPILER/src/yasm.lex"
+{  return EQ_SBYTE; }
+	YY_BREAK
+case 43:
+YY_RULE_SETUP
+#line 263 "YASM_COMPILER/src/yasm.lex"
+{  return EQ_SSHORT; }
+	YY_BREAK
+case 44:
+YY_RULE_SETUP
+#line 264 "YASM_COMPILER/src/yasm.lex"
+{  return EQ_SINT; }
+	YY_BREAK
+case 45:
+YY_RULE_SETUP
+#line 265 "YASM_COMPILER/src/yasm.lex"
+{  return EQ_SLONG; }
+	YY_BREAK
+case 46:
+YY_RULE_SETUP
+#line 267 "YASM_COMPILER/src/yasm.lex"
+{  return NEQ_BYTE; }
+	YY_BREAK
+case 47:
+YY_RULE_SETUP
+#line 268 "YASM_COMPILER/src/yasm.lex"
+{  return NEQ_SHORT; }
+	YY_BREAK
+case 48:
+YY_RULE_SETUP
+#line 269 "YASM_COMPILER/src/yasm.lex"
+{  return NEQ_INT; }
+	YY_BREAK
+case 49:
+YY_RULE_SETUP
+#line 270 "YASM_COMPILER/src/yasm.lex"
+{  return NEQ_LONG; }
+	YY_BREAK
+case 50:
+YY_RULE_SETUP
+#line 271 "YASM_COMPILER/src/yasm.lex"
+{  return NEQ_SBYTE; }
+	YY_BREAK
+case 51:
+YY_RULE_SETUP
+#line 272 "YASM_COMPILER/src/yasm.lex"
+{  return NEQ_SSHORT; }
+	YY_BREAK
+case 52:
+YY_RULE_SETUP
+#line 273 "YASM_COMPILER/src/yasm.lex"
+{  return NEQ_SINT; }
+	YY_BREAK
+case 53:
+YY_RULE_SETUP
+#line 274 "YASM_COMPILER/src/yasm.lex"
+{  return NEQ_SLONG; }
+	YY_BREAK
+case 54:
+YY_RULE_SETUP
+#line 276 "YASM_COMPILER/src/yasm.lex"
+{  return LT_BYTE; }
+	YY_BREAK
+case 55:
+YY_RULE_SETUP
+#line 277 "YASM_COMPILER/src/yasm.lex"
+{  return LT_SHORT; }
+	YY_BREAK
+case 56:
+YY_RULE_SETUP
+#line 278 "YASM_COMPILER/src/yasm.lex"
+{  return LT_INT; }
+	YY_BREAK
+case 57:
+YY_RULE_SETUP
+#line 279 "YASM_COMPILER/src/yasm.lex"
+{  return LT_LONG; }
+	YY_BREAK
+case 58:
+YY_RULE_SETUP
+#line 280 "YASM_COMPILER/src/yasm.lex"
+{  return LT_SBYTE; }
+	YY_BREAK
+case 59:
+YY_RULE_SETUP
+#line 281 "YASM_COMPILER/src/yasm.lex"
+{  return LT_SSHORT; }
+	YY_BREAK
+case 60:
+YY_RULE_SETUP
+#line 282 "YASM_COMPILER/src/yasm.lex"
+{  return LT_SINT; }
+	YY_BREAK
+case 61:
+YY_RULE_SETUP
+#line 283 "YASM_COMPILER/src/yasm.lex"
+{  return LT_SLONG; }
+	YY_BREAK
+case 62:
+YY_RULE_SETUP
+#line 285 "YASM_COMPILER/src/yasm.lex"
+{  return LEQ_BYTE; }
+	YY_BREAK
+case 63:
+YY_RULE_SETUP
+#line 286 "YASM_COMPILER/src/yasm.lex"
+{  return LEQ_SHORT; }
+	YY_BREAK
+case 64:
+YY_RULE_SETUP
+#line 287 "YASM_COMPILER/src/yasm.lex"
+{  return LEQ_INT; }
+	YY_BREAK
+case 65:
+YY_RULE_SETUP
+#line 288 "YASM_COMPILER/src/yasm.lex"
+{  return LEQ_LONG; }
+	YY_BREAK
+case 66:
+YY_RULE_SETUP
+#line 289 "YASM_COMPILER/src/yasm.lex"
+{  return LEQ_SBYTE; }
+	YY_BREAK
+case 67:
+YY_RULE_SETUP
+#line 290 "YASM_COMPILER/src/yasm.lex"
+{  return LEQ_SSHORT; }
+	YY_BREAK
+case 68:
+YY_RULE_SETUP
+#line 291 "YASM_COMPILER/src/yasm.lex"
+{  return LEQ_SINT; }
+	YY_BREAK
+case 69:
+YY_RULE_SETUP
+#line 292 "YASM_COMPILER/src/yasm.lex"
+{  return LEQ_SLONG; }
+	YY_BREAK
+case 70:
+YY_RULE_SETUP
+#line 294 "YASM_COMPILER/src/yasm.lex"
+{  return GT_BYTE; }
+	YY_BREAK
+case 71:
+YY_RULE_SETUP
+#line 295 "YASM_COMPILER/src/yasm.lex"
+{  return GT_SHORT; }
+	YY_BREAK
+case 72:
+YY_RULE_SETUP
+#line 296 "YASM_COMPILER/src/yasm.lex"
+{  return GT_INT; }
+	YY_BREAK
+case 73:
+YY_RULE_SETUP
+#line 297 "YASM_COMPILER/src/yasm.lex"
+{  return GT_LONG; }
+	YY_BREAK
+case 74:
+YY_RULE_SETUP
+#line 298 "YASM_COMPILER/src/yasm.lex"
+{  return GT_SBYTE; }
+	YY_BREAK
+case 75:
+YY_RULE_SETUP
+#line 299 "YASM_COMPILER/src/yasm.lex"
+{  return GT_SSHORT; }
+	YY_BREAK
+case 76:
+YY_RULE_SETUP
+#line 300 "YASM_COMPILER/src/yasm.lex"
+{  return GT_SINT; }
+	YY_BREAK
+case 77:
+YY_RULE_SETUP
+#line 301 "YASM_COMPILER/src/yasm.lex"
+{  return GT_SLONG; }
+	YY_BREAK
+case 78:
+YY_RULE_SETUP
+#line 303 "YASM_COMPILER/src/yasm.lex"
+{  return GEQ_BYTE; }
+	YY_BREAK
+case 79:
+YY_RULE_SETUP
+#line 304 "YASM_COMPILER/src/yasm.lex"
+{  return GEQ_SHORT; }
+	YY_BREAK
+case 80:
+YY_RULE_SETUP
+#line 305 "YASM_COMPILER/src/yasm.lex"
+{  return GEQ_INT; }
+	YY_BREAK
+case 81:
+YY_RULE_SETUP
+#line 306 "YASM_COMPILER/src/yasm.lex"
+{  return GEQ_LONG; }
+	YY_BREAK
+case 82:
+YY_RULE_SETUP
+#line 307 "YASM_COMPILER/src/yasm.lex"
+{  return GEQ_SBYTE; }
+	YY_BREAK
+case 83:
+YY_RULE_SETUP
+#line 308 "YASM_COMPILER/src/yasm.lex"
+{  return GEQ_SSHORT; }
+	YY_BREAK
+case 84:
+YY_RULE_SETUP
+#line 309 "YASM_COMPILER/src/yasm.lex"
+{  return GEQ_SINT; }
+	YY_BREAK
+case 85:
+YY_RULE_SETUP
+#line 310 "YASM_COMPILER/src/yasm.lex"
+{  return GEQ_SLONG; }
+	YY_BREAK
+case 86:
+YY_RULE_SETUP
+#line 312 "YASM_COMPILER/src/yasm.lex"
+{  return INC_BYTE; }
+	YY_BREAK
+case 87:
+YY_RULE_SETUP
+#line 313 "YASM_COMPILER/src/yasm.lex"
+{  return INC_SHORT; }
+	YY_BREAK
+case 88:
+YY_RULE_SETUP
+#line 314 "YASM_COMPILER/src/yasm.lex"
+{  return INC_INT; }
+	YY_BREAK
+case 89:
+YY_RULE_SETUP
+#line 315 "YASM_COMPILER/src/yasm.lex"
+{  return INC_LONG; }
+	YY_BREAK
+case 90:
+YY_RULE_SETUP
+#line 317 "YASM_COMPILER/src/yasm.lex"
+{  return DEC_BYTE; }
+	YY_BREAK
+case 91:
+YY_RULE_SETUP
+#line 318 "YASM_COMPILER/src/yasm.lex"
+{  return DEC_SHORT; }
+	YY_BREAK
+case 92:
+YY_RULE_SETUP
+#line 319 "YASM_COMPILER/src/yasm.lex"
+{  return DEC_INT; }
+	YY_BREAK
+case 93:
+YY_RULE_SETUP
+#line 320 "YASM_COMPILER/src/yasm.lex"
+{  return DEC_LONG; }
+	YY_BREAK
+case 94:
+YY_RULE_SETUP
+#line 322 "YASM_COMPILER/src/yasm.lex"
+{  return NEG_SBYTE; }
+	YY_BREAK
+case 95:
+YY_RULE_SETUP
+#line 323 "YASM_COMPILER/src/yasm.lex"
+{  return NEG_SSHORT; }
+	YY_BREAK
+case 96:
+YY_RULE_SETUP
+#line 324 "YASM_COMPILER/src/yasm.lex"
+{  return NEG_SINT; }
+	YY_BREAK
+case 97:
+YY_RULE_SETUP
+#line 325 "YASM_COMPILER/src/yasm.lex"
+{  return NEG_SLONG; }
+	YY_BREAK
+case 98:
+YY_RULE_SETUP
+#line 327 "YASM_COMPILER/src/yasm.lex"
+{  return LNOT_BYTE; }
+	YY_BREAK
+case 99:
+YY_RULE_SETUP
+#line 328 "YASM_COMPILER/src/yasm.lex"
+{  return LNOT_SHORT; }
+	YY_BREAK
+case 100:
+YY_RULE_SETUP
+#line 329 "YASM_COMPILER/src/yasm.lex"
+{  return LNOT_INT; }
+	YY_BREAK
+case 101:
+YY_RULE_SETUP
+#line 330 "YASM_COMPILER/src/yasm.lex"
+{  return LNOT_LONG; }
+	YY_BREAK
+case 102:
+YY_RULE_SETUP
+#line 332 "YASM_COMPILER/src/yasm.lex"
+{  return NOT_BYTE; }
+	YY_BREAK
+case 103:
+YY_RULE_SETUP
+#line 333 "YASM_COMPILER/src/yasm.lex"
+{  return NOT_SHORT; }
+	YY_BREAK
+case 104:
+YY_RULE_SETUP
+#line 334 "YASM_COMPILER/src/yasm.lex"
+{  return NOT_INT; }
+	YY_BREAK
+case 105:
+YY_RULE_SETUP
+#line 335 "YASM_COMPILER/src/yasm.lex"
+{  return NOT_LONG; }
+	YY_BREAK
+case 106:
+YY_RULE_SETUP
+#line 338 "YASM_COMPILER/src/yasm.lex"
+{  return JMP; }
+	YY_BREAK
+case 107:
+YY_RULE_SETUP
+#line 339 "YASM_COMPILER/src/yasm.lex"
+{  return JT; }
+	YY_BREAK
+case 108:
+YY_RULE_SETUP
+#line 340 "YASM_COMPILER/src/yasm.lex"
+{  return JF; }
+	YY_BREAK
+case 109:
+YY_RULE_SETUP
+#line 342 "YASM_COMPILER/src/yasm.lex"
+{  return PUSH; }
+	YY_BREAK
+case 110:
+YY_RULE_SETUP
+#line 343 "YASM_COMPILER/src/yasm.lex"
+{  return POP; }
+	YY_BREAK
+case 111:
+YY_RULE_SETUP
+#line 344 "YASM_COMPILER/src/yasm.lex"
+{  return ERASE; }
+	YY_BREAK
+case 112:
+YY_RULE_SETUP
+#line 345 "YASM_COMPILER/src/yasm.lex"
+{  return PUSH_BYTE; }
+	YY_BREAK
+case 113:
+YY_RULE_SETUP
+#line 346 "YASM_COMPILER/src/yasm.lex"
+{  return PUSH_SHORT; }
+	YY_BREAK
+case 114:
+YY_RULE_SETUP
+#line 347 "YASM_COMPILER/src/yasm.lex"
+{  return PUSH_INT; }
+	YY_BREAK
+case 115:
+YY_RULE_SETUP
+#line 348 "YASM_COMPILER/src/yasm.lex"
+{  return PUSH_LONG; }
+	YY_BREAK
+case 116:
+YY_RULE_SETUP
+#line 349 "YASM_COMPILER/src/yasm.lex"
+{  return POP_BYTE; }
+	YY_BREAK
+case 117:
+YY_RULE_SETUP
+#line 350 "YASM_COMPILER/src/yasm.lex"
+{  return POP_SHORT; }
+	YY_BREAK
+case 118:
+YY_RULE_SETUP
+#line 351 "YASM_COMPILER/src/yasm.lex"
+{  return POP_INT; }
+	YY_BREAK
+case 119:
+YY_RULE_SETUP
+#line 352 "YASM_COMPILER/src/yasm.lex"
+{  return POP_LONG; }
+	YY_BREAK
+case 120:
+YY_RULE_SETUP
+#line 354 "YASM_COMPILER/src/yasm.lex"
+{  return ADD_LONG; }
+	YY_BREAK
+case 121:
+YY_RULE_SETUP
+#line 355 "YASM_COMPILER/src/yasm.lex"
+{  return ADD_LONG; }
+	YY_BREAK
+case 122:
+YY_RULE_SETUP
+#line 356 "YASM_COMPILER/src/yasm.lex"
+{ printf("id"); }
+	YY_BREAK
+case 123:
+YY_RULE_SETUP
+#line 361 "YASM_COMPILER/src/yasm.lex"
+{return _DIV_OP;  }
+	YY_BREAK
+case 124:
+YY_RULE_SETUP
+#line 362 "YASM_COMPILER/src/yasm.lex"
+{return _MUL_OP;  }
+	YY_BREAK
+case 125:
+YY_RULE_SETUP
+#line 363 "YASM_COMPILER/src/yasm.lex"
+{return _MINUS_OP;  }
+	YY_BREAK
+case 126:
+YY_RULE_SETUP
+#line 364 "YASM_COMPILER/src/yasm.lex"
+{return _PLUS_OP; }
+	YY_BREAK
+case 127:
+YY_RULE_SETUP
+#line 365 "YASM_COMPILER/src/yasm.lex"
+/* Ignore whitespace */
+	YY_BREAK
+case 128:
+YY_RULE_SETUP
+#line 366 "YASM_COMPILER/src/yasm.lex"
+return _INDENT;
+	YY_BREAK
+case 129:
+YY_RULE_SETUP
+#line 367 "YASM_COMPILER/src/yasm.lex"
+return _OUTDENT;
+	YY_BREAK
+case 130:
+YY_RULE_SETUP
+#line 370 "YASM_COMPILER/src/yasm.lex"
 ECHO;
 	YY_BREAK
-#line 635 "D:/YASM/YASM_COMPILER/src/lexer.c"
+#line 1414 "D:/YASM/YASM_COMPILER/src/lexer.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -923,7 +1702,7 @@ static yy_state_type yy_get_previous_state()
 		while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 			{
 			yy_current_state = (int) yy_def[yy_current_state];
-			if ( yy_current_state >= 11 )
+			if ( yy_current_state >= 195 )
 				yy_c = yy_meta[(unsigned int) yy_c];
 			}
 		yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
@@ -958,11 +1737,11 @@ yy_state_type yy_current_state;
 	while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 		{
 		yy_current_state = (int) yy_def[yy_current_state];
-		if ( yy_current_state >= 11 )
+		if ( yy_current_state >= 195 )
 			yy_c = yy_meta[(unsigned int) yy_c];
 		}
 	yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
-	yy_is_jam = (yy_current_state == 10);
+	yy_is_jam = (yy_current_state == 194);
 
 	return yy_is_jam ? 0 : yy_current_state;
 	}
@@ -1517,11 +2296,10 @@ int main()
 	return 0;
 	}
 #endif
-#line 59 "YASM_COMPILER/src/yasm.lex"
+#line 370 "YASM_COMPILER/src/yasm.lex"
 
 int main()
 {
         yylex();
-
         return 0;
 }
