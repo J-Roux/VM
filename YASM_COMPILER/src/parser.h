@@ -185,7 +185,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 36 "YASM_COMPILER/src/parcer.y" /* yacc.c:1909  */
+#line 44 "YASM_COMPILER/src/parcer.y" /* yacc.c:1909  */
 
   int64_t numeric;
   char* string;

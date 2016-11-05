@@ -5,12 +5,17 @@
 #include <string.h>
 #include "parser.h"
 #include "node.h"
+#include <stdlib.h>
+
+#include "../../YASM_VM/src/command.h"
+
 
 extern int yylex();
 extern int yyparse();
 extern FILE* yyin;
-struct Node* lastBlock;
- 
+
+
+
 void yyerror(const char *str) {
   fprintf(stderr, "error: %s\n", str);
   exit(1);
@@ -24,6 +29,9 @@ int main(int argc, char** argv) {
   }
   yyin = fopen(argv[1], "r");
   yyparse();
+  printf("program size = %i\n", pointer);
+  for(uint16_t i = 0; i < pointer; i++)
+      printf("%i", data[i]);
   return 0;
 }
 
@@ -76,7 +84,7 @@ int main(int argc, char** argv) {
 %left _EQUALS_OP
 %left _NOT_OP
 
-%type<node> expr
+%type<numeric> expr
 
 
 %%
@@ -90,44 +98,46 @@ statement:
             | command
             | mem_statement
             | label
-            | expr
+            | _NUMERIC    { push_value($1); }
+
+
 
 
 label: _LABEL id
 
 id: _ID
 
-command:  _ADD_BYTE
-        | _ADD_SHORT
-        | _ADD_INT
-        | _ADD_LONG
-        | _SUB_BYTE
-        | _SUB_SHORT
-        | _SUB_INT
-        | _SUB_LONG
-        | _DIV_BYTE
-        | _DIV_SHORT
-        | _DIV_INT
-        | _DIV_LONG
+command:  _ADD_BYTE       { push_byte(ADD_BYTE); }
+        | _ADD_SHORT      { push_byte(ADD_SHORT); }
+        | _ADD_INT        { push_byte(ADD_INT); }
+        | _ADD_LONG       { push_byte(ADD_LONG); }
+        | _SUB_BYTE       { push_byte(SUB_BYTE); }
+        | _SUB_SHORT      { push_byte(SUB_SHORT); }
+        | _SUB_INT        { push_byte(SUB_INT); }
+        | _SUB_LONG       { push_byte(SUB_LONG); }
+        | _DIV_BYTE       { push_byte(DIV_BYTE); }
+        | _DIV_SHORT      { push_byte(DIV_SHORT); }
+        | _DIV_INT        { push_byte(DIV_INT); }
+        | _DIV_LONG       { push_byte(DIV_LONG); }
 
-mem_statement: _PUSH_BYTE
-             | _PUSH_SHORT
-             | _PUSH_INT
-             | _PUSH_LONG
-             | _POP_BYTE
-             | _POP_INT
-             | _POP_SHORT
-             | _POP_LONG
-             | _POP expr
-             | _PUSH expr
+mem_statement: _PUSH_BYTE       {push_byte(PUSH_BYTE);}
+             | _PUSH_SHORT      {push_byte(PUSH_SHORT);}
+             | _PUSH_INT        {push_byte(PUSH_INT);}
+             | _PUSH_LONG       {push_byte(PUSH_LONG);}
+             | _POP_BYTE        {push_byte(POP_BYTE);}
+             | _POP_INT         {push_byte(POP_INT);}
+             | _POP_SHORT       {push_byte(POP_SHORT);}
+             | _POP_LONG        {push_byte(POP_LONG);}
+             | _POP expr        {push_byte(POP); push_value($2);}
+             | _PUSH expr       {push_byte(PUSH); push_value($2);}
 
 expr:
-     | expr _MUL_OP expr        {  $$ = createNode($1, $3, _MUL_OP); }
-     | expr _DIV_OP expr        {/* $$ = $1->numeric / $3->numeric; */}
-     | expr _PLUS_OP expr       {/* $$ = $1->numeric + $3->numeric; */}
-     | expr _MINUS_OP expr      { /*$$ = $1->numeric - $3->numeric; */}
-     | expr _AND_OP expr
-     | expr _OR_OP expr
-     | _NOT_OP expr
-     | _NUMERIC
+     | expr _MUL_OP expr        { $$ = $1 * $3; }
+     | expr _DIV_OP expr        { $$ = $1 / $3; }
+     | expr _PLUS_OP expr       { $$ = $1 + $3; }
+     | expr _MINUS_OP expr      { $$ = $1 - $3; }
+     | expr _AND_OP expr        { $$ = $1 & $3; }
+     | expr _OR_OP expr         { $$ = $1 | $3; }
+     | _NOT_OP expr             { $$ = ~$2; }
+     | _NUMERIC                 { $$ = $1; }
 %%
