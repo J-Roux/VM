@@ -1,9 +1,10 @@
 %{
 #define PRINT_AST 0
-  
+#include <stdint.h>
 #include <stdio.h>
 #include <string.h>
 #include "parser.h"
+#include "node.h"
 
 extern int yylex();
 extern int yyparse();
@@ -15,35 +16,25 @@ void yyerror(const char *str) {
   exit(1);
 }
 
-void printASTIfNeeded() {
-  if (PRINT_AST) {
-    printf("\n\nAST:\n");
-//    printNode(peekTopNode());
-    printf("\n");
-  }
-}
- 
+
 int main(int argc, char** argv) {
-//  pushToCodeStack(newSyntaxTree());
-  
   if(argc < 2) {
     printf("No input file!\n");
     return 1;
   }
-  
   yyin = fopen(argv[1], "r");
   yyparse();
-//  printASTIfNeeded();
-//  initializeGlobalContext();
-//  executeAST(peekTopNode());
   return 0;
 }
 
 %}
 
+
+
+
 %union
 {
-  int numeric;
+  int64_t numeric;
   char* string;
   struct Node* node;
   struct Value* value;
@@ -72,11 +63,11 @@ int main(int argc, char** argv) {
 
 %token _JMP _JT _JF
 %token _LABEL
-%token _PUSH, _POP, _ERASE, _PUSH_BYTE, _PUSH_SHORT, _PUSH_INT, _PUSH_LONG, _POP_BYTE, _POP_SHORT, _POP_INT, _POP_LONG,
+%token _PUSH _POP _ERASE _PUSH_BYTE _PUSH_SHORT _PUSH_INT _PUSH_LONG _POP_BYTE _POP_SHORT _POP_INT _POP_LONG
 %token <string> _ID
 %token <numeric> _NUMERIC
 %token _INDENT _OUTDENT
-
+%token _NEW_LINE
 
 
 %left _PLUS_OP _MINUS_OP
@@ -85,13 +76,58 @@ int main(int argc, char** argv) {
 %left _EQUALS_OP
 %left _NOT_OP
 
+%type<node> expr
 
-%type<node> end expr func_call func_def block conditional
-%type<string> id
-%type<value> val hash logic
 
 %%
 axiom:
+      | statement_list
 
 
+statement_list: statement _NEW_LINE
+                |statement_list statement _NEW_LINE
+statement:
+            | command
+            | mem_statement
+            | label
+            | expr
+
+
+label: _LABEL id
+
+id: _ID
+
+command:  _ADD_BYTE
+        | _ADD_SHORT
+        | _ADD_INT
+        | _ADD_LONG
+        | _SUB_BYTE
+        | _SUB_SHORT
+        | _SUB_INT
+        | _SUB_LONG
+        | _DIV_BYTE
+        | _DIV_SHORT
+        | _DIV_INT
+        | _DIV_LONG
+
+mem_statement: _PUSH_BYTE
+             | _PUSH_SHORT
+             | _PUSH_INT
+             | _PUSH_LONG
+             | _POP_BYTE
+             | _POP_INT
+             | _POP_SHORT
+             | _POP_LONG
+             | _POP expr
+             | _PUSH expr
+
+expr:
+     | expr _MUL_OP expr        {  $$ = createNode($1, $3, _MUL_OP); }
+     | expr _DIV_OP expr        {/* $$ = $1->numeric / $3->numeric; */}
+     | expr _PLUS_OP expr       {/* $$ = $1->numeric + $3->numeric; */}
+     | expr _MINUS_OP expr      { /*$$ = $1->numeric - $3->numeric; */}
+     | expr _AND_OP expr
+     | expr _OR_OP expr
+     | _NOT_OP expr
+     | _NUMERIC
 %%

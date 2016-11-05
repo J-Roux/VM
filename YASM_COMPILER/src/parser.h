@@ -168,14 +168,15 @@ extern int yydebug;
     _NUMERIC = 378,
     _INDENT = 379,
     _OUTDENT = 380,
-    _PLUS_OP = 381,
-    _MINUS_OP = 382,
-    _MUL_OP = 383,
-    _DIV_OP = 384,
-    _AND_OP = 385,
-    _OR_OP = 386,
-    _EQUALS_OP = 387,
-    _NOT_OP = 388
+    _NEW_LINE = 381,
+    _PLUS_OP = 382,
+    _MINUS_OP = 383,
+    _MUL_OP = 384,
+    _DIV_OP = 385,
+    _AND_OP = 386,
+    _OR_OP = 387,
+    _EQUALS_OP = 388,
+    _NOT_OP = 389
   };
 #endif
 
@@ -184,14 +185,14 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 45 "YASM_COMPILER/src/parcer.y" /* yacc.c:1909  */
+#line 36 "YASM_COMPILER/src/parcer.y" /* yacc.c:1909  */
 
-  int numeric;
+  int64_t numeric;
   char* string;
   struct Node* node;
   struct Value* value;
 
-#line 195 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.h" /* yacc.c:1909  */
+#line 196 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

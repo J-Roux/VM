@@ -174,7 +174,8 @@ RET             ret
 
 ID               [a-zA-Z][a-zA-Z0-9]*
 NUMERIC          [0-9]+
-WS               [ \n\r\t]
+NEW_LINE         [\n\r]
+WS               [ \t]
 COMMENT          #.*
 
 %%
@@ -333,6 +334,7 @@ COMMENT          #.*
 {MUL_OP}        {return _MUL_OP;  }
 {MINUS_OP}      {return _MINUS_OP;  }
 {PLUS_OP}       {return _PLUS_OP; }
+{NEW_LINE}      {return _NEW_LINE;}
 {WS}+          /* Ignore whitespace */
 {INDENT}        return _INDENT;
 {OUTDENT}       return _OUTDENT;
