@@ -1,8 +1,7 @@
 #ifndef _CODE_STREAM_H
 #define _CODE_STREAM_H
 #include "config.h"
-#include <stdlib.h>
-#include <memory.h>
+
 static uint16_t pc = 0;
 static uint8_t * data;
 

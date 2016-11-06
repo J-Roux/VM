@@ -137,7 +137,7 @@ RESULT push_by_arg( func mem_instruction)
         RESULT result = SUCCESS;
         uint8_t arg;
         result = get_code(&arg, sizeof(uint8_t));
-        uint8_t* ptr_data = malloc(arg);
+        uint8_t ptr_data[BUFFER_SIZE];
         result |= get_code(ptr_data, arg);
         return mem_instruction(ptr_data, arg);
 }

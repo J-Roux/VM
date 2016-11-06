@@ -123,6 +123,74 @@ command:  _ADD_BYTE       { push_byte(ADD_BYTE); }
         | _DIV_SHORT      { push_byte(DIV_SHORT); }
         | _DIV_INT        { push_byte(DIV_INT); }
         | _DIV_LONG       { push_byte(DIV_LONG); }
+        | _DIV_SBYTE      { push_byte(DIV_SBYTE); }
+        | _DIV_SHORT      { push_byte(DIV_SSHORT); }
+        | _DIV_SINT       { push_byte(DIV_SINT); }
+        | _DIV_SLONG      { push_byte(DIV_SLONG); }
+        | _AND_BYTE       { push_byte(AND_BYTE);}
+        | _AND_SHORT      { push_byte(AND_SHORT);}
+        | _AND_INT        { push_byte(AND_INT);}
+        | _AND_LONG       { push_byte(AND_LONG);}
+        | _OR_BYTE        { push_byte(OR_BYTE); }
+        | _OR_SHORT       { push_byte(OR_SHORT); }
+        | _OR_INT         { push_byte(OR_INT); }
+        | _OR_LONG        { push_byte(OR_LONG); }
+        | _SHR_BYTE       { push_byte(SHR_BYTE); }
+        | _SHR_SHORT      { push_byte(SHR_SHORT); }
+        | _SHR_INT        { push_byte(SHR_INT); }
+        | _SHR_LONG       { push_byte(SHR_LONG); }
+        | _SHL_BYTE       { push_byte(SHL_BYTE); }
+        | _SHL_SHORT      { push_byte(SHL_SHORT); }
+        | _SHL_INT        { push_byte(SHL_INT); }
+        | _SHL_LONG       { push_byte(SHL_LONG); }
+        | _EQ_BYTE        { push_byte(EQ_BYTE); }
+        | _EQ_SHORT       { push_byte(EQ_SHORT); }
+        | _EQ_INT         { push_byte(EQ_INT); }
+        | _EQ_LONG        { push_byte(EQ_LONG); }
+        | _EQ_SBYTE       { push_byte(EQ_SBYTE); }
+        | _EQ_SSHORT      { push_byte(EQ_SSHORT); }
+        | _EQ_SINT        { push_byte(EQ_SINT); }
+        | _EQ_SLONG       { push_byte(EQ_SLONG); }
+        | _NEQ_BYTE       { push_byte(NEQ_BYTE); }
+        | _NEQ_SHORT      { push_byte(NEQ_SHORT); }
+        | _NEQ_INT        { push_byte(NEQ_INT); }
+        | _NEQ_LONG       { push_byte(NEQ_LONG); }
+        | _NEQ_SBYTE      { push_byte(NEQ_SBYTE); }
+        | _NEQ_SSHORT     { push_byte(NEQ_SSHORT); }
+        | _NEQ_SINT       { push_byte(NEQ_SINT); }
+        | _NEQ_SLONG      { push_byte(NEQ_SLONG); }
+        | _LT_BYTE        { push_byte(LT_BYTE); }
+        | _LT_SHORT       { push_byte(LT_SHORT); }
+        | _LT_INT         { push_byte(LT_INT); }
+        | _LT_LONG        { push_byte(LT_LONG); }
+        | _LT_SBYTE       { push_byte(LT_SBYTE); }
+        | _LT_SSHORT      { push_byte(LT_SSHORT); }
+        | _LT_SINT        { push_byte(LT_SINT); }
+        | _LT_SLONG       { push_byte(LT_SLONG); }
+        | _LEQ_BYTE       { push_byte(LEQ_BYTE); }
+        | _LEQ_SHORT      { push_byte(LEQ_SHORT); }
+        | _LEQ_INT        { push_byte(LEQ_INT); }
+        | _LEQ_LONG       { push_byte(LEQ_LONG); }
+        | _LEQ_SBYTE      { push_byte(LEQ_SBYTE); }
+        | _LEQ_SSHORT     { push_byte(LEQ_SSHORT); }
+        | _LEQ_SINT       { push_byte(LEQ_SINT); }
+        | _LEQ_SLONG      { push_byte(LEQ_SLONG); }
+        | _GT_BYTE        { push_byte(GT_BYTE); }
+        | _GT_SHORT       { push_byte(GT_SHORT); }
+        | _GT_INT         { push_byte(GT_INT); }
+        | _GT_LONG        { push_byte(GT_LONG); }
+        | _GT_SBYTE       { push_byte(GT_SBYTE); }
+        | _GT_SSHORT      { push_byte(GT_SSHORT); }
+        | _GT_SINT        { push_byte(GT_SINT); }
+        | _GT_SLONG       { push_byte(GT_SLONG); }
+        | _GEQ_BYTE       { push_byte(GEQ_BYTE); }
+        | _GEQ_SHORT      { push_byte(GEQ_SHORT); }
+        | _GEQ_INT        { push_byte(GEQ_INT); }
+        | _GEQ_LONG       { push_byte(GEQ_LONG); }
+        | _GEQ_SBYTE      { push_byte(GEQ_SBYTE); }
+        | _GEQ_SSHORT     { push_byte(GEQ_SSHORT); }
+        | _GEQ_SINT       { push_byte(GEQ_SINT); }
+        | _GEQ_SLONG      { push_byte(GEQ_SLONG); }
 
 mem_statement: _PUSH_BYTE       {push_byte(PUSH_BYTE);}
              | _PUSH_SHORT      {push_byte(PUSH_SHORT);}

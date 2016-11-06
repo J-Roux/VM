@@ -6,7 +6,7 @@
 #define DEBUG
 
 #define POINTER_SIZE int16_t
-
+#define BUFFER_SIZE 32
 
 
 

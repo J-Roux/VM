@@ -1,12 +1,17 @@
 #include "vm.h"
+RESULT result = SUCCESS;
+
 
 void setup() {
-  uint8_t *code;
-  uint16_t programm_counter;
-  execute_step(code,&programm_counter);
+  Serial.begin(9600);
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-
+   result = execute_intruction();
+   switch(result)
+   {
+    case STACK_OVERFLOW:
+        Serial.println("stack overflow");
+        break;
+   }
 }
