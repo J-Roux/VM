@@ -1,5 +1,5 @@
 #include "vm.h"
-#include <Serial.h>
+#include <Arduino.h>
 RESULT result = SUCCESS;
 
 

@@ -33,7 +33,7 @@ void set_code(uint8_t* ptr, uint16_t size)
     memcpy(data, ptr, size);
 }
 #else
-#include <Serial.h>
+#include <Arduino.h>
 
 RESULT inc_pc(uint8_t value)
 {
