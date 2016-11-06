@@ -1,4 +1,5 @@
 #include "vm.h"
+#include <Serial.h>
 RESULT result = SUCCESS;
 
 

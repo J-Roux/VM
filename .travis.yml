@@ -6,6 +6,8 @@ python:
 sudo: required
 dist: trusty
 cache:
+	- pip
+	- apt
 directories:
              - "~/.platformio"
 env:
