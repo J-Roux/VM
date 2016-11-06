@@ -23,15 +23,18 @@ void yyerror(const char *str) {
 
 
 int main(int argc, char** argv) {
+  FILE * f;
   if(argc < 2) {
     printf("No input file!\n");
     return 1;
   }
   yyin = fopen(argv[1], "r");
   yyparse();
+  push_byte(END);
   printf("program size = %i\n", pointer);
-  for(uint16_t i = 0; i < pointer; i++)
-      printf("%i", data[i]);
+  f = fopen("result.elf","wb");
+  fwrite(data, 1, pointer, f);
+  fclose(f);
   return 0;
 }
 
@@ -70,7 +73,7 @@ int main(int argc, char** argv) {
 %token _NOT_BYTE  _NOT_SHORT  _NOT_INT  _NOT_LONG
 
 %token _JMP _JT _JF
-%token _LABEL
+%token _LABEL _CALL_OP
 %token _PUSH _POP _ERASE _PUSH_BYTE _PUSH_SHORT _PUSH_INT _PUSH_LONG _POP_BYTE _POP_SHORT _POP_INT _POP_LONG
 %token <string> _ID
 %token <numeric> _NUMERIC
@@ -99,8 +102,9 @@ statement:
             | mem_statement
             | label
             | _NUMERIC    { push_value($1); }
+            | call_statement
 
-
+call_statement: _CALL_OP expr {push_byte(CALL); push_value($2);}
 
 
 label: _LABEL id

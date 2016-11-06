@@ -7,8 +7,8 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-RESULT execute_step(uint8_t *code, uint16_t *program_counter);
-RESULT execute_intruction(uint8_t *code, uint16_t *program_counter);
+
+RESULT execute_intruction();
 
 #ifdef __cplusplus
 }

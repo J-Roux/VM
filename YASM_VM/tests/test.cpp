@@ -1,6 +1,7 @@
 
 #include "../src/vm.h"
 #include "../src/stack.h"
+#include "../src/code_stream.h"
 #include <iostream>
 #include <functional>
 #include <vector>
@@ -107,8 +108,10 @@ void TestMethod(COMMANDS command, type op1, type op2) {
         using code_type = typename std::make_unsigned<type>::type;
         uint16_t pc = 0;
         auto code = get_code<code_type>(op1, op2, command);
-        EXPECT_EQ(execute_intruction(code.data(), &pc), SUCCESS);
-        EXPECT_EQ(execute_intruction(code.data(), &pc), SUCCESS);
+        set_code(code.data(), code.size());
+        EXPECT_EQ(execute_intruction(), SUCCESS);
+        EXPECT_EQ(execute_intruction(), SUCCESS);
+        jmp(0);
         auto res = GET_HEAD(type);
         EXPECT_EQ(*res, T{}(op2, op1));
 }
@@ -213,12 +216,6 @@ TEST(VMTest, Div_ubyte_intruction) {
         TestMethod<std::divides<>, uint8_t>(DIV_BYTE, 3, 27);
 }
 
-TEST(VMTest, Div_ubyte_intruction_by_zero) {
-        uint16_t pc = 0;
-        auto code = get_code<uint8_t>(0,5, DIV_BYTE);
-        EXPECT_EQ(execute_intruction(code.data(), &pc), SUCCESS);
-        EXPECT_EQ(execute_intruction(code.data(), &pc), DIV_BY_ZERO);
-}
 
 TEST(VMTest, Add_sbyte_intruction) {
         TestMethod<std::plus<>, int8_t>(ADD_BYTE, -3, 9);
@@ -236,12 +233,7 @@ TEST(VMTest, Div_sbyte_intruction) {
         TestMethod<std::divides<>, int8_t>(DIV_SBYTE, -9, 27);
 }
 
-TEST(VMTest, Div_sbyte_intruction_by_zero) {
-        uint16_t pc = 0;
-        auto code = get_code<uint8_t>(0,5, DIV_SBYTE);
-        EXPECT_EQ(execute_intruction(code.data(), &pc), SUCCESS);
-        EXPECT_EQ(execute_intruction(code.data(), &pc), DIV_BY_ZERO);
-}
+
 
 
 TEST(VMTest, And_short_intruction) {
@@ -286,12 +278,6 @@ TEST(VMTest, Div_ushort_intruction) {
 }
 
 
-TEST(VMTest, Div_ushort_intruction_by_zero) {
-        uint16_t pc = 0;
-        auto code = get_code<uint16_t>(0, 256, DIV_SHORT);
-        EXPECT_EQ(execute_intruction(code.data(), &pc), SUCCESS);
-        EXPECT_EQ(execute_intruction(code.data(), &pc), DIV_BY_ZERO);
-}
 
 
 TEST(VMTest, Add_sshort_intruction) {
@@ -314,13 +300,7 @@ TEST(VMTest, Div_sshort_intruction) {
         TestMethod<std::divides<>, int16_t>(DIV_SSHORT, -5, 260);
 }
 
-TEST(VMTest, Div_sshort_intruction_by_zero) {
-        uint16_t pc = 0;
-        auto code = get_code<uint16_t>(0, 256, DIV_SSHORT);
-        EXPECT_EQ(execute_intruction(code.data(), &pc), SUCCESS);
-        EXPECT_EQ(execute_intruction(code.data(), &pc), DIV_BY_ZERO);
 
-}
 
 
 TEST(VMTest, And_int_intruction) {
@@ -361,13 +341,6 @@ TEST(VMTest, Div_int_intruction) {
         TestMethod<std::divides<>, uint32_t>(DIV_INT, 5, 33000);
 }
 
-TEST(VMTest, Div_int_intruction_by_zero) {
-        uint16_t pc = 0;
-        auto code = get_code<uint32_t>(0, 3333, DIV_INT);
-        EXPECT_EQ(execute_intruction(code.data(), &pc), SUCCESS);
-        EXPECT_EQ(execute_intruction(code.data(), &pc), DIV_BY_ZERO);
-}
-
 TEST(VMTest, Add_sint_intruction) {
         TestMethod<std::plus<>, int32_t>(ADD_INT, -5, 33000);
 }
@@ -383,13 +356,6 @@ TEST(VMTest, Mul_sint_intruction) {
 
 TEST(VMTest, Div_sint_intruction) {
         TestMethod<std::divides<>, int32_t>(DIV_SINT, -5, 33000);
-}
-
-TEST(VMTest, Div_sint_intruction_by_zero) {
-        uint16_t pc = 0;
-        auto code = get_code<uint32_t>(0, -333, DIV_SINT);
-        EXPECT_EQ(execute_intruction(code.data(), &pc), SUCCESS);
-        EXPECT_EQ(execute_intruction(code.data(), &pc), DIV_BY_ZERO);
 }
 
 
@@ -431,12 +397,7 @@ TEST(VMTest, Div_long_intruction) {
         TestMethod<std::divides<>, uint64_t>(DIV_LONG, 5, 33000);
 }
 
-TEST(VMTest, Div_long_intruction_by_zero) {
-        uint16_t pc = 0;
-        auto code = get_code<uint64_t>(0, 3000, DIV_LONG);
-        EXPECT_EQ(execute_intruction(code.data(), &pc), SUCCESS);
-        EXPECT_EQ(execute_intruction(code.data(), &pc), DIV_BY_ZERO);
-}
+
 
 TEST(VMTest, Add_slong_intruction) {
         TestMethod<std::plus<>, int64_t>(ADD_LONG, -5, 33000);
@@ -455,34 +416,26 @@ TEST(VMTest, Div_slong_intruction) {
         TestMethod<std::divides<>, int64_t>(DIV_SLONG, -5, 33000);
 }
 
-TEST(VMTest, Div_slong_intruction_by_zero) {
-        uint16_t pc = 0;
-        auto code = get_code<uint64_t>(0, -30000, DIV_SLONG);
-        EXPECT_EQ(execute_intruction(code.data(), &pc), SUCCESS);
-        EXPECT_EQ(execute_intruction(code.data(), &pc), DIV_BY_ZERO);
-}
 
 
 TEST(VMTest, Jmp_intruction) {
-        uint16_t pc = 0;
-        auto code = std::vector<uint8_t>({PUSH, 2, 1, 7, ADD_BYTE, JMP, 6, 0});
-        EXPECT_EQ(execute_intruction(code.data(), &pc), SUCCESS);
-        EXPECT_EQ(execute_intruction(code.data(), &pc), SUCCESS);
-        EXPECT_EQ(execute_intruction(code.data(), &pc), SUCCESS);
-        EXPECT_EQ(pc, 6);
+        data = std::vector<uint8_t>({PUSH, 2, 1, 7, ADD_BYTE, JMP, 6, 0}).data();
+        EXPECT_EQ(execute_intruction(), SUCCESS);
+        EXPECT_EQ(execute_intruction(), SUCCESS);
+        EXPECT_EQ(execute_intruction(), SUCCESS);
+
 }
 
 TEST(VMTest, Jt_intruction) {
-        uint16_t pc = 0;
-        auto code = std::vector<uint8_t>({PUSH, 2, 7, 7, EQ_BYTE, JT, 6, 0});
-        EXPECT_EQ(execute_intruction(code.data(), &pc), SUCCESS);
-        EXPECT_EQ(execute_intruction(code.data(), &pc), SUCCESS);
-        EXPECT_EQ(execute_intruction(code.data(), &pc), SUCCESS);
-        EXPECT_EQ(pc, 6);
-        pc = 0;
-        code = std::vector<uint8_t>({PUSH, 2, 7, 4, EQ_BYTE, JT, 6, 0});
-        EXPECT_EQ(execute_intruction(code.data(), &pc), SUCCESS);
-        EXPECT_EQ(execute_intruction(code.data(), &pc), SUCCESS);
-        EXPECT_EQ(execute_intruction(code.data(), &pc), SUCCESS);
-        EXPECT_EQ(pc, 8);
+
+        data = std::vector<uint8_t>({PUSH, 2, 7, 7, EQ_BYTE, JT, 6, 0}).data();
+        EXPECT_EQ(execute_intruction(), SUCCESS);
+        EXPECT_EQ(execute_intruction(), SUCCESS);
+        EXPECT_EQ(execute_intruction(), SUCCESS);
+
+        data = std::vector<uint8_t>({PUSH, 2, 7, 4, EQ_BYTE, JT, 6, 0}).data();
+        EXPECT_EQ(execute_intruction(), SUCCESS);
+        EXPECT_EQ(execute_intruction(), SUCCESS);
+        EXPECT_EQ(execute_intruction(), SUCCESS);
+
 }

@@ -5,13 +5,7 @@
 
 typedef POINTER_SIZE ptr_size;
 
-typedef enum 
-{
-  SUCCESS, 
-  STACK_OVERFLOW = 2,
-  CODE_END = 4,
-  DIV_BY_ZERO = 8,
-} RESULT;
+
 
 #define STACK_START_ADDRESS -1
 #ifdef __cplusplus

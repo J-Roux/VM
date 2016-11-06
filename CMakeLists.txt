@@ -21,6 +21,7 @@ set(STACK_SIZE 128 CACHE STRING "Stack size, default:128")
 
 if(UNIX)
     set(CMAKE_CXX_FLAGS "-g -Wno-narrowing ")
+    set(CMAKE_C_FLAGS ${CMAKE_C_FLAG} "-std=c89")
 else(WIN32)
     set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} /W3 /MTd")
     set(CMAKE_CXX_FLAGS_DEBUG "/MTd")
@@ -37,12 +38,13 @@ find_package(BISON REQUIRED)
 
 file(GLOB STACK_VM "YASM_VM/src/stack.c")
 file(GLOB VM  "YASM_VM/src/vm.c")
+file(GLOB CODE_STREAM_VM "YASM_VM/src/code_stream.c")
 file(GLOB HEADERS_VM "YASM_VM/src/*.h")
 file(GLOB MAIN_VM "YASM_VM/src/main.c")
 file(GLOB COMMANDS_VM "YASM_VM/src/command.h")
 
 
-BISON_TARGET(MyParser "YASM_COMPILER/src/parcer.y" ${CMAKE_SOURCE_DIR}/YASM_COMPILER/src/parser.c)
+BISON_TARGET(MyParser "YASM_COMPILER/src/parcer.y" ${CMAKE_SOURCE_DIR}/YASM_COMPILER/src/parser.c COMPILE_FLAGS "--debug")
 FLEX_TARGET(MyScanner "YASM_COMPILER/src/yasm.lex" ${CMAKE_SOURCE_DIR}/YASM_COMPILER/src/lexer.c )
 file(GLOB COMPILER "YASM_COMPILER/src/*.c")
 file(GLOB HEADER_COMPILER "YASM_COMPILER/src/*h")
@@ -87,7 +89,7 @@ if (test)
   ##############
    
   file(GLOB TEST_VM "YASM_VM/tests/*.cpp")
-  add_executable(runUnitTests ${TEST_VM} ${STACK_VM} ${VM}  ${HEADERS_VM})
+  add_executable(runUnitTests ${TEST_VM} ${STACK_VM} ${VM}  ${HEADERS_VM} ${CODE_STREAM_VM})
  
   target_link_libraries(runUnitTests gtest gtest_main pthread)
 
@@ -103,7 +105,7 @@ add_executable(YASM_COMPILER
     ${HEADER_COMPILER}
     ${FLEX_MyScanner_OUTPUTS}
     ${BISON_MyParser_OUTPUTS})
-add_executable(YASM_VM ${MAIN_VM} ${VM} ${HEADERS_VM} ${STACK_VM})
+add_executable(YASM_VM ${MAIN_VM} ${VM} ${HEADERS_VM} ${STACK_VM} ${CODE_STREAM_VM})
 
 
 

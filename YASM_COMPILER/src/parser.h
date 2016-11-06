@@ -34,7 +34,7 @@
 # define YY_YY_HOME_PAVEL_WORKSPACE_YASM_YASM_COMPILER_SRC_PARSER_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
-# define YYDEBUG 0
+# define YYDEBUG 1
 #endif
 #if YYDEBUG
 extern int yydebug;
@@ -153,30 +153,31 @@ extern int yydebug;
     _JT = 363,
     _JF = 364,
     _LABEL = 365,
-    _PUSH = 366,
-    _POP = 367,
-    _ERASE = 368,
-    _PUSH_BYTE = 369,
-    _PUSH_SHORT = 370,
-    _PUSH_INT = 371,
-    _PUSH_LONG = 372,
-    _POP_BYTE = 373,
-    _POP_SHORT = 374,
-    _POP_INT = 375,
-    _POP_LONG = 376,
-    _ID = 377,
-    _NUMERIC = 378,
-    _INDENT = 379,
-    _OUTDENT = 380,
-    _NEW_LINE = 381,
-    _PLUS_OP = 382,
-    _MINUS_OP = 383,
-    _MUL_OP = 384,
-    _DIV_OP = 385,
-    _AND_OP = 386,
-    _OR_OP = 387,
-    _EQUALS_OP = 388,
-    _NOT_OP = 389
+    _CALL_OP = 366,
+    _PUSH = 367,
+    _POP = 368,
+    _ERASE = 369,
+    _PUSH_BYTE = 370,
+    _PUSH_SHORT = 371,
+    _PUSH_INT = 372,
+    _PUSH_LONG = 373,
+    _POP_BYTE = 374,
+    _POP_SHORT = 375,
+    _POP_INT = 376,
+    _POP_LONG = 377,
+    _ID = 378,
+    _NUMERIC = 379,
+    _INDENT = 380,
+    _OUTDENT = 381,
+    _NEW_LINE = 382,
+    _PLUS_OP = 383,
+    _MINUS_OP = 384,
+    _MUL_OP = 385,
+    _DIV_OP = 386,
+    _AND_OP = 387,
+    _OR_OP = 388,
+    _EQUALS_OP = 389,
+    _NOT_OP = 390
   };
 #endif
 
@@ -185,14 +186,14 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 44 "YASM_COMPILER/src/parcer.y" /* yacc.c:1909  */
+#line 47 "YASM_COMPILER/src/parcer.y" /* yacc.c:1909  */
 
   int64_t numeric;
   char* string;
   struct Node* node;
   struct Value* value;
 
-#line 196 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.h" /* yacc.c:1909  */
+#line 197 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

@@ -1,5 +1,5 @@
 #include "vm.h"
-
+#include "code_stream.h"
 
 
 
@@ -34,18 +34,20 @@ RESULT pop_op_long(uint64_t* op1, uint64_t* op2)
 }
 
 
-RESULT conditional_jmp(uint8_t* code, uint16_t* program_counter, uint8_t condition)
+RESULT conditional_jmp(uint8_t condition)
 {
         uint8_t op = 0;
         RESULT result = pop_byte(&op);
         if(op == condition)
         {
-                uint16_t address = *((uint16_t*)(code + *program_counter));
-                *program_counter = address;
+                uint16_t address;
+                result |= get_code((uint8_t *)&address, sizeof(uint16_t));
+                result |= jmp(address);
+
         }
         else
         {
-                *(program_counter)+=2;
+                inc_pc(2);
         }
         return result;
 }
@@ -130,20 +132,41 @@ RESULT conditional_jmp(uint8_t* code, uint16_t* program_counter, uint8_t conditi
 
 typedef RESULT(*func)(uint8_t *ptr, ptr_size size);
 
-RESULT push_by_arg(  uint8_t *code, uint16_t *program_counter,  func mem_instruction)
+RESULT push_by_arg( func mem_instruction)
 {
-
-        uint8_t* ptr_data = code + *(program_counter) + 1;
-        uint8_t arg = code[*program_counter];
-        (*program_counter) += arg + 1;
+        RESULT result = SUCCESS;
+        uint8_t arg;
+        result = get_code(&arg, sizeof(uint8_t));
+        uint8_t* ptr_data = malloc(arg);
+        result |= get_code(ptr_data, arg);
         return mem_instruction(ptr_data, arg);
 }
 
-RESULT execute_intruction(uint8_t *code, uint16_t *program_counter)
+RESULT push_data( uint8_t size)
+{
+    RESULT result;
+    uint8_t * data;
+    result |= get_code(data, size);
+    result |= push(data, size);
+    return result;
+}
+
+
+RESULT pop_data( uint8_t size)
+{
+    RESULT result;
+    uint8_t * data;
+    result |= get_code(data,  size);
+    result |= pop(data,  size);
+    return result;
+}
+
+
+RESULT execute_intruction()
 {
         RESULT result = SUCCESS;
-        COMMANDS command = code[*program_counter];
-        (*program_counter)++;
+        COMMANDS command = END;
+        result = get_code((uint8_t *)&command, sizeof(uint8_t));
         switch (command)
         {
                 UNSIGNED_BINARY_OPERATION(ADD, +);
@@ -167,90 +190,94 @@ RESULT execute_intruction(uint8_t *code, uint16_t *program_counter)
                 UNSIGNED_UNARY_OPERATION(LNOT, !);
                 case PUSH:
                 {
-                        result = push_by_arg(code, program_counter, &push);
+                        result = push_by_arg( &push);
                         break;
                 }
                 case POP:
                 {
-                        result = push_by_arg(code, program_counter, &pop);
+                        result = push_by_arg( &pop);
                         break;
                 }
                 case PUSH_BYTE:
                 {
-
-                        result = push(code + (*program_counter), sizeof(uint8_t));
+                        result = push_data(sizeof(uint8_t));
                         break;
                 }
                 case PUSH_SHORT:
                 {
 
-                        result = push(code + (*program_counter), sizeof(uint16_t));
+                        result = push_data(sizeof(uint16_t));
                         break;
                 }
                 case PUSH_INT:
                 {
 
-                        result = push(code + (*program_counter), sizeof(uint32_t));
+                        result = push_data(sizeof(uint32_t));
                         break;
                 }
                 case PUSH_LONG:
                 {
 
-                        result = push(code + *program_counter, sizeof(uint64_t));
+                        result = push_data(sizeof(uint64_t));
                         break;
                 }
                 case POP_BYTE:
                 {
 
-                        result = pop(code + (*program_counter), sizeof(uint8_t));
+                        result = pop_data(sizeof(uint8_t));
                         break;
                 }
                 case POP_SHORT:
                 {
 
-                        result = pop(code + (*program_counter), sizeof(uint16_t));
+                         result = pop_data(sizeof(uint16_t));
                         break;
                 }
                 case POP_INT:
                 {
 
-                        result = pop(code + (*program_counter), sizeof(uint32_t));
+                         result = pop_data(sizeof(uint32_t));
                         break;
                 }
                 case POP_LONG:
                 {
 
-                        result = pop(code + *program_counter, sizeof(uint64_t));
+                         result = pop_data(sizeof(uint64_t));
                         break;
                 }
 
                 case JMP:
                 {
-                        uint16_t address = *((uint16_t*)(code + *program_counter));
-                        *program_counter = address;
+                        uint16_t address;
+                        result |= get_code((uint8_t *)&address, sizeof(uint16_t));
                         break;
                 }
                 case JT:
                 {
-                        result = conditional_jmp(code, program_counter, 1);
+                        result = conditional_jmp(1);
                         break;
                 }
                 case JF:
                 {
-                        result = conditional_jmp(code, program_counter, 0);
+                        result = conditional_jmp(0);
                         break;
                 }
-
+                case END:
+                {
+                        reset();
+                        result = CODE_END;
+                        break;
+                }
+                case CALL:
+                {
+                        uint8_t id;
+                        result |= get_code((uint8_t *)&id, sizeof(uint8_t));
+                        switch(id)
+                        {
+                                case 0: printf("%i", *(get_head(sizeof(uint8_t))));
+                        }
+                }
 
         }
-
-        return result;
-}
-
-RESULT execute_step(uint8_t *code, uint16_t *program_counter)
-{
-        RESULT result = SUCCESS;
-        result = execute_intruction(code, program_counter);
-        (*program_counter)++;
         return result;
 }

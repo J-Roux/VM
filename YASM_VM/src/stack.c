@@ -4,6 +4,7 @@ static uint8_t data[STACK_SIZE];
 static ptr_size pointer = STACK_START_ADDRESS;
 
 ptr_size get_pointer() { return pointer;}
+void reset() { pointer = STACK_START_ADDRESS; }
 uint8_t* get_head(uint8_t shift )
 {
     if(pointer >= 0)

@@ -33,4 +33,14 @@
 #define TRACE(MESSAGE)
 #endif
 
+
+typedef enum
+{
+  SUCCESS,
+  STACK_OVERFLOW = 2,
+  CODE_END = 4,
+  DIV_BY_ZERO = 8,
+} RESULT;
+
+
 #endif /*_CONFIG_H_*/

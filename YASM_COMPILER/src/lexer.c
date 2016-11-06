@@ -1475,7 +1475,7 @@ YY_RULE_SETUP
 case 121:
 YY_RULE_SETUP
 #line 326 "YASM_COMPILER/src/yasm.lex"
-{  return _ADD_LONG; }
+{  return _CALL_OP; }
 	YY_BREAK
 case 122:
 YY_RULE_SETUP

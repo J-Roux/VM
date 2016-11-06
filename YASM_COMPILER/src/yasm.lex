@@ -323,7 +323,7 @@ COMMENT          #.*
 {POP_INT}         {  return _POP_INT; }
 {POP_LONG}        {  return _POP_LONG; }
 
-{CALL}            {  return _ADD_LONG; }
+{CALL}            {  return _CALL_OP; }
 {RET}             {  return _ADD_LONG; }
 {ID}              { yylval.string = strdup(yytext); return _ID;  }
 {NUMERIC}         { yylval.numeric = atoi(yytext); return _NUMERIC;}
