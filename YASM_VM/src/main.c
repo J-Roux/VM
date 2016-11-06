@@ -6,6 +6,7 @@
 #ifndef ARDUINO
 int main(int argc, char** argv)
 {
+    int stop = 1;
     int i;
     if(argc < 2) {
       printf("No input file!\n");
@@ -18,11 +19,20 @@ int main(int argc, char** argv)
     uint8_t *code = malloc(sz);
     fread(code,1,sz, f);
     set_code(code, sz);
-    while(1)
+    while(stop)
     {
         RESULT result = execute_intruction();
-        if(result == CODE_END)
-            break;
+        switch (result) {
+        case STACK_OVERFLOW :
+        {
+            printf("stack overflow\n");
+
+        }
+        case CODE_END:
+        {
+            stop = 0;
+        }
+        }
     }
     return 0;
 }

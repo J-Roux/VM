@@ -13,25 +13,15 @@
 #ifdef ARDUINO
 #include <string.h>
 #include <Arduino.h>
-#define TRACE_DBG Serial.println
+#define PRINT Serial.println
 #define MEMCPY_DBG(DEST, SRC, SIZE) memcpy(DEST, SRC, SIZE)
 #else
-#define TRACE_DBG printf
+#define PRINT(VALUE) printf("%i\n", VALUE)
 #define MEMCPY_DBG(DEST, SRC, SIZE) memcpy(DEST, SRC, SIZE)
 #endif
 
-
-#ifdef DEBUG
-#define TRACE TRACE_DBG
 #define MEMCPY(DEST, SRC, SIZE) MEMCPY_DBG(DEST, SRC, SIZE)
-#else 
-#define TRACE
-#define MEMCPY(DEST, SRC, SIZE)
-#endif
 
-#ifndef RANGE_CHECK
-#define TRACE(MESSAGE)
-#endif
 
 
 typedef enum

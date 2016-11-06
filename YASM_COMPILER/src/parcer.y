@@ -88,7 +88,7 @@ int main(int argc, char** argv) {
 %left _NOT_OP
 
 %type<numeric> expr
-
+%type<string> id
 
 %%
 axiom:
@@ -103,11 +103,17 @@ statement:
             | label
             | _NUMERIC    { push_value($1); }
             | call_statement
+            | jmp_statement
+
+jmp_statement:
+              |_JMP id     { push_byte(JMP); push_short(get_id_value($2)); }
+              | _JF id     { push_byte(JF); push_short(get_id_value($2)); }
+              | _JT id     { push_byte(JT); push_short(get_id_value($2)); }
 
 call_statement: _CALL_OP expr {push_byte(CALL); push_value($2);}
 
 
-label: _LABEL id
+label:  id  _LABEL  { add_to_map($1, pointer); }
 
 id: _ID
 

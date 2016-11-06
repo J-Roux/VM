@@ -250,6 +250,7 @@ RESULT execute_intruction()
                 {
                         uint16_t address;
                         result |= get_code((uint8_t *)&address, sizeof(uint16_t));
+                        result |= jmp(address);
                         break;
                 }
                 case JT:
@@ -274,7 +275,7 @@ RESULT execute_intruction()
                         result |= get_code((uint8_t *)&id, sizeof(uint8_t));
                         switch(id)
                         {
-                                case 0: printf("%i", *(get_head(sizeof(uint8_t))));
+                                case 0: PRINT(*(get_head(sizeof(uint8_t))));
                         }
                 }
 

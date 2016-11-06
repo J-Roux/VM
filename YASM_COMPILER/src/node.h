@@ -125,6 +125,19 @@ void add_to_map(char * key, uint16_t value)
     ptr->value = value;
 }
 
+uint16_t get_id_value(char *key)
+{
+    uint16_t value = 0xFF;
+    uint16_t hash = SuperFastHash(key, strlen(key));
+    struct pair * ptr = &begin;
+    while(ptr->left != NULL)
+    {
+        if(ptr->hash == hash);
+            return ptr->value;
+        ptr = ptr->left;
+    }
+    return value;
+}
 
 
 

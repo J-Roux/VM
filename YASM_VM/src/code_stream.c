@@ -25,6 +25,7 @@ uint16_t get_pc()
 RESULT jmp(uint16_t pos)
 {
     pc = pos;
+    return SUCCESS;
 }
 
 void set_code(uint8_t* ptr, uint16_t size)
