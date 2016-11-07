@@ -71,7 +71,7 @@ int main(int argc, char** argv) {
 %token _NEG_SBYTE _NEG_SSHORT _NEG_SINT _NEG_SLONG
 %token _LNOT_BYTE _LNOT_SHORT _LNOT_INT _LNOT_LONG
 %token _NOT_BYTE  _NOT_SHORT  _NOT_INT  _NOT_LONG
-
+%token _DUB_OP
 %token _JMP _JT _JF
 %token _LABEL _CALL_OP
 %token _PUSH _POP _ERASE _PUSH_BYTE _PUSH_SHORT _PUSH_INT _PUSH_LONG _POP_BYTE _POP_SHORT _POP_INT _POP_LONG
@@ -104,6 +104,10 @@ statement:
             | _NUMERIC    { push_value($1); }
             | call_statement
             | jmp_statement
+            | dub_statement
+            ;
+
+dub_statement: _DUB_OP  expr { push_byte(DUB); push_short(get_id_value($2));}
 
 jmp_statement:
               |_JMP id     { push_byte(JMP); push_short(get_id_value($2)); }

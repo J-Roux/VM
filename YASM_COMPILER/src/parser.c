@@ -243,35 +243,36 @@ extern int yydebug;
     _NOT_SHORT = 359,
     _NOT_INT = 360,
     _NOT_LONG = 361,
-    _JMP = 362,
-    _JT = 363,
-    _JF = 364,
-    _LABEL = 365,
-    _CALL_OP = 366,
-    _PUSH = 367,
-    _POP = 368,
-    _ERASE = 369,
-    _PUSH_BYTE = 370,
-    _PUSH_SHORT = 371,
-    _PUSH_INT = 372,
-    _PUSH_LONG = 373,
-    _POP_BYTE = 374,
-    _POP_SHORT = 375,
-    _POP_INT = 376,
-    _POP_LONG = 377,
-    _ID = 378,
-    _NUMERIC = 379,
-    _INDENT = 380,
-    _OUTDENT = 381,
-    _NEW_LINE = 382,
-    _PLUS_OP = 383,
-    _MINUS_OP = 384,
-    _MUL_OP = 385,
-    _DIV_OP = 386,
-    _AND_OP = 387,
-    _OR_OP = 388,
-    _EQUALS_OP = 389,
-    _NOT_OP = 390
+    _DUB_OP = 362,
+    _JMP = 363,
+    _JT = 364,
+    _JF = 365,
+    _LABEL = 366,
+    _CALL_OP = 367,
+    _PUSH = 368,
+    _POP = 369,
+    _ERASE = 370,
+    _PUSH_BYTE = 371,
+    _PUSH_SHORT = 372,
+    _PUSH_INT = 373,
+    _PUSH_LONG = 374,
+    _POP_BYTE = 375,
+    _POP_SHORT = 376,
+    _POP_INT = 377,
+    _POP_LONG = 378,
+    _ID = 379,
+    _NUMERIC = 380,
+    _INDENT = 381,
+    _OUTDENT = 382,
+    _NEW_LINE = 383,
+    _PLUS_OP = 384,
+    _MINUS_OP = 385,
+    _MUL_OP = 386,
+    _DIV_OP = 387,
+    _AND_OP = 388,
+    _OR_OP = 389,
+    _EQUALS_OP = 390,
+    _NOT_OP = 391
   };
 #endif
 
@@ -287,7 +288,7 @@ union YYSTYPE
   struct Node* node;
   struct Value* value;
 
-#line 291 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:355  */
+#line 292 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:355  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -304,7 +305,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 308 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:358  */
+#line 309 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -544,23 +545,23 @@ union yyalloc
 #endif /* !YYCOPY_NEEDED */
 
 /* YYFINAL -- State number of the termination state.  */
-#define YYFINAL  113
+#define YYFINAL  116
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   136
+#define YYLAST   141
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  136
+#define YYNTOKENS  137
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  11
+#define YYNNTS  12
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  118
+#define YYNRULES  120
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  131
+#define YYNSTATES  134
 
 /* YYTRANSLATE[YYX] -- Symbol number corresponding to YYX as returned
    by yylex, with out-of-bounds checking.  */
 #define YYUNDEFTOK  2
-#define YYMAXUTOK   390
+#define YYMAXUTOK   391
 
 #define YYTRANSLATE(YYX)                                                \
   ((unsigned int) (YYX) <= YYMAXUTOK ? yytranslate[YYX] : YYUNDEFTOK)
@@ -608,7 +609,7 @@ static const yytype_uint8 yytranslate[] =
      105,   106,   107,   108,   109,   110,   111,   112,   113,   114,
      115,   116,   117,   118,   119,   120,   121,   122,   123,   124,
      125,   126,   127,   128,   129,   130,   131,   132,   133,   134,
-     135
+     135,   136
 };
 
 #if YYDEBUG
@@ -616,17 +617,18 @@ static const yytype_uint8 yytranslate[] =
 static const yytype_uint8 yyrline[] =
 {
        0,    94,    94,    95,    98,    99,   100,   101,   102,   103,
-     104,   105,   106,   108,   109,   110,   111,   113,   116,   118,
-     120,   121,   122,   123,   124,   125,   126,   127,   128,   129,
-     130,   131,   132,   133,   134,   135,   136,   137,   138,   139,
-     140,   141,   142,   143,   144,   145,   146,   147,   148,   149,
-     150,   151,   152,   153,   154,   155,   156,   157,   158,   159,
-     160,   161,   162,   163,   164,   165,   166,   167,   168,   169,
-     170,   171,   172,   173,   174,   175,   176,   177,   178,   179,
-     180,   181,   182,   183,   184,   185,   186,   187,   188,   189,
-     190,   191,   192,   193,   194,   195,   196,   197,   198,   199,
-     201,   202,   203,   204,   205,   206,   207,   208,   209,   210,
-     212,   213,   214,   215,   216,   217,   218,   219,   220
+     104,   105,   106,   107,   110,   112,   113,   114,   115,   117,
+     120,   122,   124,   125,   126,   127,   128,   129,   130,   131,
+     132,   133,   134,   135,   136,   137,   138,   139,   140,   141,
+     142,   143,   144,   145,   146,   147,   148,   149,   150,   151,
+     152,   153,   154,   155,   156,   157,   158,   159,   160,   161,
+     162,   163,   164,   165,   166,   167,   168,   169,   170,   171,
+     172,   173,   174,   175,   176,   177,   178,   179,   180,   181,
+     182,   183,   184,   185,   186,   187,   188,   189,   190,   191,
+     192,   193,   194,   195,   196,   197,   198,   199,   200,   201,
+     202,   203,   205,   206,   207,   208,   209,   210,   211,   212,
+     213,   214,   216,   217,   218,   219,   220,   221,   222,   223,
+     224
 };
 #endif
 
@@ -655,14 +657,14 @@ static const char *const yytname[] =
   "_INC_SHORT", "_INC_INT", "_INC_LONG", "_DEC_BYTE", "_DEC_SHORT",
   "_DEC_INT", "_DEC_LONG", "_NEG_SBYTE", "_NEG_SSHORT", "_NEG_SINT",
   "_NEG_SLONG", "_LNOT_BYTE", "_LNOT_SHORT", "_LNOT_INT", "_LNOT_LONG",
-  "_NOT_BYTE", "_NOT_SHORT", "_NOT_INT", "_NOT_LONG", "_JMP", "_JT", "_JF",
-  "_LABEL", "_CALL_OP", "_PUSH", "_POP", "_ERASE", "_PUSH_BYTE",
-  "_PUSH_SHORT", "_PUSH_INT", "_PUSH_LONG", "_POP_BYTE", "_POP_SHORT",
-  "_POP_INT", "_POP_LONG", "_ID", "_NUMERIC", "_INDENT", "_OUTDENT",
-  "_NEW_LINE", "_PLUS_OP", "_MINUS_OP", "_MUL_OP", "_DIV_OP", "_AND_OP",
-  "_OR_OP", "_EQUALS_OP", "_NOT_OP", "$accept", "axiom", "statement_list",
-  "statement", "jmp_statement", "call_statement", "label", "id", "command",
-  "mem_statement", "expr", YY_NULLPTR
+  "_NOT_BYTE", "_NOT_SHORT", "_NOT_INT", "_NOT_LONG", "_DUB_OP", "_JMP",
+  "_JT", "_JF", "_LABEL", "_CALL_OP", "_PUSH", "_POP", "_ERASE",
+  "_PUSH_BYTE", "_PUSH_SHORT", "_PUSH_INT", "_PUSH_LONG", "_POP_BYTE",
+  "_POP_SHORT", "_POP_INT", "_POP_LONG", "_ID", "_NUMERIC", "_INDENT",
+  "_OUTDENT", "_NEW_LINE", "_PLUS_OP", "_MINUS_OP", "_MUL_OP", "_DIV_OP",
+  "_AND_OP", "_OR_OP", "_EQUALS_OP", "_NOT_OP", "$accept", "axiom",
+  "statement_list", "statement", "dub_statement", "jmp_statement",
+  "call_statement", "label", "id", "command", "mem_statement", "expr", YY_NULLPTR
 };
 #endif
 
@@ -684,14 +686,14 @@ static const yytype_uint16 yytoknum[] =
      355,   356,   357,   358,   359,   360,   361,   362,   363,   364,
      365,   366,   367,   368,   369,   370,   371,   372,   373,   374,
      375,   376,   377,   378,   379,   380,   381,   382,   383,   384,
-     385,   386,   387,   388,   389,   390
+     385,   386,   387,   388,   389,   390,   391
 };
 # endif
 
-#define YYPACT_NINF -123
+#define YYPACT_NINF -124
 
 #define yypact_value_is_default(Yystate) \
-  (!!((Yystate) == (-123)))
+  (!!((Yystate) == (-124)))
 
 #define YYTABLE_NINF -7
 
@@ -702,20 +704,20 @@ static const yytype_uint16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      -3,  -123,  -123,  -123,  -123,  -123,  -123,  -123,  -123,  -123,
-    -123,  -123,  -123,  -123,  -123,  -123,  -123,  -123,  -123,  -123,
-    -123,  -123,  -123,  -123,  -123,  -123,  -123,  -123,  -123,  -123,
-    -123,  -123,  -123,  -123,  -123,  -123,  -123,  -123,  -123,  -123,
-    -123,  -123,  -123,  -123,  -123,  -123,  -123,  -123,  -123,  -123,
-    -123,  -123,  -123,  -123,  -123,  -123,  -123,  -123,  -123,  -123,
-    -123,  -123,  -123,  -123,  -123,  -123,  -123,  -123,  -123,  -123,
-    -123,  -123,  -123,  -123,  -123,  -123,  -123,  -123,  -123,  -123,
-    -106,  -106,  -106,   -40,   -40,   -40,  -123,  -123,  -123,  -123,
-    -123,  -123,  -123,  -123,  -123,  -123,    94,    -3,   -31,  -123,
-    -123,  -123,    -9,  -123,  -123,  -123,  -123,  -123,  -123,   -40,
-     -43,   -43,   -43,  -123,   -25,  -123,  -123,  -123,   -40,   -40,
-     -40,   -40,   -40,   -40,  -123,  -122,  -122,   -33,   -33,  -123,
-    -123
+      -3,  -124,  -124,  -124,  -124,  -124,  -124,  -124,  -124,  -124,
+    -124,  -124,  -124,  -124,  -124,  -124,  -124,  -124,  -124,  -124,
+    -124,  -124,  -124,  -124,  -124,  -124,  -124,  -124,  -124,  -124,
+    -124,  -124,  -124,  -124,  -124,  -124,  -124,  -124,  -124,  -124,
+    -124,  -124,  -124,  -124,  -124,  -124,  -124,  -124,  -124,  -124,
+    -124,  -124,  -124,  -124,  -124,  -124,  -124,  -124,  -124,  -124,
+    -124,  -124,  -124,  -124,  -124,  -124,  -124,  -124,  -124,  -124,
+    -124,  -124,  -124,  -124,  -124,  -124,  -124,  -124,  -124,  -124,
+     -41,  -107,  -107,  -107,   -41,   -41,   -41,  -124,  -124,  -124,
+    -124,  -124,  -124,  -124,  -124,  -124,  -124,    94,    -3,   -30,
+    -124,  -124,  -124,  -124,    -9,  -124,  -124,  -124,   -41,   -44,
+    -124,  -124,  -124,   -44,   -44,   -44,  -124,   -25,  -124,  -124,
+    -124,   -41,   -41,   -41,   -41,   -41,   -41,  -124,  -123,  -123,
+     -37,   -37,  -124,  -124
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -723,34 +725,34 @@ static const yytype_int8 yypact[] =
      means the default is an error.  */
 static const yytype_uint8 yydefact[] =
 {
-       2,    20,    21,    22,    23,    24,    25,    26,    27,    28,
-      29,    30,    31,    32,    34,    35,    36,    37,    38,    39,
-      40,    41,    42,    43,    44,    45,    46,    47,    48,    49,
-      50,    51,    52,    53,    54,    55,    56,    57,    58,    59,
-      60,    61,    62,    63,    64,    65,    66,    67,    68,    69,
-      70,    71,    72,    73,    74,    75,    76,    77,    78,    79,
-      80,    81,    82,    83,    84,    85,    86,    87,    88,    89,
-      90,    91,    92,    93,    94,    95,    96,    97,    98,    99,
-       0,     0,     0,   110,   110,   110,   100,   101,   102,   103,
-     104,   106,   105,   107,    19,    10,     0,     3,     0,    12,
-      11,     9,     0,     7,     8,    14,    16,    15,   118,   110,
-      17,   109,   108,     1,     0,     4,    18,   117,   110,   110,
-     110,   110,   110,   110,     5,   113,   114,   111,   112,   115,
-     116
+       2,    22,    23,    24,    25,    26,    27,    28,    29,    30,
+      31,    32,    33,    34,    36,    37,    38,    39,    40,    41,
+      42,    43,    44,    45,    46,    47,    48,    49,    50,    51,
+      52,    53,    54,    55,    56,    57,    58,    59,    60,    61,
+      62,    63,    64,    65,    66,    67,    68,    69,    70,    71,
+      72,    73,    74,    75,    76,    77,    78,    79,    80,    81,
+      82,    83,    84,    85,    86,    87,    88,    89,    90,    91,
+      92,    93,    94,    95,    96,    97,    98,    99,   100,   101,
+     112,     0,     0,     0,   112,   112,   112,   102,   103,   104,
+     105,   106,   108,   107,   109,    21,    10,     0,     3,     0,
+      13,    12,    11,     9,     0,     7,     8,   120,   112,    14,
+      16,    18,    17,    19,   111,   110,     1,     0,     4,    20,
+     119,   112,   112,   112,   112,   112,   112,     5,   115,   116,
+     113,   114,   117,   118
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-    -123,  -123,  -123,     6,  -123,  -123,  -123,    11,  -123,  -123,
-      13
+    -124,  -124,  -124,    14,  -124,  -124,  -124,  -124,    10,  -124,
+    -124,    15
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,    96,    97,    98,    99,   100,   101,   102,   103,   104,
-     110
+      -1,    97,    98,    99,   100,   101,   102,   103,   104,   105,
+     106,   109
 };
 
   /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -758,38 +760,40 @@ static const yytype_int8 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int16 yytable[] =
 {
-       1,     2,     3,     4,     5,     6,     7,     8,   120,   121,
-     122,   123,     9,    10,    11,    12,    13,    94,    14,    15,
+       1,     2,     3,     4,     5,     6,     7,     8,   123,   124,
+     125,   126,     9,    10,    11,    12,    13,    95,    14,    15,
       16,    17,    18,    19,    20,    21,    22,    23,    24,    25,
       26,    27,    28,    29,    30,    31,    32,    33,    34,    35,
       36,    37,    38,    39,    40,    41,    42,    43,    44,    45,
       46,    47,    48,    49,    50,    51,    52,    53,    54,    55,
       56,    57,    58,    59,    60,    61,    62,    63,    64,    65,
       66,    67,    68,    69,    70,    71,    72,    73,    74,    75,
-      76,    77,    78,    79,   108,   118,   119,   120,   121,   122,
-     123,   105,   106,   107,   113,   109,   115,   111,   112,   122,
-     123,   116,   124,   114,    80,    81,    82,     0,    83,    84,
-      85,     0,    86,    87,    88,    89,    90,    91,    92,    93,
-      94,    95,   117,     0,    -6,     0,     0,     0,     0,     0,
-       0,   125,   126,   127,   128,   129,   130
+      76,    77,    78,    79,   107,   121,   122,   123,   124,   125,
+     126,   110,   111,   112,   116,   108,   125,   126,   118,   113,
+     114,   115,   119,   127,    80,    81,    82,    83,     0,    84,
+      85,    86,   117,    87,    88,    89,    90,    91,    92,    93,
+      94,    95,    96,   120,     0,    -6,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,   128,   129,   130,   131,
+     132,   133
 };
 
 static const yytype_int16 yycheck[] =
 {
-       3,     4,     5,     6,     7,     8,     9,    10,   130,   131,
-     132,   133,    15,    16,    17,    18,    19,   123,    21,    22,
+       3,     4,     5,     6,     7,     8,     9,    10,   131,   132,
+     133,   134,    15,    16,    17,    18,    19,   124,    21,    22,
       23,    24,    25,    26,    27,    28,    29,    30,    31,    32,
       33,    34,    35,    36,    37,    38,    39,    40,    41,    42,
       43,    44,    45,    46,    47,    48,    49,    50,    51,    52,
       53,    54,    55,    56,    57,    58,    59,    60,    61,    62,
       63,    64,    65,    66,    67,    68,    69,    70,    71,    72,
       73,    74,    75,    76,    77,    78,    79,    80,    81,    82,
-      83,    84,    85,    86,   124,   128,   129,   130,   131,   132,
-     133,    80,    81,    82,     0,   135,   127,    84,    85,   132,
-     133,   110,   127,    97,   107,   108,   109,    -1,   111,   112,
-     113,    -1,   115,   116,   117,   118,   119,   120,   121,   122,
-     123,   124,   109,    -1,   127,    -1,    -1,    -1,    -1,    -1,
-      -1,   118,   119,   120,   121,   122,   123
+      83,    84,    85,    86,   125,   129,   130,   131,   132,   133,
+     134,    81,    82,    83,     0,   136,   133,   134,   128,    84,
+      85,    86,   111,   128,   107,   108,   109,   110,    -1,   112,
+     113,   114,    98,   116,   117,   118,   119,   120,   121,   122,
+     123,   124,   125,   108,    -1,   128,    -1,    -1,    -1,    -1,
+      -1,    -1,    -1,    -1,    -1,    -1,   121,   122,   123,   124,
+     125,   126
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
@@ -804,36 +808,38 @@ static const yytype_uint8 yystos[] =
       57,    58,    59,    60,    61,    62,    63,    64,    65,    66,
       67,    68,    69,    70,    71,    72,    73,    74,    75,    76,
       77,    78,    79,    80,    81,    82,    83,    84,    85,    86,
-     107,   108,   109,   111,   112,   113,   115,   116,   117,   118,
-     119,   120,   121,   122,   123,   124,   137,   138,   139,   140,
-     141,   142,   143,   144,   145,   143,   143,   143,   124,   135,
-     146,   146,   146,     0,   139,   127,   110,   146,   128,   129,
-     130,   131,   132,   133,   127,   146,   146,   146,   146,   146,
-     146
+     107,   108,   109,   110,   112,   113,   114,   116,   117,   118,
+     119,   120,   121,   122,   123,   124,   125,   138,   139,   140,
+     141,   142,   143,   144,   145,   146,   147,   125,   136,   148,
+     145,   145,   145,   148,   148,   148,     0,   140,   128,   111,
+     148,   129,   130,   131,   132,   133,   134,   128,   148,   148,
+     148,   148,   148,   148
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
-       0,   136,   137,   137,   138,   138,   139,   139,   139,   139,
-     139,   139,   139,   140,   140,   140,   140,   141,   142,   143,
-     144,   144,   144,   144,   144,   144,   144,   144,   144,   144,
-     144,   144,   144,   144,   144,   144,   144,   144,   144,   144,
-     144,   144,   144,   144,   144,   144,   144,   144,   144,   144,
-     144,   144,   144,   144,   144,   144,   144,   144,   144,   144,
-     144,   144,   144,   144,   144,   144,   144,   144,   144,   144,
-     144,   144,   144,   144,   144,   144,   144,   144,   144,   144,
-     144,   144,   144,   144,   144,   144,   144,   144,   144,   144,
-     144,   144,   144,   144,   144,   144,   144,   144,   144,   144,
-     145,   145,   145,   145,   145,   145,   145,   145,   145,   145,
-     146,   146,   146,   146,   146,   146,   146,   146,   146
+       0,   137,   138,   138,   139,   139,   140,   140,   140,   140,
+     140,   140,   140,   140,   141,   142,   142,   142,   142,   143,
+     144,   145,   146,   146,   146,   146,   146,   146,   146,   146,
+     146,   146,   146,   146,   146,   146,   146,   146,   146,   146,
+     146,   146,   146,   146,   146,   146,   146,   146,   146,   146,
+     146,   146,   146,   146,   146,   146,   146,   146,   146,   146,
+     146,   146,   146,   146,   146,   146,   146,   146,   146,   146,
+     146,   146,   146,   146,   146,   146,   146,   146,   146,   146,
+     146,   146,   146,   146,   146,   146,   146,   146,   146,   146,
+     146,   146,   146,   146,   146,   146,   146,   146,   146,   146,
+     146,   146,   147,   147,   147,   147,   147,   147,   147,   147,
+     147,   147,   148,   148,   148,   148,   148,   148,   148,   148,
+     148
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
 static const yytype_uint8 yyr2[] =
 {
        0,     2,     0,     1,     2,     3,     0,     1,     1,     1,
-       1,     1,     1,     0,     2,     2,     2,     2,     2,     1,
+       1,     1,     1,     1,     2,     0,     2,     2,     2,     2,
+       2,     1,     1,     1,     1,     1,     1,     1,     1,     1,
        1,     1,     1,     1,     1,     1,     1,     1,     1,     1,
        1,     1,     1,     1,     1,     1,     1,     1,     1,     1,
        1,     1,     1,     1,     1,     1,     1,     1,     1,     1,
@@ -842,8 +848,8 @@ static const yytype_uint8 yyr2[] =
        1,     1,     1,     1,     1,     1,     1,     1,     1,     1,
        1,     1,     1,     1,     1,     1,     1,     1,     1,     1,
        1,     1,     1,     1,     1,     1,     1,     1,     1,     1,
-       1,     1,     1,     1,     1,     1,     1,     1,     2,     2,
-       0,     3,     3,     3,     3,     3,     3,     2,     1
+       2,     2,     0,     3,     3,     3,     3,     3,     3,     2,
+       1
 };
 
 
@@ -1522,629 +1528,635 @@ yyreduce:
         case 10:
 #line 104 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
     { push_value((yyvsp[0].numeric)); }
-#line 1526 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
-    break;
-
-  case 14:
-#line 109 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(JMP); push_short(get_id_value((yyvsp[0].string))); }
 #line 1532 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
-  case 15:
+  case 14:
 #line 110 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(JF); push_short(get_id_value((yyvsp[0].string))); }
+    { push_byte(DUB); push_short(get_id_value((yyvsp[0].numeric)));}
 #line 1538 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 111 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(JT); push_short(get_id_value((yyvsp[0].string))); }
+#line 113 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(JMP); push_short(get_id_value((yyvsp[0].string))); }
 #line 1544 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 113 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    {push_byte(CALL); push_value((yyvsp[0].numeric));}
+#line 114 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(JF); push_short(get_id_value((yyvsp[0].string))); }
 #line 1550 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 116 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { add_to_map((yyvsp[-1].string), pointer); }
+#line 115 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(JT); push_short(get_id_value((yyvsp[0].string))); }
 #line 1556 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
+    break;
+
+  case 19:
+#line 117 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    {push_byte(CALL); push_value((yyvsp[0].numeric));}
+#line 1562 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 20:
 #line 120 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(ADD_BYTE); }
-#line 1562 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
-    break;
-
-  case 21:
-#line 121 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(ADD_SHORT); }
+    { add_to_map((yyvsp[-1].string), pointer); }
 #line 1568 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 122 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(ADD_INT); }
+#line 124 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(ADD_BYTE); }
 #line 1574 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 123 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(ADD_LONG); }
+#line 125 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(ADD_SHORT); }
 #line 1580 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 124 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(SUB_BYTE); }
+#line 126 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(ADD_INT); }
 #line 1586 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 25:
-#line 125 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(SUB_SHORT); }
+#line 127 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(ADD_LONG); }
 #line 1592 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 26:
-#line 126 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(SUB_INT); }
+#line 128 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(SUB_BYTE); }
 #line 1598 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 27:
-#line 127 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(SUB_LONG); }
+#line 129 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(SUB_SHORT); }
 #line 1604 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 28:
-#line 128 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(DIV_BYTE); }
+#line 130 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(SUB_INT); }
 #line 1610 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 29:
-#line 129 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(DIV_SHORT); }
+#line 131 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(SUB_LONG); }
 #line 1616 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 30:
-#line 130 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(DIV_INT); }
+#line 132 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(DIV_BYTE); }
 #line 1622 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 31:
-#line 131 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(DIV_LONG); }
+#line 133 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(DIV_SHORT); }
 #line 1628 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 32:
-#line 132 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(DIV_SBYTE); }
+#line 134 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(DIV_INT); }
 #line 1634 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 33:
-#line 133 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(DIV_SSHORT); }
+#line 135 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(DIV_LONG); }
 #line 1640 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 34:
-#line 134 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(DIV_SINT); }
+#line 136 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(DIV_SBYTE); }
 #line 1646 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 35:
-#line 135 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(DIV_SLONG); }
+#line 137 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(DIV_SSHORT); }
 #line 1652 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 36:
-#line 136 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(AND_BYTE);}
+#line 138 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(DIV_SINT); }
 #line 1658 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 37:
-#line 137 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(AND_SHORT);}
+#line 139 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(DIV_SLONG); }
 #line 1664 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 38:
-#line 138 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(AND_INT);}
+#line 140 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(AND_BYTE);}
 #line 1670 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 39:
-#line 139 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(AND_LONG);}
+#line 141 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(AND_SHORT);}
 #line 1676 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 40:
-#line 140 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(OR_BYTE); }
+#line 142 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(AND_INT);}
 #line 1682 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 41:
-#line 141 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(OR_SHORT); }
+#line 143 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(AND_LONG);}
 #line 1688 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 42:
-#line 142 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(OR_INT); }
+#line 144 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(OR_BYTE); }
 #line 1694 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 43:
-#line 143 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(OR_LONG); }
+#line 145 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(OR_SHORT); }
 #line 1700 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 44:
-#line 144 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(SHR_BYTE); }
+#line 146 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(OR_INT); }
 #line 1706 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 45:
-#line 145 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(SHR_SHORT); }
+#line 147 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(OR_LONG); }
 #line 1712 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 46:
-#line 146 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(SHR_INT); }
+#line 148 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(SHR_BYTE); }
 #line 1718 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 47:
-#line 147 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(SHR_LONG); }
+#line 149 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(SHR_SHORT); }
 #line 1724 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 48:
-#line 148 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(SHL_BYTE); }
+#line 150 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(SHR_INT); }
 #line 1730 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 49:
-#line 149 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(SHL_SHORT); }
+#line 151 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(SHR_LONG); }
 #line 1736 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 50:
-#line 150 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(SHL_INT); }
+#line 152 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(SHL_BYTE); }
 #line 1742 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 51:
-#line 151 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(SHL_LONG); }
+#line 153 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(SHL_SHORT); }
 #line 1748 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 52:
-#line 152 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(EQ_BYTE); }
+#line 154 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(SHL_INT); }
 #line 1754 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 53:
-#line 153 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(EQ_SHORT); }
+#line 155 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(SHL_LONG); }
 #line 1760 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 54:
-#line 154 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(EQ_INT); }
+#line 156 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(EQ_BYTE); }
 #line 1766 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 55:
-#line 155 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(EQ_LONG); }
+#line 157 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(EQ_SHORT); }
 #line 1772 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 56:
-#line 156 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(EQ_SBYTE); }
+#line 158 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(EQ_INT); }
 #line 1778 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 57:
-#line 157 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(EQ_SSHORT); }
+#line 159 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(EQ_LONG); }
 #line 1784 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 58:
-#line 158 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(EQ_SINT); }
+#line 160 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(EQ_SBYTE); }
 #line 1790 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 59:
-#line 159 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(EQ_SLONG); }
+#line 161 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(EQ_SSHORT); }
 #line 1796 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 60:
-#line 160 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(NEQ_BYTE); }
+#line 162 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(EQ_SINT); }
 #line 1802 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 61:
-#line 161 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(NEQ_SHORT); }
+#line 163 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(EQ_SLONG); }
 #line 1808 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 62:
-#line 162 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(NEQ_INT); }
+#line 164 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(NEQ_BYTE); }
 #line 1814 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 63:
-#line 163 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(NEQ_LONG); }
+#line 165 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(NEQ_SHORT); }
 #line 1820 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 64:
-#line 164 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(NEQ_SBYTE); }
+#line 166 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(NEQ_INT); }
 #line 1826 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 65:
-#line 165 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(NEQ_SSHORT); }
+#line 167 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(NEQ_LONG); }
 #line 1832 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 66:
-#line 166 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(NEQ_SINT); }
+#line 168 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(NEQ_SBYTE); }
 #line 1838 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 67:
-#line 167 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(NEQ_SLONG); }
+#line 169 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(NEQ_SSHORT); }
 #line 1844 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 68:
-#line 168 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(LT_BYTE); }
+#line 170 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(NEQ_SINT); }
 #line 1850 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 69:
-#line 169 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(LT_SHORT); }
+#line 171 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(NEQ_SLONG); }
 #line 1856 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 70:
-#line 170 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(LT_INT); }
+#line 172 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(LT_BYTE); }
 #line 1862 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 71:
-#line 171 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(LT_LONG); }
+#line 173 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(LT_SHORT); }
 #line 1868 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 72:
-#line 172 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(LT_SBYTE); }
+#line 174 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(LT_INT); }
 #line 1874 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 73:
-#line 173 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(LT_SSHORT); }
+#line 175 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(LT_LONG); }
 #line 1880 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 74:
-#line 174 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(LT_SINT); }
+#line 176 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(LT_SBYTE); }
 #line 1886 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 75:
-#line 175 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(LT_SLONG); }
+#line 177 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(LT_SSHORT); }
 #line 1892 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 76:
-#line 176 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(LEQ_BYTE); }
+#line 178 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(LT_SINT); }
 #line 1898 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 77:
-#line 177 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(LEQ_SHORT); }
+#line 179 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(LT_SLONG); }
 #line 1904 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 78:
-#line 178 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(LEQ_INT); }
+#line 180 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(LEQ_BYTE); }
 #line 1910 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 79:
-#line 179 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(LEQ_LONG); }
+#line 181 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(LEQ_SHORT); }
 #line 1916 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 80:
-#line 180 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(LEQ_SBYTE); }
+#line 182 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(LEQ_INT); }
 #line 1922 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 81:
-#line 181 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(LEQ_SSHORT); }
+#line 183 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(LEQ_LONG); }
 #line 1928 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 82:
-#line 182 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(LEQ_SINT); }
+#line 184 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(LEQ_SBYTE); }
 #line 1934 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 83:
-#line 183 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(LEQ_SLONG); }
+#line 185 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(LEQ_SSHORT); }
 #line 1940 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 84:
-#line 184 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(GT_BYTE); }
+#line 186 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(LEQ_SINT); }
 #line 1946 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 85:
-#line 185 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(GT_SHORT); }
+#line 187 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(LEQ_SLONG); }
 #line 1952 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 86:
-#line 186 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(GT_INT); }
+#line 188 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(GT_BYTE); }
 #line 1958 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 87:
-#line 187 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(GT_LONG); }
+#line 189 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(GT_SHORT); }
 #line 1964 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 88:
-#line 188 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(GT_SBYTE); }
+#line 190 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(GT_INT); }
 #line 1970 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 89:
-#line 189 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(GT_SSHORT); }
+#line 191 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(GT_LONG); }
 #line 1976 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 90:
-#line 190 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(GT_SINT); }
+#line 192 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(GT_SBYTE); }
 #line 1982 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 91:
-#line 191 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(GT_SLONG); }
+#line 193 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(GT_SSHORT); }
 #line 1988 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 92:
-#line 192 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(GEQ_BYTE); }
+#line 194 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(GT_SINT); }
 #line 1994 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 93:
-#line 193 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(GEQ_SHORT); }
+#line 195 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(GT_SLONG); }
 #line 2000 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 94:
-#line 194 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(GEQ_INT); }
+#line 196 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(GEQ_BYTE); }
 #line 2006 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 95:
-#line 195 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(GEQ_LONG); }
+#line 197 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(GEQ_SHORT); }
 #line 2012 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 96:
-#line 196 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(GEQ_SBYTE); }
+#line 198 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(GEQ_INT); }
 #line 2018 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 97:
-#line 197 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(GEQ_SSHORT); }
+#line 199 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(GEQ_LONG); }
 #line 2024 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 98:
-#line 198 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(GEQ_SINT); }
+#line 200 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(GEQ_SBYTE); }
 #line 2030 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 99:
-#line 199 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { push_byte(GEQ_SLONG); }
+#line 201 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(GEQ_SSHORT); }
 #line 2036 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 100:
-#line 201 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    {push_byte(PUSH_BYTE);}
+#line 202 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(GEQ_SINT); }
 #line 2042 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 101:
-#line 202 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    {push_byte(PUSH_SHORT);}
+#line 203 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { push_byte(GEQ_SLONG); }
 #line 2048 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 102:
-#line 203 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    {push_byte(PUSH_INT);}
+#line 205 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    {push_byte(PUSH_BYTE);}
 #line 2054 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 103:
-#line 204 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    {push_byte(PUSH_LONG);}
+#line 206 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    {push_byte(PUSH_SHORT);}
 #line 2060 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 104:
-#line 205 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    {push_byte(POP_BYTE);}
+#line 207 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    {push_byte(PUSH_INT);}
 #line 2066 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 105:
-#line 206 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    {push_byte(POP_INT);}
+#line 208 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    {push_byte(PUSH_LONG);}
 #line 2072 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 106:
-#line 207 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    {push_byte(POP_SHORT);}
+#line 209 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    {push_byte(POP_BYTE);}
 #line 2078 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 107:
-#line 208 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    {push_byte(POP_LONG);}
+#line 210 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    {push_byte(POP_INT);}
 #line 2084 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 108:
-#line 209 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    {push_byte(POP); push_value((yyvsp[0].numeric));}
+#line 211 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    {push_byte(POP_SHORT);}
 #line 2090 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 109:
-#line 210 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    {push_byte(PUSH); push_value((yyvsp[0].numeric));}
+#line 212 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    {push_byte(POP_LONG);}
 #line 2096 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
-  case 111:
+  case 110:
 #line 213 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { (yyval.numeric) = (yyvsp[-2].numeric) * (yyvsp[0].numeric); }
+    {push_byte(POP); push_value((yyvsp[0].numeric));}
 #line 2102 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
-  case 112:
+  case 111:
 #line 214 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { (yyval.numeric) = (yyvsp[-2].numeric) / (yyvsp[0].numeric); }
+    {push_byte(PUSH); push_value((yyvsp[0].numeric));}
 #line 2108 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 113:
-#line 215 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { (yyval.numeric) = (yyvsp[-2].numeric) + (yyvsp[0].numeric); }
+#line 217 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { (yyval.numeric) = (yyvsp[-2].numeric) * (yyvsp[0].numeric); }
 #line 2114 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 114:
-#line 216 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { (yyval.numeric) = (yyvsp[-2].numeric) - (yyvsp[0].numeric); }
+#line 218 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { (yyval.numeric) = (yyvsp[-2].numeric) / (yyvsp[0].numeric); }
 #line 2120 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 115:
-#line 217 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { (yyval.numeric) = (yyvsp[-2].numeric) & (yyvsp[0].numeric); }
+#line 219 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { (yyval.numeric) = (yyvsp[-2].numeric) + (yyvsp[0].numeric); }
 #line 2126 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 116:
-#line 218 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { (yyval.numeric) = (yyvsp[-2].numeric) | (yyvsp[0].numeric); }
+#line 220 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { (yyval.numeric) = (yyvsp[-2].numeric) - (yyvsp[0].numeric); }
 #line 2132 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 117:
-#line 219 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { (yyval.numeric) = ~(yyvsp[0].numeric); }
+#line 221 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { (yyval.numeric) = (yyvsp[-2].numeric) & (yyvsp[0].numeric); }
 #line 2138 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
   case 118:
-#line 220 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
-    { (yyval.numeric) = (yyvsp[0].numeric); }
+#line 222 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { (yyval.numeric) = (yyvsp[-2].numeric) | (yyvsp[0].numeric); }
 #line 2144 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
     break;
 
+  case 119:
+#line 223 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { (yyval.numeric) = ~(yyvsp[0].numeric); }
+#line 2150 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
+    break;
 
-#line 2148 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
+  case 120:
+#line 224 "YASM_COMPILER/src/parcer.y" /* yacc.c:1646  */
+    { (yyval.numeric) = (yyvsp[0].numeric); }
+#line 2156 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
+    break;
+
+
+#line 2160 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -2372,5 +2384,5 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 221 "YASM_COMPILER/src/parcer.y" /* yacc.c:1906  */
+#line 225 "YASM_COMPILER/src/parcer.y" /* yacc.c:1906  */
 

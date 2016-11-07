@@ -149,35 +149,36 @@ extern int yydebug;
     _NOT_SHORT = 359,
     _NOT_INT = 360,
     _NOT_LONG = 361,
-    _JMP = 362,
-    _JT = 363,
-    _JF = 364,
-    _LABEL = 365,
-    _CALL_OP = 366,
-    _PUSH = 367,
-    _POP = 368,
-    _ERASE = 369,
-    _PUSH_BYTE = 370,
-    _PUSH_SHORT = 371,
-    _PUSH_INT = 372,
-    _PUSH_LONG = 373,
-    _POP_BYTE = 374,
-    _POP_SHORT = 375,
-    _POP_INT = 376,
-    _POP_LONG = 377,
-    _ID = 378,
-    _NUMERIC = 379,
-    _INDENT = 380,
-    _OUTDENT = 381,
-    _NEW_LINE = 382,
-    _PLUS_OP = 383,
-    _MINUS_OP = 384,
-    _MUL_OP = 385,
-    _DIV_OP = 386,
-    _AND_OP = 387,
-    _OR_OP = 388,
-    _EQUALS_OP = 389,
-    _NOT_OP = 390
+    _DUB_OP = 362,
+    _JMP = 363,
+    _JT = 364,
+    _JF = 365,
+    _LABEL = 366,
+    _CALL_OP = 367,
+    _PUSH = 368,
+    _POP = 369,
+    _ERASE = 370,
+    _PUSH_BYTE = 371,
+    _PUSH_SHORT = 372,
+    _PUSH_INT = 373,
+    _PUSH_LONG = 374,
+    _POP_BYTE = 375,
+    _POP_SHORT = 376,
+    _POP_INT = 377,
+    _POP_LONG = 378,
+    _ID = 379,
+    _NUMERIC = 380,
+    _INDENT = 381,
+    _OUTDENT = 382,
+    _NEW_LINE = 383,
+    _PLUS_OP = 384,
+    _MINUS_OP = 385,
+    _MUL_OP = 386,
+    _DIV_OP = 387,
+    _AND_OP = 388,
+    _OR_OP = 389,
+    _EQUALS_OP = 390,
+    _NOT_OP = 391
   };
 #endif
 
@@ -193,7 +194,7 @@ union YYSTYPE
   struct Node* node;
   struct Value* value;
 
-#line 197 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.h" /* yacc.c:1909  */
+#line 198 "/home/pavel/workspace/YASM/YASM_COMPILER/src/parser.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

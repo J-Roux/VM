@@ -170,7 +170,7 @@ POP_INT         popi
 POP_LONG        popl
 
 CALL            call
-
+DUB             dub
 
 ID               [a-zA-Z][a-zA-Z0-9]*
 NUMERIC          [0-9]+
@@ -324,7 +324,7 @@ COMMENT          #.*
 {POP_LONG}        {  return _POP_LONG; }
 
 {CALL}            {  return _CALL_OP; }
-
+{DUB}             {  return _DUB_OP; }
 {ID}              { yylval.string = strdup(yytext); return _ID;  }
 {NUMERIC}         { yylval.numeric = atoi(yytext); return _NUMERIC;}
 

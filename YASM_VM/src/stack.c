@@ -42,23 +42,37 @@ RESULT range_check(ptr_size size, COMPARE_TYPE type)
 
 RESULT push(uint8_t *ptr, ptr_size size)
 {
-  RESULT result = SUCCESS;
-  if(RANGE_CHECK)
-      result = range_check(size, PUSH);
-  MEMCPY(data + ++pointer, ptr, size);
-  pointer += size - 1;
+  RESULT result = range_check(size, PUSH);
+  if(result == SUCCESS)
+  {
+    MEMCPY(data + ++pointer, ptr, size);
+    pointer += size - 1;
+  }
   return result;
 }
 
 RESULT pop(uint8_t *ptr, ptr_size size)
 {
-  RESULT result = SUCCESS;
-  if(RANGE_CHECK)
-      result = range_check( size, POP);
-  pointer -= size - 1;
-  MEMCPY(ptr, data + pointer--, size);
+  RESULT result = range_check( size, POP);
+  if(result == SUCCESS)
+  {
+      pointer -= size - 1;
+      MEMCPY(ptr, data + pointer--, size);
+  }
   return result;
 }
+
+RESULT dub(uint16_t size)
+{
+    RESULT result = range_check(size, PUSH);
+    if(result == SUCCESS)
+    {
+        MEMCPY(data + pointer + 1, data + pointer - size, size);
+        pointer += size;
+    }
+    return result;
+}
+
 
 
 RESULT push_byte(uint8_t value) { return push((uint8_t *)&value, sizeof(uint8_t)); }

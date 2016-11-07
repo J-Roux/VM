@@ -15,6 +15,7 @@ extern "C" {
 RESULT push(uint8_t *ptr, ptr_size size);
 RESULT pop(uint8_t *ptr, ptr_size size);
 
+RESULT dub(uint16_t size);
 
 RESULT push_byte(uint8_t value);
 RESULT push_short(uint16_t value);

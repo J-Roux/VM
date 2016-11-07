@@ -269,6 +269,13 @@ RESULT execute_intruction()
                         result = CODE_END;
                         break;
                 }
+                case DUB:
+                {
+                        uint16_t size;
+                        result |= get_code((uint8_t *)&size, sizeof(uint16_t));
+                        result |= dub(size);
+                        break;
+                }
                 case CALL:
                 {
                         uint8_t id;

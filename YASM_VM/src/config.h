@@ -13,7 +13,7 @@
 #ifdef ARDUINO
 #include <string.h>
 #include <Arduino.h>
-#define PRINT Serial.println
+#define PRINT
 #define MEMCPY_DBG(DEST, SRC, SIZE) memcpy(DEST, SRC, SIZE)
 #else
 #define PRINT(VALUE) printf("%i\n", VALUE)
