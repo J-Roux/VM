@@ -18,7 +18,9 @@ int main(int argc, char** argv)
     rewind(f);
     uint8_t *code = malloc(sz);
     fread(code,1,sz, f);
-    set_code(code, sz);
+    code_stream_init();
+    vm_code = code;
+    range = sz;
     while(stop)
     {
         RESULT result = execute_intruction();

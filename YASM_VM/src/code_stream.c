@@ -1,67 +1,69 @@
 #include "code_stream.h"
 
 
+
+RESULT get_code(uint8_t *)
+
+
+
+
 #ifndef ARDUINO
-#include <stdlib.h>
-#include <memory.h>
-RESULT inc_pc(uint8_t value)
+
+ERRORS code_stream_init()
 {
-    pc += value;
-    return SUCCESS;
+    return NO_ERROR;
 }
 
-RESULT get_code(uint8_t* ptr, uint16_t size)
+
+ERRORS getbyte(uint16_t pos, uint8_t * in)
 {
-    memcpy(ptr, data + pc , size);
-    pc += size;
-    return SUCCESS;
+    if(pos < range)
+    {
+        *in = vm_code[pos];
+        return NO_ERROR;
+    }
+    else
+    {
+        *in = 0xFF;
+        return OUT_OF_RANGE;
+    }
 }
 
-uint16_t get_pc()
-{
-    return pc;
-}
 
-RESULT jmp(uint16_t pos)
-{
-    pc = pos;
-    return SUCCESS;
-}
-
-void set_code(uint8_t* ptr, uint16_t size)
-{
-    data = realloc(data, size);
-    memcpy(data, ptr, size);
-}
 #else
 #include <Arduino.h>
 
-RESULT inc_pc(uint8_t value)
+static uint16_t range;
+ERRORS init()
 {
-    pc += value;
-    return SUCCESS;
+
+    while(Serial.available() <= 0)
+    int income = Serial.read();
+    if(income != -1)
+    {
+        range = income;
+        return NO_ERROR;
+    }
+    else
+    {
+        return NO_RANGE;
+    }
+
 }
 
-RESULT get_code(uint8_t* ptr, uint16_t size)
+ERRORS getbyte(uint8_t pos, uint8_t * in)
 {
-
-    return SUCCESS;
-}
-
-uint16_t get_pc()
-{
-    return pc;
-}
-
-RESULT jmp(uint16_t pos)
-{
-    pc = pos;
-}
-
-void set_code(uint8_t* ptr, uint16_t size)
-{
-
-
+    Serial.write(pos);
+    while(Serial.available() <=0);
+    if(income != -1)
+    {
+        range = income;
+        return NO_ERROR;
+    }
+    else
+    {
+        return NO_CONNECTION;
+    }
 }
 
 #endif

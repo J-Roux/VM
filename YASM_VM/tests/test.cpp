@@ -116,18 +116,7 @@ void TestMethod(COMMANDS command, type op1, type op2) {
         EXPECT_EQ(*res, T{}(op2, op1));
 }
 
-//template<class T, class type>
-//void TestUnary(COMMANDS command)
-//{
-//  using code_type = typename std::make_unsigned<type>::type;
-//  uint16_t pc = 0;
-//  auto t = GET_HEAD(type);
-//  std::make_signed<type>::type t1 = *t;
-//  auto code = std::vector<uint8_t> {uint8_t(command)};
-//  EXPECT_EQ(execute_intruction(code.data(), &pc), SUCCESS);
-//  auto res = GET_HEAD(type);
-//  EXPECT_EQ(*res, T{}(0, t1));
-//}
+
 
 template<typename T = void>
 struct shift_right;
@@ -168,6 +157,14 @@ struct negative<void>
                 return    std::forward<T>(lhs) - std::forward<U>(rhs);
         }
 };
+
+TEST(VMTest, Dub_command){
+    data = std::vector<uint8_t>({PUSH, 1, 5, DUB, 0, 1}).data();
+    EXPECT_EQ(execute_intruction(), SUCCESS);
+    EXPECT_EQ(execute_intruction(), SUCCESS);
+    auto res = GET_HEAD(uint8_t);
+    EXPECT_EQ(5, *res);
+}
 
 
 TEST(VMTest, Eq_byte_intruction) {
@@ -418,6 +415,7 @@ TEST(VMTest, Div_slong_intruction) {
 
 
 
+
 TEST(VMTest, Jmp_intruction) {
         data = std::vector<uint8_t>({PUSH, 2, 1, 7, ADD_BYTE, JMP, 6, 0}).data();
         EXPECT_EQ(execute_intruction(), SUCCESS);
@@ -439,3 +437,7 @@ TEST(VMTest, Jt_intruction) {
         EXPECT_EQ(execute_intruction(), SUCCESS);
 
 }
+
+
+
+

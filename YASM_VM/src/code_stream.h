@@ -2,17 +2,29 @@
 #define _CODE_STREAM_H
 #include "config.h"
 
-static uint16_t pc = 0;
-static uint8_t * data;
+typedef enum
+{
+    OUT_OF_RANGE = DIV_BY_ZERO,
+    NO_ERROR,
+    NO_CONNECTION,
+    NO_RANGE
+} ERRORS;
+
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-RESULT inc_pc(uint8_t value);
-RESULT get_code(uint8_t* ptr, uint16_t size);
-uint16_t get_pc();
-RESULT jmp(uint16_t pos);
-void set_code(uint8_t *data, uint16_t size);
+
+#ifndef ARDUINO
+static uint16_t range;
+static uint8_t *vm_code;
+#endif
+
+
+ERRORS code_stream_init();
+ERRORS getbyte(uint16_t pos, uint8_t * in);
+
+
 #ifdef __cplusplus
 }
 #endif
