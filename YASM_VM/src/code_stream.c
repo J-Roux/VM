@@ -1,22 +1,56 @@
 #include "code_stream.h"
+#include <stdarg.h>
 
 
 
-RESULT get_code(uint8_t *)
+RESULT get_u16(uint16_t* pc, uint16_t* data)
+{
+        uint8_t in;
+        get_byte(*pc, &in);
+        *data = in << 8;
+        jmp(pc, *pc + 1);
+        get_byte(*pc, &in);
+        *data = in;
+        return SUCCESS;
+}
+
 
 
 
 
 #ifndef ARDUINO
 
-ERRORS code_stream_init()
+uint16_t range;
+uint8_t* vm_code;
+
+ERRORS code_stream_init(uint8_t count, ...)
 {
+	va_list args;
+	va_start(args, count);
+        vm_code = va_arg(args, uint8_t*);
+	range = va_arg(args, uint16_t);
+
+	va_end(args);
     return NO_ERROR;
 }
 
-
-ERRORS getbyte(uint16_t pos, uint8_t * in)
+ERRORS jmp(uint16_t* pc, uint16_t address)
 {
+        if(*pc < range)
+        {
+            *pc = address;
+            return NO_ERROR;
+        }
+        else
+        {
+            return OUT_OF_RANGE;
+        }
+}
+
+
+ERRORS get_byte(uint16_t pos, uint8_t * in)
+{
+	
     if(pos < range)
     {
         *in = vm_code[pos];
@@ -34,7 +68,7 @@ ERRORS getbyte(uint16_t pos, uint8_t * in)
 #include <Arduino.h>
 
 static uint16_t range;
-ERRORS init()
+ERRORS code_stream_init(uint8_t count, ...)
 {
 
     while(Serial.available() <= 0)

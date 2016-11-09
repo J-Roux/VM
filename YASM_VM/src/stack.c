@@ -62,12 +62,12 @@ RESULT pop(uint8_t *ptr, ptr_size size)
   return result;
 }
 
-RESULT dub(uint16_t size)
+RESULT dub(uint8_t size)
 {
     RESULT result = range_check(size, PUSH);
     if(result == SUCCESS)
     {
-        MEMCPY(data + pointer + 1, data + pointer - size, size);
+        MEMCPY(data + pointer + 1, data + pointer - size + 1, size);
         pointer += size;
     }
     return result;

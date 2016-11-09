@@ -3,6 +3,12 @@
 
 
 
+static uint16_t pc = 0;
+
+RESULT inc_pc(uint16_t offset)
+{
+        return jmp(&pc, pc + offset);
+}
 
 
 RESULT pop_op_byte(uint8_t* op1, uint8_t* op2)
@@ -41,9 +47,8 @@ RESULT conditional_jmp(uint8_t condition)
         if(op == condition)
         {
                 uint16_t address;
-                result |= get_code((uint8_t *)&address, sizeof(uint16_t));
-                result |= jmp(address);
-
+                result |= get_u16(&pc, &address);
+                jmp(&pc, address);
         }
         else
         {
@@ -130,23 +135,30 @@ RESULT conditional_jmp(uint8_t condition)
         UNSIGNED_UNARY_OPERATION(OPERATION, OP)\
         SIGNED_UNARY_OPERATION(OPERATION, OP)
 
-typedef RESULT(*func)(uint8_t *ptr, ptr_size size);
+typedef RESULT(*func)(uint8_t value);
 
 RESULT push_by_arg( func mem_instruction)
 {
         RESULT result = SUCCESS;
         uint8_t arg;
-        result = get_code(&arg, sizeof(uint8_t));
-        uint8_t ptr_data[BUFFER_SIZE];
-        result |= get_code(ptr_data, arg);
-        return mem_instruction(ptr_data, arg);
+        uint8_t t;
+          inc_pc(1);
+        result = get_byte(pc, &arg);
+        inc_pc(1);
+        for(uint8_t i = 0; i < arg; i++)
+        {
+                get_byte(pc, &t);
+                jmp(&pc, pc + 1);
+                mem_instruction(t);
+        }
+        return result;
 }
 
 RESULT push_data( uint8_t size)
 {
     RESULT result;
     uint8_t * data;
-    result |= get_code(data, size);
+    //result |= get_code(data, size);
     result |= push(data, size);
     return result;
 }
@@ -156,7 +168,7 @@ RESULT pop_data( uint8_t size)
 {
     RESULT result;
     uint8_t * data;
-    result |= get_code(data,  size);
+   // result |= get_code(data,  size);
     result |= pop(data,  size);
     return result;
 }
@@ -166,7 +178,7 @@ RESULT execute_intruction()
 {
         RESULT result = SUCCESS;
         COMMANDS command = END;
-        result = get_code((uint8_t *)&command, sizeof(uint8_t));
+        result = get_byte(pc, (uint8_t*)&command);
         switch (command)
         {
                 UNSIGNED_BINARY_OPERATION(ADD, +);
@@ -190,12 +202,12 @@ RESULT execute_intruction()
                 UNSIGNED_UNARY_OPERATION(LNOT, !);
                 case PUSH:
                 {
-                        result = push_by_arg( &push);
+                        result = push_by_arg( &push_byte);
                         break;
                 }
                 case POP:
                 {
-                        result = push_by_arg( &pop);
+                        result = push_by_arg( &pop_byte);
                         break;
                 }
                 case PUSH_BYTE:
@@ -241,16 +253,15 @@ RESULT execute_intruction()
                 }
                 case POP_LONG:
                 {
-
-                         result = pop_data(sizeof(uint64_t));
+                        result = pop_data(sizeof(uint64_t));
                         break;
                 }
 
                 case JMP:
                 {
                         uint16_t address;
-                        result |= get_code((uint8_t *)&address, sizeof(uint16_t));
-                        result |= jmp(address);
+                        result |= get_u16(&pc, &address);
+                        result |= jmp(&pc, address);
                         break;
                 }
                 case JT:
@@ -265,21 +276,24 @@ RESULT execute_intruction()
                 }
                 case END:
                 {
-                        reset();
+                        pc = 0;
+                        //reset();
                         result = CODE_END;
                         break;
                 }
                 case DUB:
                 {
-                        uint16_t size;
-                        result |= get_code((uint8_t *)&size, sizeof(uint16_t));
+                        uint8_t size;
+                        inc_pc(1);
+                        result |= get_byte(pc, &size);
                         result |= dub(size);
+                        inc_pc(1);
                         break;
                 }
                 case CALL:
                 {
                         uint8_t id;
-                        result |= get_code((uint8_t *)&id, sizeof(uint8_t));
+                        result |= get_byte(pc, &id);
                         switch(id)
                         {
                                 case 0: PRINT(*(get_head(sizeof(uint8_t))));
@@ -287,5 +301,5 @@ RESULT execute_intruction()
                 }
 
         }
-        return result;
+        return SUCCESS;
 }

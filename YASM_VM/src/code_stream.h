@@ -15,14 +15,11 @@ typedef enum
 extern "C" {
 #endif
 
-#ifndef ARDUINO
-static uint16_t range;
-static uint8_t *vm_code;
-#endif
 
-
-ERRORS code_stream_init();
-ERRORS getbyte(uint16_t pos, uint8_t * in);
+ERRORS jmp(uint16_t* pc, uint16_t address);
+RESULT get_u16(uint16_t* pos, uint16_t* data);
+ERRORS code_stream_init(uint8_t count, ...);
+ERRORS get_byte(uint16_t pos, uint8_t * in);
 
 
 #ifdef __cplusplus
